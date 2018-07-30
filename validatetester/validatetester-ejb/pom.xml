@@ -2,45 +2,38 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>plugin-validatesignature-tester-ejb</artifactId>
-  <groupId>org.fundaciobit.plugins</groupId>
-  <version>1.0.0</version>
+  <artifactId>pluginsib-validatesignature-tester-ejb</artifactId>
+  <groupId>org.fundaciobit.pluginsib.validatesignature</groupId>
+  <version>2.0.0</version>
   <packaging>ejb</packaging>
 
-  <name>FundacioBit Plugins - Validate Signature Plugins - Tester - EJB</name>
+  <name>PluginsIB - Validate Signature Plugins - Tester - EJB</name>
 
   <parent>
-    <groupId>org.fundaciobit.plugins</groupId>
-    <version>1.0.0</version>
-    <artifactId>plugins-validatesignature-tester</artifactId>
+    <groupId>org.fundaciobit.pluginsib.validatesignature</groupId>
+    <version>2.0.0</version>
+    <artifactId>pluginsib-validatesignature-tester</artifactId>
   </parent>
 
   <dependencies>
 
-  <!--
-    <dependency>
-      <groupId>org.fundaciobit.plugins</groupId>
-      <artifactId>plugins-api</artifactId>
-      <version>1.0.0</version>
-      <scope>provided</scope>
-    </dependency>
-    -->
+  
 
     <!-- ================  API ======================== -->
 
-    <dependency>
-      <groupId>org.fundaciobit.plugins</groupId>
-      <artifactId>plugin-validatesignature-api</artifactId>
-      <version>1.0.0</version>
+	<dependency>
+      <groupId>org.fundaciobit.pluginsib.validatesignature</groupId>
+      <artifactId>pluginsib-validatesignature-api</artifactId>
+      <version>2.0.0</version>
     </dependency>
     
     
     <!-- ============== PLUGINS ======================== -->
     
     <dependency>
-      <groupId>org.fundaciobit.plugins</groupId>
+      <groupId>org.fundaciobit.pluginsib.validatesignature</groupId>
       <artifactId>plugin-validatesignature-afirmacxf</artifactId>
-      <version>1.0.2</version>
+      <version>2.0.0</version>
 
       <exclusions> 
         <exclusion>  
