@@ -1,11 +1,11 @@
 
 
-Per usar en JBOSS 5.x s'ha d'usar la següent despendència:
+Per usar en JBOSS 5.x s'ha d'usar la segÃ¼ent despendÃ¨ncia:
 
 <dependency>
   <groupId>org.fundaciobit.plugins</groupId>
   <artifactId>plugin-validatesignature-afirmacxf</artifactId>
-  <version>2.0.x</version>
+  <version>1.0.x</version>
 
   <exclusions> 
     <exclusion>  
@@ -37,10 +37,11 @@ Per usar en JBOSS 5.x s'ha d'usar la següent despendència:
       <groupId>org.apache.ws.security</groupId>
       <artifactId>wss4j</artifactId>
     </exclusion>
-        
+    <!--    
     <exclusion>  
       <groupId>org.apache.santuario</groupId>
       <artifactId>xmlsec</artifactId>
     </exclusion>
+    -->
   </exclusions> 
 </dependency>
