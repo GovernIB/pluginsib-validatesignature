@@ -1,4 +1,9 @@
 package org.fundaciobit.plugins.validatesignature.api;
+
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import org.fundaciobit.plugins.validatesignature.api.xml.ThrowableAdapter;
+
 /**
  * 
  * @author anadal
@@ -35,7 +40,8 @@ public class ValidationStatus {
   public void setErrorMsg(String errorMsg) {
     this.errorMsg = errorMsg;
   }
-
+  
+  @XmlJavaTypeAdapter(ThrowableAdapter.class)
   public Throwable getErrorException() {
     return errorException;
   }
