@@ -1,6 +1,6 @@
 package org.fundaciobit.plugins.validatesignature.api;
 
-import org.fundaciobit.plugins.IPlugin;
+import org.fundaciobit.pluginsib.core.IPlugin;
 
 
 /**

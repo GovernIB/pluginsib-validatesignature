@@ -12,7 +12,7 @@ import java.util.Properties;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
-import org.fundaciobit.plugins.utils.PluginsManager;
+import org.fundaciobit.pluginsib.core.utils.PluginsManager;
 import org.fundaciobit.plugins.validatesignature.api.IValidateSignaturePlugin;
 
 /**

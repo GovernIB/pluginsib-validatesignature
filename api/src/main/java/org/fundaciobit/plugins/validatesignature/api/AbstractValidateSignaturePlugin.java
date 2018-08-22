@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
-import org.fundaciobit.plugins.utils.AbstractPluginProperties;
+import org.fundaciobit.pluginsib.core.utils.AbstractPluginProperties;
 
 /**
  * 
@@ -153,7 +153,7 @@ public abstract class AbstractValidateSignaturePlugin extends AbstractPluginProp
 
             for (int j = 0; j < certificate.length; j++) {
               System.out.println("    + Cert[" + j + "] = "
-                  + org.fundaciobit.plugins.utils.Base64.encode(certificate[j]));
+                  + org.fundaciobit.pluginsib.core.utils.Base64.encode(certificate[j]));
             }
 
           }
