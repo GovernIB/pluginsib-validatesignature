@@ -5,7 +5,7 @@
   <artifactId>pluginsib-validatesignature-tester</artifactId>
   <packaging>pom</packaging>
 
-  <name>PluginsIB - Validate Signature Plugins - Validate Tester</name>
+  <name>PluginsIB - Validate Signature - Validate Tester</name>
 
   <parent>
     <groupId>org.fundaciobit.pluginsib.validatesignature</groupId>

@@ -7,7 +7,7 @@
   <version>2.0.0</version>
   <packaging>ejb</packaging>
 
-  <name>PluginsIB - Validate Signature Plugins - Tester - EJB</name>
+  <name>PluginsIB - Validate Signature - Tester - EJB</name>
 
   <parent>
     <groupId>org.fundaciobit.pluginsib.validatesignature</groupId>

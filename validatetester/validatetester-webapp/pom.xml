@@ -7,7 +7,7 @@
     <version>2.0.0</version>
     <packaging>war</packaging>
 
-    <name> PluginsIB - Validate Signature Plugins - Tester - WebApp</name>
+    <name> PluginsIB - Validate Signature - Tester - WebApp</name>
 
     <parent>
         <groupId>org.fundaciobit.pluginsib.validatesignature</groupId>
