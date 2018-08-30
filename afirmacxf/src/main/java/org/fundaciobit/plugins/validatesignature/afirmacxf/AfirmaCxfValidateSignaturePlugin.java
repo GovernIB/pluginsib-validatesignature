@@ -1,5 +1,7 @@
 package org.fundaciobit.plugins.validatesignature.afirmacxf;
 
+import java.security.Provider;
+import java.security.Security;
 import java.security.cert.X509Certificate;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,6 +38,7 @@ import org.apache.commons.lang3.reflect.FieldUtils;
 import org.bouncycastle.asn1.cms.ContentInfo;
 import org.bouncycastle.asn1.cms.SignedData;
 import org.bouncycastle.cms.CMSSignedData;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.util.encoders.Base64;
 import org.fundaciobit.pluginsib.core.utils.FileUtils;
 import org.fundaciobit.pluginsib.core.utils.XTrustProvider;
@@ -60,6 +63,10 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.itextpdf.text.pdf.AcroFields;
+import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.security.PdfPKCS7;
+
 import es.gob.afirma.i18n.Language;
 import es.gob.afirma.integraFacade.GenerateMessageResponse;
 import es.gob.afirma.integraFacade.pojo.DataInfo;
@@ -78,7 +85,6 @@ import es.gob.afirma.utils.DSSConstants.ReportDetailLevel;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 
-
 /**
  * 
  * @author anadal
@@ -95,8 +101,7 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
   public static final Map<String, String> localAlgorithm2PluginAlgorithm = new HashMap<String, String>();
 
   public static final Map<String, String> localAlgorithmEnc2PluginAlgorithm = new HashMap<String, String>();
-  
-  
+
   public static final SignatureRequestedInformation supportedSignatureRequestedInformation = new SignatureRequestedInformation();
   
 
@@ -108,9 +113,7 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
     supportedSignatureRequestedInformation.setReturnTimeStampInfo(true);
     supportedSignatureRequestedInformation.setReturnValidationChecks(true);
     supportedSignatureRequestedInformation.setValidateCertificateRevocation(true);
-    
-    
-    
+
     
     localSignType2PluginSignType.put(DSSConstants.SignTypesURIs.XADES_V_1_3_2,
         SIGNTYPE_XAdES); // = "http://uri.etsi.org/01903/v1.3.2#";
@@ -118,6 +121,10 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
         SIGNTYPE_XAdES); // = "http://uri.etsi.org/01903/v1.2.2#";
     localSignType2PluginSignType.put(DSSConstants.SignTypesURIs.XADES_V_1_1_1,
         SIGNTYPE_XAdES); // = "http://uri.etsi.org/01903/v1.1.1#";
+    
+    localSignType2PluginSignType.put("http://uri.etsi.org/01903/v1.4.1#",
+        SIGNTYPE_XAdES); // = "http://uri.etsi.org/01903/v1.4.1#";
+    
     localSignType2PluginSignType.put(DSSConstants.SignTypesURIs.CADES,
         SIGNTYPE_CAdES); // = "http://uri.etsi.org/01733/v1.7.3#";
     localSignType2PluginSignType.put(DSSConstants.SignTypesURIs.CMS,
@@ -638,7 +645,12 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
       log.info(" ========== IN PARAMS =========== ");
 
       for (String b : inParams.keySet()) {
-        log.info(b + " => " + inParams.get(b));
+        String str = (String)inParams.get(b);
+        if (str.length() > 80) {
+          log.info(b + " => " + str.substring(1,80));
+        } else {
+          log.info(b + " => " + str);
+        }
       }
       log.info(" ================================= ");
     }
@@ -706,7 +718,7 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
           
         }
         
-        keys.put(key.replace(":", "_").replace("/", "_"), value);
+        keys.put(key.replace(":", "_").replace("/", "_").replace("@", "_"), value);
       }
       
       
@@ -753,7 +765,12 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
       log.info(" ================================= ");
 
       for (String b : propertiesResult.keySet()) {
-        log.info(b + " => " + propertiesResult.get(b));
+        String str = propertiesResult.get(b).toString();
+        if (str.length() > 80) {
+          log.info(b + " => " + str.substring(1,80));
+        } else {
+          log.info(b + " => " + str);
+        }
       }
       log.info(" ================================= ");
     }
@@ -919,6 +936,7 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
       String profilePlugin = localSignProfile2PluginSignProfile.get(profile);
       
       if (pluginType != null && (SIGNTYPE_PAdES.equals(pluginType) || SIGNTYPE_CAdES.equals(pluginType) )) {
+
         List<IndividualSignatureReport> reports = verSigRes.getVerificationReport();
         if (reports != null && reports.size() !=0) {
           // Get last Signature 
@@ -927,6 +945,18 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
             profilePlugin = SIGNPROFILE_EPES;
           }
         }
+        
+        if (SIGNTYPE_PAdES.equals(pluginType)) {
+          
+           if (SIGNPROFILE_EPES.equals(profilePlugin) || SIGNPROFILE_BES.equals(profilePlugin) ) {
+              if(containsTimeStamp(signData)) {
+                profilePlugin = SIGNPROFILE_T;
+              }
+           } else if (SIGNPROFILE_XL.equals(profilePlugin)) {
+             profilePlugin = SIGNPROFILE_PADES_LTV;
+           }
+        }
+        
       }
       signatureInfo.setSignProfile(profilePlugin);
     }
@@ -1023,6 +1053,31 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
   }
 
 
+  protected boolean containsTimeStamp(byte[] signature) {
+    try {
+      Provider provider = new BouncyCastleProvider();
+      Security.addProvider(provider);
+
+      PdfReader reader = new PdfReader(signature);
+
+      AcroFields fields = reader.getAcroFields();
+      List<String> names = fields.getSignatureNames();
+
+      String signatureName = names.get(names.size() - 1);
+
+      PdfPKCS7 pkcs7 = fields.verifySignature(signatureName);
+
+      if (pkcs7.getTimeStampDate() != null && pkcs7.getTimeStampToken() != null) {
+        return true;
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+
+    }
+    return false;
+  }
+  
+  
 
   protected void internalPrint(VerifySignatureResponse verSigRes) {
     {

@@ -1,12 +1,18 @@
 
 
-Per usar en JBOSS 5.x s'ha d'usar la següent despendència:
+Per usar en JBOSS 5.x s'han d'usar les següents dependències:
 
   <dependency>
-    <groupId>org.fundaciobit.plugins</groupId>
-    <artifactId>plugin-validatesignature-integra</artifactId>
-    <version>1.0.0</version>
-    
+    <groupId>org.apache.santuario</groupId>
+    <artifactId>xmlsec</artifactId>
+    <version>1.5.5</version>
+  </dependency>
+
+  <dependency>
+    <groupId>org.fundaciobit.pluginsib.validatesignature</groupId>
+    <artifactId>pluginsib-validatesignature-integra</artifactId>
+    <version>2.0.0</version>
+
     <exclusions>
         <!-- Eliminam tota la comunicació AXIS -->
         <exclusion>  
@@ -60,7 +66,7 @@ Per usar en JBOSS 5.x s'ha d'usar la següent despendència:
           <groupId>org.apache.ws.security</groupId>
           <artifactId>wss4j</artifactId>
         </exclusion>
-        
+
         <exclusion>  
           <groupId>org.apache.santuario</groupId>
           <artifactId>xmlsec</artifactId>

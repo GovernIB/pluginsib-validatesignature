@@ -3,13 +3,13 @@
 	
 <#if (dss_InputDocuments_dss_Document_dss_Base64Data)??>	<dss:InputDocuments>
 		<dss:Document>
-			
+
 		<dss:Base64Data>${dss_InputDocuments_dss_Document_dss_Base64Data}</dss:Base64Data></dss:Document>
         
         
     </dss:InputDocuments>
 </#if><#if (dss_InputDocuments_dss_Document_dss_Base64XML)??>	<dss:InputDocuments>
-		<dss:Document>
+		<dss:Document ID="${dss_InputDocuments_dss_Document_ID}">
 			
 		<dss:Base64XML>${dss_InputDocuments_dss_Document_dss_Base64XML}</dss:Base64XML></dss:Document>
         
@@ -54,5 +54,13 @@
 		
 		
 		${dss_SignatureObject}</dss:SignatureObject></#if>
+    <#if (dss_SignatureObject_dss_SignaturePtr_WhichDocument)??>
+  <dss:SignatureObject>
+    <dss:SignaturePtr WhichDocument="${dss_SignatureObject_dss_SignaturePtr_WhichDocument}"/>
+    
+    
+    
+  </dss:SignatureObject>
+    </#if>
 	
 </dss:VerifyRequest>
