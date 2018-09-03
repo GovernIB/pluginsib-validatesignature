@@ -28,9 +28,9 @@ import java.security.spec.AlgorithmParameterSpec;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-
 import org.apache.xml.security.signature.XMLSignatureInput;
 import org.apache.xml.security.transforms.Transform;
 
@@ -103,6 +103,7 @@ public abstract class ApacheTransform extends TransformService {
 	return transformIt(data, xc, os);
     }
 
+    @SuppressWarnings("rawtypes")
     private Data transformIt(Data data, XMLCryptoContext xc, OutputStream os) 
 	throws TransformException {
 

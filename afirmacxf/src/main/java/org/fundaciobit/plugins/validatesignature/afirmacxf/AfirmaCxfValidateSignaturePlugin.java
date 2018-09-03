@@ -103,10 +103,10 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
   public static final Map<String, String> localAlgorithmEnc2PluginAlgorithm = new HashMap<String, String>();
 
   public static final SignatureRequestedInformation supportedSignatureRequestedInformation = new SignatureRequestedInformation();
-  
+
 
   static {
-    
+
     supportedSignatureRequestedInformation.setReturnCertificateInfo(true);
     supportedSignatureRequestedInformation.setReturnCertificates(true);
     supportedSignatureRequestedInformation.setReturnSignatureTypeFormatProfile(true);
@@ -114,7 +114,6 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
     supportedSignatureRequestedInformation.setReturnValidationChecks(true);
     supportedSignatureRequestedInformation.setValidateCertificateRevocation(true);
 
-    
     localSignType2PluginSignType.put(DSSConstants.SignTypesURIs.XADES_V_1_3_2,
         SIGNTYPE_XAdES); // = "http://uri.etsi.org/01903/v1.3.2#";
     localSignType2PluginSignType.put(DSSConstants.SignTypesURIs.XADES_V_1_2_2,

@@ -10,6 +10,7 @@
     <module>api</module>
     <module>fake</module>
     <module>afirmacxf</module>
+    <module>validatetester</module>
   </modules>
   <profiles>
     <profile>
@@ -18,7 +19,6 @@
       </activation>
       <modules>
         <module>integra</module>
-		<module>validatetester</module>
       </modules>
     </profile>
   </profiles>

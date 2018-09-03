@@ -88,6 +88,7 @@
           <groupId>com.sun.xml.wss</groupId>
           <artifactId>xws-security</artifactId>
         </exclusion>
+        <!--
         <exclusion>
           <groupId>org.bouncycastle</groupId>
           <artifactId>bcprov-jdk16</artifactId>
@@ -100,7 +101,7 @@
           <groupId>org.bouncycastle</groupId>
           <artifactId>bctsp-jdk16</artifactId>
         </exclusion>
-        
+        -->
       </exclusions>
     </dependency>
 
