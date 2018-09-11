@@ -40,37 +40,44 @@ public abstract class AbstractValidateSignaturePlugin extends AbstractPluginProp
   }
 
   @Override
-  public boolean filter(ValidateSignatureRequest vsr) {
+  public String filter(ValidateSignatureRequest vsr) {
 
     SignatureRequestedInformation required = vsr.getSignatureRequestedInformation();
     SignatureRequestedInformation supported = getSupportedSignatureRequestedInformation();
 
+    
     if (!checkRequiredSupported(required.getReturnSignatureTypeFormatProfile(),
         supported.getReturnSignatureTypeFormatProfile())) {
-      return false;
+      //XYZ Falta traduir missatge TODO
+    	return "L'usuari ha demanat el tipus de perfil del format i el plugin no ho soporta.";
     }
     if (!checkRequiredSupported(required.getValidateCertificateRevocation(),
         supported.getValidateCertificateRevocation())) {
-      return false;
+    	 //XYZ Falta traduir missatge TODO
+    	return "L'usuari ha demanat la revocació del certificat i el plugin no ho soporta.";
     }
     if (!checkRequiredSupported(required.getReturnCertificateInfo(),
         supported.getReturnCertificateInfo())) {
-      return false;
+    	 //XYZ Falta traduir missatge TODO
+    	return "L'usuari ha demanat la informació del certificat i el plugin no ho soporta.";
     }
     if (!checkRequiredSupported(required.getReturnValidationChecks(),
         supported.getReturnValidationChecks())) {
-      return false;
+    	 //XYZ Falta traduir missatge TODO
+    	return "L'usuari ha demanat informació detallada de la validació i el plugin no ho soporta.";
     }
     if (!checkRequiredSupported(required.getReturnCertificates(),
         supported.getReturnCertificates())) {
-      return false;
+    	 //XYZ Falta traduir missatge TODO
+    	return "L'usuari ha demanat el certificat i el plugin no ho soporta.";
     }
     if (!checkRequiredSupported(required.getReturnTimeStampInfo(),
         supported.getReturnTimeStampInfo())) {
-      return false;
+    	 //XYZ Falta traduir missatge TODO
+    	return "L'usuari ha demanat informació del segell de temps i el plugin no ho soporta.";
     }
 
-    return true;
+    return "Tot correcte.";
   }
 
   protected boolean checkRequiredSupported(Boolean required, Boolean supported) {
