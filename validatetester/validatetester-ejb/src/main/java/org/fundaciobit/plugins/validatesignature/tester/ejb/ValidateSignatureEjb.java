@@ -49,9 +49,12 @@ public class ValidateSignatureEjb implements ValidateSignatureLocal {
     // XYZ ZZZ
     IValidateSignaturePlugin plugin= vspm.getInstanceByPluginID(pluginID);
     
-    if (plugin.filter(validationRequest)) {
-      throw new Exception("XYZ ZZZ El plugin no suporta el format de firma"
-          + " o alguan de la informació requerida.");
+    String error = plugin.filter(validationRequest);
+
+    if (error != null) {
+      // TODO XYZ ZZZ Traduir
+      throw new Exception("El plugin no suporta el format de firma"
+          + " o alguna de la informació requerida: " + error);
     }
     
 
