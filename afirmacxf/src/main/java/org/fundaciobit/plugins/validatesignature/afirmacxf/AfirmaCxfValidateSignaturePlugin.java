@@ -1546,6 +1546,12 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
       throw new Exception(msg, e);
     }
   }
+
+@Override
+public String getResourceBundleName() {
+	// TODO Auto-generated method stub
+	return "Validate signature afirmaCxf";
+}
   
   
   

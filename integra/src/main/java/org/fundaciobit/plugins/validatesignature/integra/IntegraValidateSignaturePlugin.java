@@ -400,4 +400,10 @@ public class IntegraValidateSignaturePlugin extends AbstractValidateSignaturePlu
     }
   }
 
+@Override
+public String getResourceBundleName() {
+	// TODO Auto-generated method stub
+	return "ValidateSignature Integra";
+}
+
 }

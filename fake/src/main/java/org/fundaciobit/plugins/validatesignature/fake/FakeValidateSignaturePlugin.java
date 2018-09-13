@@ -67,4 +67,10 @@ public class FakeValidateSignaturePlugin extends AbstractValidateSignaturePlugin
 
     return si;
   }
+
+@Override
+public String getResourceBundleName() {
+	// TODO Auto-generated method stub
+	return "ValidateSignature Fake";
+}
 }

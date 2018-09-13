@@ -2,17 +2,18 @@ package org.fundaciobit.plugins.validatesignature.api;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
-import org.fundaciobit.pluginsib.core.utils.AbstractPluginProperties;
+import org.fundaciobit.pluginsib.core.utils.AbstractPluginPropertiesTranslations;
 
 /**
  * 
  * @author anadal
  *
  */
-public abstract class AbstractValidateSignaturePlugin extends AbstractPluginProperties
+public abstract class AbstractValidateSignaturePlugin extends AbstractPluginPropertiesTranslations
     implements IValidateSignaturePlugin, ValidateSignatureConstants {
 
   protected Logger log = Logger.getLogger(this.getClass());
@@ -48,35 +49,35 @@ public abstract class AbstractValidateSignaturePlugin extends AbstractPluginProp
     
     if (!checkRequiredSupported(required.getReturnSignatureTypeFormatProfile(),
         supported.getReturnSignatureTypeFormatProfile())) {
-      //XYZ Falta traduir missatge TODO
-    	return "L'usuari ha demanat el tipus de perfil del format i el plugin no ho soporta.";
+    	String msg = getTraduccio("validatesignatureapi", "error.filter.typeformatprofile" , new Locale(vsr.getLanguage())) ;
+    	return msg;
     }
     if (!checkRequiredSupported(required.getValidateCertificateRevocation(),
         supported.getValidateCertificateRevocation())) {
-    	 //XYZ Falta traduir missatge TODO
-    	return "L'usuari ha demanat la revocació del certificat i el plugin no ho soporta.";
+    	String msg = getTraduccio("validatesignatureapi", "error.filter.certificaterevocation" , new Locale(vsr.getLanguage())) ;
+    	return msg;
     }
     if (!checkRequiredSupported(required.getReturnCertificateInfo(),
         supported.getReturnCertificateInfo())) {
-    	 //XYZ Falta traduir missatge TODO
-    	return "L'usuari ha demanat la informació del certificat i el plugin no ho soporta.";
+    	String msg = getTraduccio("validatesignatureapi", "error.filter.certificateinfo" , new Locale(vsr.getLanguage())) ;
+    	return msg;
     }
     if (!checkRequiredSupported(required.getReturnValidationChecks(),
         supported.getReturnValidationChecks())) {
-    	 //XYZ Falta traduir missatge TODO
-    	return "L'usuari ha demanat informació detallada de la validació i el plugin no ho soporta.";
+    	String msg = getTraduccio("validatesignatureapi", "error.filter.validationchecks" , new Locale(vsr.getLanguage())) ;
+    	return msg;
     }
     if (!checkRequiredSupported(required.getReturnCertificates(),
         supported.getReturnCertificates())) {
-    	 //XYZ Falta traduir missatge TODO
-    	return "L'usuari ha demanat el certificat i el plugin no ho soporta.";
+    	String msg = getTraduccio("validatesignatureapi", "error.filter.returncertificates" , new Locale(vsr.getLanguage())) ;
+    	return msg;
     }
     if (!checkRequiredSupported(required.getReturnTimeStampInfo(),
         supported.getReturnTimeStampInfo())) {
-    	 //XYZ Falta traduir missatge TODO
-    	return "L'usuari ha demanat informació del segell de temps i el plugin no ho soporta.";
+    	String msg = getTraduccio("validatesignatureapi", "error.filter.timestampinfo" , new Locale(vsr.getLanguage())) ;
+    	return msg;
     }
-    return "Tot correcte.";
+    return null;
   }
 
   protected boolean checkRequiredSupported(Boolean required, Boolean supported) {
