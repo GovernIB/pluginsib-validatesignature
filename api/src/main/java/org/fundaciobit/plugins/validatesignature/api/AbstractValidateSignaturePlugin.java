@@ -76,7 +76,6 @@ public abstract class AbstractValidateSignaturePlugin extends AbstractPluginProp
     	 //XYZ Falta traduir missatge TODO
     	return "L'usuari ha demanat informació del segell de temps i el plugin no ho soporta.";
     }
-
     return "Tot correcte.";
   }
 
