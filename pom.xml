@@ -11,6 +11,7 @@
     <module>fake</module>
     <module>afirmacxf</module>
     <module>validatetester</module>
+    <module>esignature</module>
   </modules>
   <profiles>
     <profile>
