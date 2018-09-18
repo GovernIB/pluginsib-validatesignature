@@ -35,7 +35,7 @@ import javax.xml.bind.annotation.XmlType;
 public class CertificateChain2 {
 
     @XmlElement(name = "Certificate")
-    protected List<Certificate3> certificate;
+    protected List<Certificate2> certificate;
 
     /**
      * Gets the value of the certificate property.
@@ -55,13 +55,13 @@ public class CertificateChain2 {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Certificate3 }
+     * {@link Certificate2 }
      * 
      * 
      */
-    public List<Certificate3> getCertificate() {
+    public List<Certificate2> getCertificate() {
         if (certificate == null) {
-            certificate = new ArrayList<Certificate3>();
+            certificate = new ArrayList<Certificate2>();
         }
         return this.certificate;
     }

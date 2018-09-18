@@ -411,7 +411,7 @@ public class DiagnosticData2 {
     public static class UsedCertificates {
 
         @XmlElement(name = "Certificate", namespace = "http://dss.esig.europa.eu/validation/diagnostic")
-        protected List<Certificate2> certificate;
+        protected List<Certificate3> certificate;
 
         /**
          * Gets the value of the certificate property.
@@ -431,13 +431,13 @@ public class DiagnosticData2 {
          * 
          * <p>
          * Objects of the following type(s) are allowed in the list
-         * {@link Certificate2 }
+         * {@link Certificate3 }
          * 
          * 
          */
-        public List<Certificate2> getCertificate() {
+        public List<Certificate3> getCertificate() {
             if (certificate == null) {
-                certificate = new ArrayList<Certificate2>();
+                certificate = new ArrayList<Certificate3>();
             }
             return this.certificate;
         }
