@@ -23,6 +23,7 @@ import org.bouncycastle.asn1.cms.SignedData;
 import org.bouncycastle.cms.CMSSignedData;
 import org.fundaciobit.pluginsib.validatesignature.esignature.ws.BasicSignature;
 import org.fundaciobit.pluginsib.validatesignature.esignature.ws.Certificate2;
+import org.fundaciobit.pluginsib.validatesignature.esignature.ws.Certificate3;
 import org.fundaciobit.pluginsib.validatesignature.esignature.ws.CertificatePolicy;
 import org.fundaciobit.pluginsib.validatesignature.esignature.ws.CertifiedRole;
 import org.fundaciobit.pluginsib.validatesignature.esignature.ws.ContainerInfo;
@@ -319,7 +320,7 @@ public class ESignatureValidateSignaturePlugin extends AbstractValidateSignature
       if(returnCertificates){
         List<byte[]> cadena = new ArrayList<byte[]>();
         sdi.setAlgorithm(sig2.getBasicSignature().getDigestAlgoUsedToSignThisToken());
-        for (Certificate2 ce : diagnostic.getUsedCertificates().getCertificate()) {
+        for (Certificate3 ce : diagnostic.getUsedCertificates().getCertificate()) {
           cadena.add(ce.getBase64Encoded());
         }
         if (cadena.size() > 0){
@@ -340,12 +341,12 @@ public class ESignatureValidateSignaturePlugin extends AbstractValidateSignature
       // TimeStampInfo
       if (returnTimeStampInfo) {
         TimeStampInfo tsi = new TimeStampInfo();
-        HashMap<String, Certificate2> timestampCertificateMap = new HashMap<String,Certificate2>();
+        HashMap<String, Certificate3> timestampCertificateMap = new HashMap<String,Certificate3>();
         tsi.setAlgorithm(sig2.getBasicSignature().getDigestAlgoUsedToSignThisToken());
       
         if(sig2.getTimestamps().getTimestamp().size()>0) {
           for(Timestamp ts: sig2.getTimestamps().getTimestamp()) {
-            for(Certificate2 cert: diagnostic.getUsedCertificates().getCertificate()) {
+            for(Certificate3 cert: diagnostic.getUsedCertificates().getCertificate()) {
               if(ts.getSigningCertificate().getId().equals(cert.getId())) {
                 timestampCertificateMap.put(ts.getSigningCertificate().getId(), cert);
               }
@@ -407,7 +408,7 @@ public class ESignatureValidateSignaturePlugin extends AbstractValidateSignature
       log.info("Lista de atributos no especificados:\n");
     }
 
-    for (Certificate2 cert : diagnostic.getUsedCertificates().getCertificate()) {
+    for (Certificate3 cert : diagnostic.getUsedCertificates().getCertificate()) {
 
       //ci.setClasificacion();
       //ci.setExtensionUsoCertificado();
@@ -519,7 +520,7 @@ public class ESignatureValidateSignaturePlugin extends AbstractValidateSignature
     log.info("");
     log.info("- C E R T I F I C A T E S: ");
 
-    for (Certificate2 cert : diagnostic.getUsedCertificates().getCertificate()) {
+    for (Certificate3 cert : diagnostic.getUsedCertificates().getCertificate()) {
       log.info("\n");
       log.info("** CERTIFICATE NAME: " + cert.getCommonName());
       log.info("cert.getCountryName: " + cert.getCountryName());
@@ -557,7 +558,7 @@ public class ESignatureValidateSignaturePlugin extends AbstractValidateSignature
       // Cadena de certificats.
       log.info("Certificate Chain: ");
       if (cert.getCertificateChain() != null) {
-        for (org.fundaciobit.pluginsib.validatesignature.esignature.ws.Certificate2.CertificateChain.ChainItem chain : cert
+        for (org.fundaciobit.pluginsib.validatesignature.esignature.ws.Certificate3.CertificateChain.ChainItem chain : cert
             .getCertificateChain().getChainItem()) {
           log.info("    chain.getId: " + chain.getId());
           log.info("    chain.getSource: " + chain.getSource());
@@ -613,7 +614,7 @@ public class ESignatureValidateSignaturePlugin extends AbstractValidateSignature
       // Info and messages
       log.info("Info:");
       if (cert.getInfo().getMessage() != null) {
-        for (Certificate2.Info.Message message : cert.getInfo().getMessage()) {
+        for (Certificate3.Info.Message message : cert.getInfo().getMessage()) {
           log.info("    Message Id: " + message.getId());
           log.info("    Message Value: " + message.getValue());
         }

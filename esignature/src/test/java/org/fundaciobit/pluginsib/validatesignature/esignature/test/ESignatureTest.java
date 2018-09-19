@@ -19,6 +19,7 @@ import org.fundaciobit.pluginsib.core.test.TestUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.fundaciobit.pluginsib.validatesignature.esignature.ws.Certificate2;
+import org.fundaciobit.pluginsib.validatesignature.esignature.ws.Certificate3;
 import org.fundaciobit.pluginsib.validatesignature.esignature.ws.SimpleReport;
 import org.fundaciobit.pluginsib.validatesignature.esignature.ESignatureValidateSignaturePlugin;
 import org.fundaciobit.pluginsib.validatesignature.esignature.TypeFormatProfile;
@@ -546,7 +547,7 @@ public class ESignatureTest {
   }
 
   private static void printCertificateInfo(org.fundaciobit.pluginsib.validatesignature.esignature.ws.WsReportsDTO ret) {
-    for (Certificate2 cert : ret.getDiagnosticData().getUsedCertificates().getCertificate()) {
+    for (Certificate3 cert : ret.getDiagnosticData().getUsedCertificates().getCertificate()) {
       System.out.println("-Nombre del certificado:" + cert.getCommonName());
       System.out.println("Pais: " + cert.getCountryName());
       System.out.println("E-mail: " + cert.getEmail());
