@@ -1,0 +1,6 @@
+signatures=1,2,3
+
+
+firma.1=resultsPDF/hola.pdf_upgraded_to_PAdES_LTA_LEVEL.pdf|foto.jpg|1|PAdES|implicit_enveloped/attached|PAdES-LTV
+firma.2=resultsPDF/hola.pdf_upgraded_to_PAdES_LTV.pdf|foto.jpg|1|PAdES|implicit_enveloped/attached|PAdES-LTV
+firma.3=resultsPDF/hola.pdf_upgraded_to_PAdES_LT_LEVEL.pdf|foto.jpg|1|PAdES|implicit_enveloped/attached|PAdES-LTV
