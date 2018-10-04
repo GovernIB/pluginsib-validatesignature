@@ -14,8 +14,7 @@ import org.fundaciobit.plugins.validatesignature.api.ValidationStatus;
  * @author anadal
  *
  */
-public class FakeValidateSignaturePlugin extends AbstractValidateSignaturePlugin implements
-    IValidateSignaturePlugin {
+public class FakeValidateSignaturePlugin extends AbstractValidateSignaturePlugin  {
 
   /**
    * 
@@ -68,9 +67,8 @@ public class FakeValidateSignaturePlugin extends AbstractValidateSignaturePlugin
     return si;
   }
 
-@Override
-public String getResourceBundleName() {
-	// TODO Auto-generated method stub
-	return "ValidateSignature Fake";
-}
+  @Override
+  public String getResourceBundleName() {
+  	return "validatesignature-fake";
+  }
 }

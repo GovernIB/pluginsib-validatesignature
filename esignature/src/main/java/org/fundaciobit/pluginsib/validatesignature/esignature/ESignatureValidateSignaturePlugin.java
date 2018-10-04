@@ -22,7 +22,6 @@ import org.bouncycastle.asn1.cms.ContentInfo;
 import org.bouncycastle.asn1.cms.SignedData;
 import org.bouncycastle.cms.CMSSignedData;
 import org.fundaciobit.pluginsib.validatesignature.esignature.ws.BasicSignature;
-import org.fundaciobit.pluginsib.validatesignature.esignature.ws.Certificate2;
 import org.fundaciobit.pluginsib.validatesignature.esignature.ws.Certificate3;
 import org.fundaciobit.pluginsib.validatesignature.esignature.ws.CertificatePolicy;
 import org.fundaciobit.pluginsib.validatesignature.esignature.ws.CertifiedRole;
@@ -870,9 +869,12 @@ public class ESignatureValidateSignaturePlugin extends AbstractValidateSignature
       return SIGNFORMAT_EXPLICIT_DETACHED;
     }
   }
+
+
+
   @Override
   public String getResourceBundleName() {
-    return "validatesignatureesignature";
+    return "validatesignature-esignature";
   }
   
   

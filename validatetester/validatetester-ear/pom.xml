@@ -104,7 +104,7 @@
     </dependency>
     
     <dependency>
-      <artifactId>pluginsib-validatesignature-esginature</artifactId>
+      <artifactId>pluginsib-validatesignature-esignature</artifactId>
       <groupId>org.fundaciobit.pluginsib.validatesignature</groupId>
       <version>2.0.0</version>
     </dependency>

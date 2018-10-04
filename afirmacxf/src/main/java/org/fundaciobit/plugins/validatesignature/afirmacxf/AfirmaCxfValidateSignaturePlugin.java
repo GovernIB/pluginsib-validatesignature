@@ -1545,11 +1545,10 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
     }
   }
 
-@Override
-public String getResourceBundleName() {
-	// TODO Auto-generated method stub
-	return "Validate signature afirmaCxf";
-}
+  @Override
+  public String getResourceBundleName() {
+  	return "validatesignature-afirmacxf";
+  }
   
   
   

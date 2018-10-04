@@ -56,3 +56,5 @@
 /validatetester/.settings/org.eclipse.m2e.core.prefs
 /esignature/config/config.properties
 >>>>>>> fc517b7cca11e2888094495897fa6f7dc2e2fb7b
+/target
+/esignature/.settings
