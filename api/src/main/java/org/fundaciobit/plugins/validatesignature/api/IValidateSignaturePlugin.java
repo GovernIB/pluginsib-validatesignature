@@ -13,7 +13,11 @@ public interface IValidateSignaturePlugin extends IPlugin {
   
   public static final String VALIDATE_SIGNATURE_BASE_PROPERTY = IPLUGIN_BASE_PROPERTIES + "validatesignature.";
   
-  
+  /**
+   * 
+   * @param validationRequest
+   * @return null si tot ha anat bé. Sinó el missatge de l'error.
+   */
   public String filter(ValidateSignatureRequest validationRequest);
   
   /**

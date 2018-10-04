@@ -27,3 +27,9 @@
 /validatetester/validatetester-ear/target
 /validatetester/validatetester-webapp/target
 /afirmacxf/config/plugin.properties
+/integra/.classpath
+/integra/.project
+/integra/.settings/org.eclipse.core.resources.prefs
+/integra/.settings/org.eclipse.jdt.core.prefs
+/integra/.settings/org.eclipse.m2e.core.prefs
+/validatetester/compil.bat

@@ -52,7 +52,6 @@ import org.fundaciobit.plugins.validatesignature.api.AbstractValidateSignaturePl
 import org.fundaciobit.plugins.validatesignature.api.CertificateInfo;
 import org.fundaciobit.plugins.validatesignature.api.SignatureCheck;
 import org.fundaciobit.plugins.validatesignature.api.SignatureDetailInfo;
-import org.fundaciobit.plugins.validatesignature.api.IValidateSignaturePlugin;
 import org.fundaciobit.plugins.validatesignature.api.SignatureRequestedInformation;
 import org.fundaciobit.plugins.validatesignature.api.TimeStampInfo;
 import org.fundaciobit.plugins.validatesignature.api.ValidateSignatureRequest;
@@ -90,8 +89,7 @@ import freemarker.template.Template;
  * @author anadal
  * 
  */
-public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignaturePlugin
-    implements IValidateSignaturePlugin {
+public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignaturePlugin {
 
   
   public static final Map<String, String> localSignProfile2PluginSignProfile = new HashMap<String, String>();

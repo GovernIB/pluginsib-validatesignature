@@ -77,7 +77,8 @@ public abstract class AbstractValidateSignaturePlugin extends AbstractPluginProp
     	return "L'usuari ha demanat informació del segell de temps i el plugin no ho soporta.";
     }
 
-    return "Tot correcte.";
+    // null Significa tot OK
+    return null;
   }
 
   protected boolean checkRequiredSupported(Boolean required, Boolean supported) {
