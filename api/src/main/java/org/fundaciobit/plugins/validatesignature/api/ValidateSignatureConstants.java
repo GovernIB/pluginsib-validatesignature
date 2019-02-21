@@ -28,7 +28,7 @@ public interface ValidateSignatureConstants {
   public static final String SIGNFORMAT_IMPLICIT_ENVELOPING_ATTACHED = "implicit_enveloping/attached";
 
   /**
-   * El documetn està forà de la firma: xades detached i cades detached
+   * El document està forà de la firma: xades detached i cades detached
    */
   public static final String SIGNFORMAT_EXPLICIT_DETACHED = "explicit/detached";
 

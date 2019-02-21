@@ -929,7 +929,10 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
       }
     }
     
+   
+    
     if (profile != null) {
+
       String profilePlugin = localSignProfile2PluginSignProfile.get(profile);
       
       if (pluginType != null && (SIGNTYPE_PAdES.equals(pluginType) || SIGNTYPE_CAdES.equals(pluginType) )) {
