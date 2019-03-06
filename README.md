@@ -2,17 +2,19 @@
 
 **Descripció**
 
-Repositori que permet la validació de Firmes de Integr@, @Firma, esignature i afirmacxf.
+Repositori que permet la validació de Firmes emprant Integr@ (integra), servidor @Firma (afirmacxf), esignature (esignature) i implementació buida (fake).
+
+També inclou un testejador del plugins de validació de firmes via web (validatetester).
 
 **Implementacions**
 
-Directori | Nom | Descripció
------------- | ------------- | -------------
-afirmacxf | -- | -- 
-esginature | -- | --
-fake | -- | --
-integra | -- | --
-validatetester | -- | --
+Directori | Descripció
+------------ | -------------
+afirmacxf | @Firma 
+esignature | serveis de validació amb web service europeu 
+fake | implementació buida 
+integra | Integr@ 
+validatetester | testejador del plugins de validació de firmes via web 
 
 **Enllaços**
 
