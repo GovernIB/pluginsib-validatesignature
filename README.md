@@ -3,7 +3,7 @@
 
 ***Descripció***
 
-Repositori que permet la validació de Firmes.
+Repositori que conté l'API i Plugins de validació de firmes.
 
 ***Versions***
 > - Versió Estable: -
