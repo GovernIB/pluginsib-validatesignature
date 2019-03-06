@@ -1,8 +1,8 @@
 # ![Logo](https://github.com/GovernIB/maven/raw/binaris/pluginsib/projectinfo_Attachments/icon.jpg) pluginsib-validatesignature  (pluginsib-2.0)
 
-**Descripció**
+***Descripció***
 
-Repositori que permet la validació de Firmes emprant Integr@ (integra), servidor @Firma (afirmacxf), esignature (esignature) i implementació buida (fake).
+Repositori que permet la validació de Firmes emprant Integr@ (integra), servidor @Firma (afirmacxf), eSignature (eSignature) i implementació buida (fake).
 
 També inclou un testejador del plugins de validació de firmes via web (validatetester).
 
@@ -10,13 +10,13 @@ També inclou un testejador del plugins de validació de firmes via web (validat
 
 Directori | Descripció
 ------------ | -------------
-afirmacxf | @Firma 
-esignature | serveis de validació amb web service europeu 
-fake | implementació buida 
-integra | Integr@ 
-validatetester | testejador del plugins de validació de firmes via web 
+afirmacxf | Servei de validació que ataca als servidors de @Firma mitjançant WS. 
+eSignature | Serveis de validació de firma que ataquen al WS de eSignature.
+fake | Implementació buida. 
+integra | Servei de validació de firma amb les llibreries de Integra. 
+validatetester | Tester del plugins de validació de firmes via web. 
 
-**Enllaços**
+***Enllaços***
 
 
 Plugin procedent de [pluginsib-1.0/plugins-validatesignature](https://github.com/GovernIB/pluginsib/tree/pluginsib-1.0/plugins-validatesignature).  
