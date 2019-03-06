@@ -2,17 +2,14 @@
 
 **Descripció**
 
-.
-Repositori que conté informació i permet la validació de Firmes de Integr@ i @Firma.
-
-La versió actual d'aquest plugin és la [pluginsib-validatesignature-2.0](https://github.com/GovernIB/pluginsib-validatesignature/tree/pluginsib-validatesignature-2.0).
-
+Repositori que permet la validació de Firmes de Integr@, @Firma, esignature i afirmacxf.
 
 **Implementacions**
 
 Directori | Nom | Descripció
 ------------ | ------------- | -------------
 afirmacxf | -- | -- 
+esginature | -- | --
 fake | -- | --
 integra | -- | --
 validatetester | -- | --
