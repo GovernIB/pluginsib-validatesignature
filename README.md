@@ -12,7 +12,7 @@ També inclou un testejador del plugins de validació de firmes via web (validat
 Directori | Descripció | Documentació
 ------------ | ------------- | -------------
 afirmacxf | Servei de validació que ataca als servidors de @Firma mitjançant WS. | [Fitxers de configuració](./afirmacxf/config)
-eSignature | Serveis de validació de firma que ataquen al WS de eSignature. |
-fake | Implementació buida. 
-integra | Servei de validació de firma amb les llibreries de Integra. 
-validatetester | Tester del plugins de validació de firmes via web. 
+eSignature | Serveis de validació de firma que ataquen al WS de eSignature. | [Fitxers de configuració](./esignature/config)
+fake | Implementació buida. | 
+integra | Servei de validació de firma amb les llibreries de Integra. | [Fitxers de configuració](./integra/conf)
+validatetester | Tester del plugins de validació de firmes via web. | 
