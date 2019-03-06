@@ -1,6 +1,6 @@
 # ![Logo](https://github.com/GovernIB/maven/raw/binaris/pluginsib/projectinfo_Attachments/icon.jpg) pluginsib-validatesignature  (pluginsib-2.0)
 
-**Descripció**
+***Descripció***
 
 Repositori que permet la validació de Firmes.
 
