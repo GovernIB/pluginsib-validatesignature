@@ -7,7 +7,7 @@ Repositori que permet la validació de Firmes emprant Integr@ (integra), servido
 
 També inclou un testejador del plugins de validació de firmes via web (validatetester).
 
-***Implementacions***
+#### ***Documentació***
 
 Directori | Descripció | Documentació
 ------------ | ------------- | -------------
