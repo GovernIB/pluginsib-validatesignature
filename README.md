@@ -1,13 +1,13 @@
 # ![Logo](https://github.com/GovernIB/maven/raw/binaris/pluginsib/projectinfo_Attachments/icon.jpg) pluginsib-validatesignature  (pluginsib-2.0)
 *API i Plugins de Validació de Firmes*
 
-***Descripció***
-
-Repositori que conté l'API i Plugins de validació de firmes.
-
 ***Versions***
 > - Versió Estable: -
 > - Versió en Desenvolupament: __pluginsib-validatesignature-2.0__ (branca [pluginsib-validatesignature-2.0](https://github.com/GovernIB/pluginsib-validatesignature/tree/pluginsib-validatesignature-2.0))
+
+***Descripció***
+
+Repositori que conté l'API i Plugins de validació de firmes.
 
 ***Enllaços***
 
