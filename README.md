@@ -17,9 +17,9 @@ Directori | Descripció | Documentació
 
 Directori | Descripció | Documentació
 ------------ | ------------- | -------------
-api | Interficie de programació per les implementacions | -----------
+api | API de validatesignature | --
 afirmacxf | Servei de validació que ataca als servidors de @Firma mitjançant WS. | [Fitxers de configuració](./afirmacxf/config)
 eSignature | Serveis de validació de firma que ataquen al WS de eSignature. | [Fitxers de configuració](./esignature/config)
-fake | Implementació buida. | -----------
+fake | Implementació buida. | --
 integra | Servei de validació de firma amb les llibreries de Integra. | [Fitxers de configuració](./integra/conf)
-validatetester | Tester del plugins de validació de firmes via web. | -----------
+validatetester | Tester del plugins de validació de firmes via web. | --
