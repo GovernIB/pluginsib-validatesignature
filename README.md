@@ -17,6 +17,7 @@ Directori | Descripció | Documentació
 
 Directori | Descripció | Documentació
 ------------ | ------------- | -------------
+api | Interficie de programació per les implementacions | -----------
 afirmacxf | Servei de validació que ataca als servidors de @Firma mitjançant WS. | [Fitxers de configuració](./afirmacxf/config)
 eSignature | Serveis de validació de firma que ataquen al WS de eSignature. | [Fitxers de configuració](./esignature/config)
 fake | Implementació buida. | -----------
