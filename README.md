@@ -11,6 +11,12 @@ També inclou un testejador del plugins de validació de firmes via web (validat
 
 Directori | Descripció | Documentació
 ------------ | ------------- | -------------
+------------ | ------------- | -------------
+
+***Implementacions***
+
+Directori | Descripció | Documentació
+------------ | ------------- | -------------
 afirmacxf | Servei de validació que ataca als servidors de @Firma mitjançant WS. | [Fitxers de configuració](./afirmacxf/config)
 eSignature | Serveis de validació de firma que ataquen al WS de eSignature. | [Fitxers de configuració](./esignature/config)
 fake | Implementació buida. | -----------
