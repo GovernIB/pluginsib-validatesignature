@@ -9,7 +9,7 @@ També inclou un testejador del plugins de validació de firmes via web (validat
 
 #### ***Documentació***
 
-Directori | Descripció | Documentació
+Nom | Descripció | Enllaç
 ------------ | ------------- | -------------
 ------------ | ------------- | -------------
 
