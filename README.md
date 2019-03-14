@@ -1,4 +1,4 @@
-# ![Logo](https://github.com/GovernIB/maven/raw/binaris/pluginsib/projectinfo_Attachments/icon.jpg) pluginsib-validatesignature  (pluginsib-2.0)
+# ![Logo](https://github.com/GovernIB/maven/blob/binaris/digitalib/logo.png) pluginsib-validatesignature  (pluginsib-2.0)
 *API i Plugins de Validació de Firmes*
 
 ***Versions***
