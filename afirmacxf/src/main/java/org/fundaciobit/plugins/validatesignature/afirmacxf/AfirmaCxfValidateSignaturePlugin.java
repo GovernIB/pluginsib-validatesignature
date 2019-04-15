@@ -46,10 +46,10 @@ import org.fundaciobit.pluginsib.utils.cxf.CXFUtils;
 import org.fundaciobit.pluginsib.utils.cxf.ClientHandler;
 import org.fundaciobit.pluginsib.utils.cxf.ClientHandlerCertificate;
 import org.fundaciobit.pluginsib.utils.cxf.ClientHandlerUsernamePassword;
+import org.fundaciobit.plugins.certificate.afirmacxf.InfoCertificatUtils;
 import org.fundaciobit.plugins.validatesignature.afirmacxf.validarfirmaapi.DSSSignature;
 import org.fundaciobit.plugins.validatesignature.afirmacxf.validarfirmaapi.DSSSignatureService;
 import org.fundaciobit.plugins.validatesignature.api.AbstractValidateSignaturePlugin;
-import org.fundaciobit.plugins.validatesignature.api.CertificateInfo;
 import org.fundaciobit.plugins.validatesignature.api.SignatureCheck;
 import org.fundaciobit.plugins.validatesignature.api.SignatureDetailInfo;
 import org.fundaciobit.plugins.validatesignature.api.SignatureRequestedInformation;
@@ -987,7 +987,8 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
       Map<String, Object> certificateInfo = report.getReadableCertificateInfo();
       if (certificateInfo != null && certificateInfo.size() != 0) {
 
-        CertificateInfo ci = new CertificateInfo();
+        /*
+        InformacioCertificat ci = new InformacioCertificat();
         ci.setApellidosResponsable((String) certificateInfo.get("ApellidosResponsable"));
         ci.setOrganizacionEmisora((String) certificateInfo.get("OrganizacionEmisora"));
         ci.setSegundoApellidoResponsable((String) certificateInfo
@@ -1027,6 +1028,7 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
             .get("numeroIdentificacionPersonal"));
         ci.setOrganizacion((String) certificateInfo.get("organizacion"));
         ci.setPuesto((String) certificateInfo.get("puesto"));
+        */
 
         /*
          * InfoCert[NIFEntidadSuscriptora] = S0711001H
@@ -1043,7 +1045,7 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
         // TODO XYZ ZZZ Falta resta de propietats
         // ci.setOtherProperties(otherProperties);
 
-        di.setCertificateInfo(ci);
+        di.setCertificateInfo(InfoCertificatUtils.processInfoCertificate(certificateInfo));
 
       }
     }

@@ -6,6 +6,7 @@ import java.util.Locale;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
+import org.fundaciobit.plugins.certificate.InformacioCertificat;
 import org.fundaciobit.pluginsib.core.utils.AbstractPluginPropertiesTranslations;
 
 /**
@@ -170,49 +171,10 @@ public abstract class AbstractValidateSignaturePlugin extends AbstractPluginProp
           }
         }
 
-        CertificateInfo ci = di.getCertificateInfo();
+        InformacioCertificat ci = di.getCertificateInfo();
         if (ci != null) {
           System.out.println(" - Certificate Info:");
-          System.out.println("     + CertInfo[ApellidosResponsable]: "
-              + ci.getApellidosResponsable());
-          System.out.println("     + CertInfo[OrganizacionEmisora]: "
-              + ci.getOrganizacionEmisora());
-          System.out.println("     + CertInfo[segundoApellidoResponsable]: "
-              + ci.getSegundoApellidoResponsable());
-          System.out.println("     + CertInfo[versionPolitica]: " + ci.getVersionPolitica());
-          System.out.println("     + CertInfo[usoCertificado]: " + ci.getUsoCertificado());
-          System.out.println("     + CertInfo[pais]: " + ci.getPais());
-          System.out.println("     + CertInfo[subject]: " + ci.getSubject());
-          System.out.println("     + CertInfo[numeroSerie]: " + ci.getNumeroSerie());
-          System.out.println("     + CertInfo[primerApellidoResponsable]: "
-              + ci.getPrimerApellidoResponsable());
-          System.out.println("     + CertInfo[NombreApellidosResponsable]: "
-              + ci.getNombreApellidosResponsable());
-          System.out.println("     + CertInfo[validoHasta]: " + ci.getValidoHasta());
-          System.out.println("     + CertInfo[idPolitica]: " + ci.getIdPolitica());
-          System.out.println("     + CertInfo[ID_europeo]: " + ci.getIdEuropeo());
-          System.out.println("     + CertInfo[validoDesde]: " + ci.getValidoDesde());
-          System.out.println("     + CertInfo[tipoCertificado]: " + ci.getTipoCertificado());
-          System.out.println("     + CertInfo[email]: " + ci.getEmail());
-          System.out.println("     + CertInfo[clasificacion]: " + ci.getClasificacion());
-          System.out.println("     + CertInfo[idEmisor]: " + ci.getIdEmisor());
-          System.out.println("     + CertInfo[NIFResponsable]: " + ci.getNifResponsable());
-          System.out.println("     + CertInfo[extensionUsoCertificado]: "
-              + ci.getExtensionUsoCertificado());
-          System.out.println("     + CertInfo[nombreResponsable]: "
-              + ci.getNombreResponsable());
-          System.out.println("     + CertInfo[politica]: " + ci.getPolitica());
-          // Empleat Public
-          System.out.println("     + CertInfo[NIFEntidadSuscriptora]: "
-              + ci.getNifEntidadSuscriptora());
-          System.out.println("     + CertInfo[entidadSuscriptora]: "
-              + ci.getEntidadSuscriptora());
-          System.out.println("     + CertInfo[unidadOrganizativa]: "
-              + ci.getUnidadOrganizativa());
-          System.out.println("     + CertInfo[numeroIdentificacionPersonal]: "
-              + ci.getNumeroIdentificacionPersonal());
-          System.out.println("     + CertInfo[organizacion]: " + ci.getOrganizacion());
-          System.out.println("     + CertInfo[puesto]: " + ci.getPuesto());
+          System.out.println(ci.toString());
 
         }
       }

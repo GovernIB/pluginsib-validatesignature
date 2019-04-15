@@ -51,17 +51,7 @@ public class SoapDocumentValidationServiceImplService extends Service {
     public SoapDocumentValidationServiceImplService() {
         super(WSDL_LOCATION, SERVICE);
     }
-    
-    public SoapDocumentValidationServiceImplService(WebServiceFeature ... features) {
-        super(WSDL_LOCATION, SERVICE, features);
-    }
-    public SoapDocumentValidationServiceImplService(URL wsdlLocation, WebServiceFeature ... features) {
-        super(wsdlLocation, SERVICE, features);
-    }
 
-    public SoapDocumentValidationServiceImplService(URL wsdlLocation, QName serviceName, WebServiceFeature ... features) {
-        super(wsdlLocation, serviceName, features);
-    }
 
     /**
      * 

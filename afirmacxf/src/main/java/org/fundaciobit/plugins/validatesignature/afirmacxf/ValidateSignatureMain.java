@@ -6,7 +6,7 @@ import java.util.Properties;
 
 import org.fundaciobit.pluginsib.core.utils.FileUtils;
 import org.fundaciobit.pluginsib.core.utils.XTrustProvider;
-import org.fundaciobit.plugins.validatesignature.api.CertificateInfo;
+import org.fundaciobit.plugins.certificate.InformacioCertificat;
 import org.fundaciobit.plugins.validatesignature.api.IValidateSignaturePlugin;
 import org.fundaciobit.plugins.validatesignature.api.SignatureDetailInfo;
 import org.fundaciobit.plugins.validatesignature.api.SignatureRequestedInformation;
@@ -126,19 +126,19 @@ public class ValidateSignatureMain {
         int count = 1;
         for (SignatureDetailInfo info :certificatesInfo) {
           System.out.println(" =========== CERTIFICAT " + (count++) + " ============");
-          CertificateInfo certInfo = info.getCertificateInfo();
+          InformacioCertificat certInfo = info.getCertificateInfo();
           
           if (certInfo == null) {
             System.out.println("       --- NO HI HA INFORMACIO DISPONIBLE ---");
           } else {
-            System.out.println("    -  getNombreApellidosResponsable: " + certInfo.getNombreApellidosResponsable());
-            System.out.println("    -  getNombreResponsable: " + certInfo.getNombreResponsable());
-            System.out.println("    -  getApellidosResponsable: " + certInfo.getApellidosResponsable());
+            System.out.println("    -  getNombreApellidosResponsable: " + certInfo.getNomCompletResponsable());
+            System.out.println("    -  getNombreResponsable: " + certInfo.getNomResponsable());
+            System.out.println("    -  getApellidosResponsable: " + certInfo.getLlinatgesResponsable());
             System.out.println("    -  getNumeroSerie: " + certInfo.getNumeroSerie());
-            System.out.println("    -  getValidoDesde: " + certInfo.getValidoDesde());
-            System.out.println("    -  getValidoHasta: " + certInfo.getValidoHasta());
+            System.out.println("    -  getValidoDesde: " + certInfo.getValidDesDe());
+            System.out.println("    -  getValidoHasta: " + certInfo.getValidFins());
             System.out.println("    -  getNifResponsable: " + certInfo.getNifResponsable());
-            System.out.println("    -  getIdEmisor: " + certInfo.getIdEmisor());
+            System.out.println("    -  getEmissorID: " + certInfo.getEmissorID());
           }
         }
         

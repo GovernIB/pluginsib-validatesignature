@@ -4,6 +4,7 @@ import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigInteger;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import javax.xml.crypto.dsig.Reference;
 import javax.xml.crypto.dsig.XMLSignature;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.ws.BindingProvider;
+
 import org.bouncycastle.asn1.cms.ContentInfo;
 import org.bouncycastle.asn1.cms.SignedData;
 import org.bouncycastle.cms.CMSSignedData;
@@ -42,9 +44,8 @@ import org.fundaciobit.pluginsib.validatesignature.esignature.ws.SoapDocumentVal
 import org.fundaciobit.pluginsib.validatesignature.esignature.ws.SoapDocumentValidationServiceImplService;
 import org.fundaciobit.pluginsib.validatesignature.esignature.ws.Timestamp;
 import org.fundaciobit.pluginsib.validatesignature.esignature.ws.TrustedList;
-
+import org.fundaciobit.plugins.certificate.InformacioCertificat;
 import org.fundaciobit.plugins.validatesignature.api.AbstractValidateSignaturePlugin;
-import org.fundaciobit.plugins.validatesignature.api.CertificateInfo;
 import org.fundaciobit.plugins.validatesignature.api.IValidateSignaturePlugin;
 import org.fundaciobit.plugins.validatesignature.api.SignatureDetailInfo;
 import org.fundaciobit.plugins.validatesignature.api.SignatureRequestedInformation;
@@ -56,6 +57,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+
 
 //import es.gob.afirma.i18n.Language;
 //import es.gob.afirma.signature.SigningException;
@@ -396,9 +399,9 @@ public class ESignatureValidateSignaturePlugin extends AbstractValidateSignature
     return mt;
   }
 
-  private CertificateInfo constructCertificateInfo(DiagnosticData diagnostic) {
+  private InformacioCertificat constructCertificateInfo(DiagnosticData diagnostic) {
 
-    CertificateInfo ci = new CertificateInfo();
+    InformacioCertificat ci = new InformacioCertificat();
     final boolean debug = "true".equals(this.getProperty(DEBUG_BASE_PROPERTY));
     
     if (debug) {
@@ -413,25 +416,25 @@ public class ESignatureValidateSignaturePlugin extends AbstractValidateSignature
       //ci.setExtensionUsoCertificado();
       
       if(cert.getId()!=null) {
-        ci.setIdEmisor(cert.getId());
+        ci.setEmissorID(cert.getId());
       }else if(debug) {
         log.info("Certificate Id = NULL");
       }
       
       if(cert.getCertificatePolicies().getCertificatePolicy().size()>0) {
-        ci.setIdPolitica(cert.getCertificatePolicies().getCertificatePolicy().get(0).getValue());
+        ci.setPoliticaID(cert.getCertificatePolicies().getCertificatePolicy().get(0).getValue());
       }else if(debug) {
         log.info("Certificate Policy Id = NULL");
       }
       
       if (cert.getSerialNumber().toString() != null) {
-        ci.setNumeroSerie(cert.getSerialNumber().toString());
+        ci.setNumeroSerie(new BigInteger(cert.getSerialNumber().toString()));
       }else if(debug){
         log.info("Num de Serie: NULL.");
       }
       
       if (cert.getOrganizationName()!=null) {
-        ci.setOrganizacion(cert.getOrganizationName());
+        ci.setOrganitzacio(cert.getOrganizationName());
       } else if (debug) {
         log.info("Certificate Organizacion: NULL.");
       }
@@ -454,23 +457,23 @@ public class ESignatureValidateSignaturePlugin extends AbstractValidateSignature
       //ci.setTipoCertificado();
       
       if (cert.getOrganizationName() != null) {
-        ci.setUnidadOrganizativa(cert.getOrganizationName());
+        ci.setUnitatOrganitzativa(cert.getOrganizationName());
       } else if (debug) {
         log.info("Unidad Organizativa: NULL.");
       }
       
       if (cert.getSigningCertificate() != null) {
-        ci.setUsoCertificado(cert.getSigningCertificate().getSigned());
+        ci.setUsCertificat(cert.getSigningCertificate().getSigned());
       } else if (debug){
         log.info("Uso Certificado: NULL.");
       }
       
       if(cert.getNotBefore()!=null) {
-        ci.setValidoDesde(cert.getNotBefore().toGregorianCalendar().getTime());
+        ci.setValidDesDe(cert.getNotBefore().toGregorianCalendar().getTime());
       }
       
       if(cert.getNotAfter()!=null) {
-        ci.setValidoHasta(cert.getNotAfter().toGregorianCalendar().getTime());
+        ci.setValidFins(cert.getNotAfter().toGregorianCalendar().getTime());
       }
       //ci.setVersionPolitica();
     }

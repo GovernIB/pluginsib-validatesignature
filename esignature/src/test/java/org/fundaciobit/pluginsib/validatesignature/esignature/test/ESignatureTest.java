@@ -18,7 +18,6 @@ import javax.xml.namespace.QName;
 import org.fundaciobit.pluginsib.core.test.TestUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
-import org.fundaciobit.pluginsib.validatesignature.esignature.ws.Certificate2;
 import org.fundaciobit.pluginsib.validatesignature.esignature.ws.Certificate3;
 import org.fundaciobit.pluginsib.validatesignature.esignature.ws.SimpleReport;
 import org.fundaciobit.pluginsib.validatesignature.esignature.ESignatureValidateSignaturePlugin;

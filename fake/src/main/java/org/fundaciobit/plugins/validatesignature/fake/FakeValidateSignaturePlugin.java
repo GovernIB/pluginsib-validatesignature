@@ -3,7 +3,6 @@ package org.fundaciobit.plugins.validatesignature.fake;
 import java.util.Properties;
 
 import org.fundaciobit.plugins.validatesignature.api.AbstractValidateSignaturePlugin;
-import org.fundaciobit.plugins.validatesignature.api.IValidateSignaturePlugin;
 import org.fundaciobit.plugins.validatesignature.api.SignatureRequestedInformation;
 import org.fundaciobit.plugins.validatesignature.api.ValidateSignatureRequest;
 import org.fundaciobit.plugins.validatesignature.api.ValidateSignatureResponse;

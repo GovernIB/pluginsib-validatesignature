@@ -5,12 +5,13 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.StringWriter;
 import java.util.Properties;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.Marshaller;
 import javax.xml.namespace.QName;
 
-import org.fundaciobit.plugins.validatesignature.api.CertificateInfo;
+import org.fundaciobit.plugins.certificate.InformacioCertificat;
 import org.fundaciobit.plugins.validatesignature.api.IValidateSignaturePlugin;
 import org.fundaciobit.plugins.validatesignature.api.SignatureDetailInfo;
 import org.fundaciobit.plugins.validatesignature.api.SignatureRequestedInformation;
@@ -19,13 +20,9 @@ import org.fundaciobit.plugins.validatesignature.api.ValidateSignatureResponse;
 import org.fundaciobit.pluginsib.core.utils.FileUtils;
 import org.fundaciobit.pluginsib.validatesignature.esignature.ESignatureValidateSignaturePlugin;
 
-
-
-
-
 /**
  * 
- * @author anadal
+ * @author anadal(u80067)
  *
  */
 public class TestEsborrar {
@@ -204,10 +201,10 @@ public class TestEsborrar {
     if (vs.getSignatureDetailInfo() != null) {
       for (SignatureDetailInfo info : vs.getSignatureDetailInfo()) {
 
-        CertificateInfo ci = info.getCertificateInfo();
+        InformacioCertificat ci = info.getCertificateInfo();
 
         if (ci != null) {
-           System.out.println("***[EMISSOR: " + ci.getIdEmisor() + "]***");
+           System.out.println("***[EMISSOR: " + ci.getEmissorID() + "]***");
         }
 
       }

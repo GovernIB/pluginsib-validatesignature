@@ -3,6 +3,8 @@ package org.fundaciobit.plugins.validatesignature.api;
 import java.util.Date;
 import java.util.List;
 
+import org.fundaciobit.plugins.certificate.InformacioCertificat;
+
 /**
  * 
  * @author anadal
@@ -35,7 +37,7 @@ public class SignatureDetailInfo {
    */
   protected String policyIdentifier;
 
-  protected CertificateInfo certificateInfo;
+  protected InformacioCertificat certificateInfo;
   
   
   protected byte[][] certificateChain;
@@ -45,11 +47,11 @@ public class SignatureDetailInfo {
   
   
 
-  public CertificateInfo getCertificateInfo() {
+  public InformacioCertificat getCertificateInfo() {
     return certificateInfo;
   }
 
-  public void setCertificateInfo(CertificateInfo certificateInfo) {
+  public void setCertificateInfo(InformacioCertificat certificateInfo) {
     this.certificateInfo = certificateInfo;
   }
 
