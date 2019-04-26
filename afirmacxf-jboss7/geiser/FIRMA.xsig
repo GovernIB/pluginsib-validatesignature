@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AFIRMA Id="AFIRMA-Root-743a57aa-5f7a-482e-aee2-99a0d26a079e"><CONTENT Id="CONTENT-38b9505b-f506-42a1-bddf-3b6aa5a8a7db" MimeType="text/plain">NWE2NDI3YjU1MjMzYjkxMjBhZWEyZDZmMDg0MjVkMDUxMWZmYjc0NTk0ZjRlYzE2ZmE4ZGVkNTNjZjVlMjE1MjNlN2ZlMWU1ZDY4NjkwYzYwZDMwYTNkMjcwNDFmMWIyOWRmM2E5NGM3ODNlNTBkNjQ1MGJlNTM3YmUzZmYyYTk=</CONTENT><ds:Signature Id="Signature-21809a50-70dd-4c87-b2aa-6d400a33c4ea-Signature" xmlns:ds="http://www.w3.org/2000/09/xmldsig#"><ds:SignedInfo><ds:CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/><ds:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/><ds:Reference Id="Reference-f949a972-839e-477d-bd6a-95882090bcd5" Type="http://www.w3.org/2000/09/xmldsig#Object" URI="#CONTENT-38b9505b-f506-42a1-bddf-3b6aa5a8a7db"><ds:Transforms><ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#base64"/></ds:Transforms><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"/><ds:DigestValue>Md7p795Zhpd25uUvhPCHYyQX0AMOsdoBdwIc8wz//BPxV7sx/m1Xr/BlRo9LhvrJcMIFR05kAJLV
+LQksuKAOTA==</ds:DigestValue></ds:Reference><ds:Reference Type="http://uri.etsi.org/01903#SignedProperties" URI="#Signature-21809a50-70dd-4c87-b2aa-6d400a33c4ea-SignedProperties"><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"/><ds:DigestValue>gWz9edBiJhvmnn98WgHNpRpo88zo1tpbm/BohOCBiI0nhbHAwpzYErconar+1/GtJpxg/58pzBe1
+XVuA+Dxjfw==</ds:DigestValue></ds:Reference><ds:Reference URI="#Signature-21809a50-70dd-4c87-b2aa-6d400a33c4ea-KeyInfo"><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"/><ds:DigestValue>TGXxnFbKQ8ZNwlH/FCqGL5omnX6v6/YWXMBWQBk5J0ZUto3rjTTBJ5aDdhNR0HavOyTG/G/03LNM
+ZMkx96Q1WQ==</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue Id="Signature-21809a50-70dd-4c87-b2aa-6d400a33c4ea-SignatureValue">YvgaTF59dz0JHExd/wXJLn/OM3B9GKAEtb2je8B8NTIkD8iRqlFyTlDM2tPvy5tFAvumGluDxtDs
+h1Uml4fESI90pZdLYIAkdFO5I3+00ZliO9J7pc3bjTzPcwVxGVbvUkordv7Qx40XKg14v1e5uPCx
+wtQR/r1jm7HJT+Yy9P0UWbKYV8q+63rPwxBRahw9E9bBDDbiTArChuFEh5g7/3uyt4FkTDjukkL8
+dDTJo1jqkMNYhcOBpfPV4RmSUXHKKxtq0cIhkd23rbZXiXJ7v1i2We7EUZrYo93OwWJtGbUE5Bz4
+BTuxyXEPdXWNvLfAyBr+LG4/CcFBJnogQH3Jng==</ds:SignatureValue><ds:KeyInfo Id="Signature-21809a50-70dd-4c87-b2aa-6d400a33c4ea-KeyInfo"><ds:X509Data><ds:X509Certificate>MIIIkDCCB3igAwIBAgIQH8HLtQG2BOBacIjeeOmZDTANBgkqhkiG9w0BAQsFADBqMQswCQYDVQQG
+EwJFUzERMA8GA1UECgwIRk5NVC1SQ00xDjAMBgNVBAsMBUNFUkVTMRIwEAYDVQQFEwlRMjgyNjAw
+NEoxJDAiBgNVBAMMG0FDIEFkbWluaXN0cmFjacOzbiBQw7pibGljYTAeFw0xODAxMzAxNTAxNTBa
+Fw0yMTAxMzAxNTAxNTBaMIHqMQswCQYDVQQGEwJFUzEPMA0GA1UEBwwGTUFEUklEMTEwLwYDVQQK
+DChNSU5JU1RFUklPIERFIEhBQ0lFTkRBIFkgRlVOQ0lPTiBQVUJMSUNBMRowGAYDVQQLDBFTRUxM
+TyBFTEVDVFJPTklDTzEYMBYGA1UEYQwPVkFURVMtUzI4MjYwMDFGMRIwEAYDVQQFEwlTMjgyNjAw
+MUYxTTBLBgNVBAMMRFNFTExPIEVMRUNUUk9OSUNPIERFIExBIFNFQ1JFVEFSSUEgR0VORVJBTCBE
+RSBBRE1JTklTVFJBQ0lPTiBESUdJVEFMMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA
+nF36VcEixhA3xQKcS8g1gDxVfJpqA8tJCYb/ovU7CNzlO7YI2Y9j0JuiPZ82oLgOMbzFaSuAAyuS
+lQODtS7WLdRqiv0I9O62jj4mV+MEMEzXm3gzMurVpz1d7fzb6PEGejzkhdIGhR4MtsZ8/21KaqR2
+UPzM/1KEcoEDksichRzUjUnRGyTeE71CVesQL2pUY+1AXdXiTuDISEi0mZHalli4Emc9XonIWCBP
+vc4WJa9Ol2sTPsye5ww83g3i9GewB1+jVpdDg2xTi8w3gsdF/C4vE5lB7XGvSzwFwLPaf8G2MGHP
+K9R8NZddJ6+nstkl99uXEx/FGFBxlaP7mHibRQIDAQABo4IErzCCBKswge0GA1UdEQSB5TCB4qSB
+3zCB3DFWMFQGCWCFVAEDBQYCBQxHU0VMTE8gRUxFQ1RSw5NOSUNPIERFIExBIFNFQ1JFVEFSw41B
+IEdFTkVSQUwgREUgQURNSU5JU1RSQUNJw5NOIERJR0lUQUwxGDAWBglghVQBAwUGAgMMCVMyODI2
+MDAxRjE3MDUGCWCFVAEDBQYCAgwoTUlOSVNURVJJTyBERSBIQUNJRU5EQSBZIEZVTkNJT04gUFVC
+TElDQTEvMC0GCWCFVAEDBQYCAQwgU0VMTE8gRUxFQ1RST05JQ08gREUgTklWRUwgTUVESU8wDAYD
+VR0TAQH/BAIwADAOBgNVHQ8BAf8EBAMCBPAwHQYDVR0OBBYEFKwmPddNcqJWWNyX5P/sENs8CPgb
+MB8GA1UdIwQYMBaAFBQR4rUruYyYrWjTMVRA5FhfAxt9MIGsBggrBgEFBQcBAwSBnzCBnDAIBgYE
+AI5GAQEwCwYGBACORgEDAgEPMBMGBgQAjkYBBjAJBgcEAI5GAQYCMG4GBgQAjkYBBTBkMDAWKmh0
+dHBzOi8vd3d3LmNlcnQuZm5tdC5lcy9wZHMvUERTX0FQX2VzLnBkZhMCZXMwMBYqaHR0cHM6Ly93
+d3cuY2VydC5mbm10LmVzL3Bkcy9QRFNfQVBfZW4ucGRmEwJlbjCCARkGA1UdIASCARAwggEMMIHy
+BgsrBgEEAaxmAwMJATCB4jApBggrBgEFBQcCARYdaHR0cDovL3d3dy5jZXJ0LmZubXQuZXMvZHBj
+cy8wgbQGCCsGAQUFBwICMIGnDIGkQ2VydGlmaWNhZG8gY3VhbGlmaWNhZG8gZGUgc2VsbG8gZWxl
+Y3Ryw7NuaWNvLiBTdWpldG8gYSBsYXMgY29uZGljaW9uZXMgZGUgdXNvIGV4cHVlc3RhcyBlbiBE
+UEMgZGUgRk5NVC1SQ00sIE5JRjogUTI4MjYwMDQtSiAoQy9Kb3JnZSBKdWFuIDEwNi0yODAwOS1N
+YWRyaWQtRXNwYcOxYSkwCQYHBACL7EABATAKBghghVQBAwUGAjB/BggrBgEFBQcBAQRzMHEwOwYI
+KwYBBQUHMAGGL2h0dHA6Ly9vY3NwYXAuY2VydC5mbm10LmVzL29jc3BhcC9PY3NwUmVzcG9uZGVy
+MDIGCCsGAQUFBzAChiZodHRwOi8vd3d3LmNlcnQuZm5tdC5lcy9jZXJ0cy9BQ0FQLmNydDAdBgNV
+HSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwge4GA1UdHwSB5jCB4zCB4KCB3aCB2oaBqmxkYXA6
+Ly9sZGFwYXBlLmNlcnQuZm5tdC5lcy9DTj1DUkw1MzUsQ049QUMlMjBBZG1pbmlzdHJhY2klRjNu
+JTIwUCVGQWJsaWNhLE9VPUNFUkVTLE89Rk5NVC1SQ00sQz1FUz9jZXJ0aWZpY2F0ZVJldm9jYXRp
+b25MaXN0O2JpbmFyeT9iYXNlP29iamVjdGNsYXNzPWNSTERpc3RyaWJ1dGlvblBvaW50hitodHRw
+Oi8vd3d3LmNlcnQuZm5tdC5lcy9jcmxzYWNhcC9DUkw1MzUuY3JsMA0GCSqGSIb3DQEBCwUAA4IB
+AQA2lXrx+3wEElZHAcAb/JToYDj63oao1E4iiAY0go1/F8xvoWOwqD7tc/nTaMTwMK7US1z+WBSa
+O/E0+T9oe4osK1PYDtdMqHGvX6A/zwlY8Cm6XJRBAcbvUHUlWXtVDPeDnICONhHMgMppVPIkGFfc
+nET7a322SKk2thtNjiOmmS6x1s25jkT797obE8Ff7y5Ehj3+F9z2YYFEiWuZRpxmZREGuBoIq6hw
+w5vVFqyRjnMjO/QgY/4uqTFvBeDgMJYDl1qiBVDwUgONmyqk+TNQg/wm4K7j4xViUH88DR4agtdc
++CMzydzFfo1FRvhJ+O4mNGz5lo11y4XQmnzgvlLS</ds:X509Certificate></ds:X509Data><ds:KeyValue><ds:RSAKeyValue><ds:Modulus>nF36VcEixhA3xQKcS8g1gDxVfJpqA8tJCYb/ovU7CNzlO7YI2Y9j0JuiPZ82oLgOMbzFaSuAAyuS
+lQODtS7WLdRqiv0I9O62jj4mV+MEMEzXm3gzMurVpz1d7fzb6PEGejzkhdIGhR4MtsZ8/21KaqR2
+UPzM/1KEcoEDksichRzUjUnRGyTeE71CVesQL2pUY+1AXdXiTuDISEi0mZHalli4Emc9XonIWCBP
+vc4WJa9Ol2sTPsye5ww83g3i9GewB1+jVpdDg2xTi8w3gsdF/C4vE5lB7XGvSzwFwLPaf8G2MGHP
+K9R8NZddJ6+nstkl99uXEx/FGFBxlaP7mHibRQ==</ds:Modulus><ds:Exponent>AQAB</ds:Exponent></ds:RSAKeyValue></ds:KeyValue></ds:KeyInfo><ds:Object><xades:QualifyingProperties Id="Signature-21809a50-70dd-4c87-b2aa-6d400a33c4ea-QualifyingProperties" Target="#Signature-21809a50-70dd-4c87-b2aa-6d400a33c4ea-Signature" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xades="http://uri.etsi.org/01903/v1.3.2#"><xades:SignedProperties Id="Signature-21809a50-70dd-4c87-b2aa-6d400a33c4ea-SignedProperties"><xades:SignedSignatureProperties><xades:SigningTime>2018-11-02T15:01:24+01:00</xades:SigningTime><xades:SigningCertificate><xades:Cert><xades:CertDigest><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"/><ds:DigestValue>cNO6Z42FgYBKjyN1zuyKDiu3pq4EwRWZsOmoCbjj6eibEMH19r25wXWwn2W5Y7MfFl9agNIE63skH0m7HepjyA==</ds:DigestValue></xades:CertDigest><xades:IssuerSerial><ds:X509IssuerName>CN=AC Administración Pública, SERIALNUMBER=Q2826004J, OU=CERES, O=FNMT-RCM, C=ES</ds:X509IssuerName><ds:X509SerialNumber>42212312833006102700310241101635754253</ds:X509SerialNumber></xades:IssuerSerial></xades:Cert></xades:SigningCertificate><xades:SignaturePolicyIdentifier><xades:SignaturePolicyId><xades:SigPolicyId><xades:Identifier>urn:oid:2.16.724.1.3.1.1.2.1.9</xades:Identifier><xades:Description>Política de firma electrónica para la Administración General del Estado</xades:Description></xades:SigPolicyId><xades:SigPolicyHash><ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><ds:DigestValue>G7roucf600+f03r/o0bAOQ6WAs0=</ds:DigestValue></xades:SigPolicyHash><xades:SigPolicyQualifiers><xades:SigPolicyQualifier><xades:SPURI>https://sede.060.gob.es/politica_de_firma_anexo_1.pdf</xades:SPURI></xades:SigPolicyQualifier></xades:SigPolicyQualifiers></xades:SignaturePolicyId></xades:SignaturePolicyIdentifier></xades:SignedSignatureProperties><xades:SignedDataObjectProperties><xades:DataObjectFormat ObjectReference="#Reference-f949a972-839e-477d-bd6a-95882090bcd5"><xades:Description/><xades:MimeType>text/plain</xades:MimeType><xades:Encoding>http://www.w3.org/2000/09/xmldsig#base64</xades:Encoding></xades:DataObjectFormat></xades:SignedDataObjectProperties></xades:SignedProperties></xades:QualifyingProperties></ds:Object></ds:Signature></AFIRMA>
