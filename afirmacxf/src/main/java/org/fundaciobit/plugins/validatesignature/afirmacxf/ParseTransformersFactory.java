@@ -55,11 +55,11 @@ public final class ParseTransformersFactory {
     private static String getTransformerClassName(String serviceReq, String method, String version) {
         Properties properties = TransformersProperties.getMethodParseTransformersProperties(serviceReq, method, version);
         
-        logger.error("XYZ ZZZ  ParseTransformersFactory::getTransformerClassName [PROPERTY] => " + serviceReq + "." + method + "." + version + "." + "parser" + "." + "transformerClass");
+        //logger.error("ParseTransformersFactory::getTransformerClassName [PROPERTY] => " + serviceReq + "." + method + "." + version + "." + "parser" + "." + "transformerClass");
         
         String res = properties.getProperty(serviceReq + "." + method + "." + version + "." + "parser" + "." + "transformerClass");
         
-        logger.error("XYZ ZZZ  ParseTransformersFactory::getTransformerClassName [PROPERTY VALUE] => " + res);
+        //logger.error(" ParseTransformersFactory::getTransformerClassName [PROPERTY VALUE] => " + res);
         return res;
     }
 }

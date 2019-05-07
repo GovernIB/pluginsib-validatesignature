@@ -144,7 +144,7 @@ public final class TransformersFacade {
         try {
             Class transformerClass = XmlTransformersFactory.getXmlTransformer(service, method, "request", version);
             
-            LOGGER.info("XYZ ZZZ transformerClass => " + transformerClass );
+            //LOGGER.info(" transformerClass => " + transformerClass );
             
             res = (String)this.invokeCommonXmlTransf(transformerClass, parameters, service, method, "request", version);
         }
