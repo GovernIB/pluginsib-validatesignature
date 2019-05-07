@@ -1,5 +1,4 @@
-ï»¿<%@page import="org.fundaciobit.plugins.validatesignature.api.ValidateSignatureRequest"%>
-<%@page import="org.fundaciobit.plugins.validatesignature.api.CertificateInfo"%>
+<%@page import="org.fundaciobit.plugins.validatesignature.api.ValidateSignatureRequest"%>
 <%@page import="org.fundaciobit.plugins.validatesignature.api.ValidateSignatureResponse"%>
 <%@ include file="/WEB-INF/views/include.jsp"%>
 
@@ -32,7 +31,7 @@
                 <td>
                    <h4>Petici&oacute;</h4>
                    
-                  Retornar informaciÃ³ de Tipus, Format i Perfil: <b>${request.signatureRequestedInformation.returnSignatureTypeFormatProfile}</b> <br/>
+                  Retornar informació de Tipus, Format i Perfil: <b>${request.signatureRequestedInformation.returnSignatureTypeFormatProfile}</b> <br/>
                   Validate Certificate Revocation: <b>${request.signatureRequestedInformation.validateCertificateRevocation}</b> <br/>
                   Return Certificate Info: <b>${request.signatureRequestedInformation.returnCertificateInfo}</b> <br/>
                   Return Validation Checks: <b>${request.signatureRequestedInformation.returnValidationChecks}</b> <br/>
@@ -69,10 +68,10 @@
                 
             </tr>
             
-            <%--DADES BÃ€SIQUES  --%>
+            <%--DADES BÀSIQUES  --%>
             <tr>
                 <td>
-                  <h4>Dades BÃ siques</h4>
+                  <h4>Dades Bàsiques</h4>
                       <ul>
                          <li>Tipus: <b>${response.signType }</b></li>
                          <li>Format: <b>${response.signFormat }</b></li>
@@ -133,124 +132,151 @@
                              </c:if>
                               
                               
-                              <%--  InformaciÃ³ del certificat --%>
+                              <%--  Informació del certificat --%>
                               <c:set var="infoCert" value="${infosign.certificateInfo}" ></c:set>
                               
  
                             <c:if test="${ not empty infoCert }">
                             <b>CertificateInfo</b> <br/>
                             <ul>
-                            <c:if test="${ not empty infoCert.apellidosResponsable}">
-                               <li>apellidosResponsable:<b> ${ infoCert.apellidosResponsable}</b></li>
+                            
+                            <c:if test="${ not empty infoCert.nomResponsable}">
+                               <li>nomResponsable:<b> ${ infoCert.nomResponsable}</b></li>
+                            </c:if>
+
+                            <c:if test="${ not empty infoCert.primerLlinatgeResponsable}">
+                               <li>primerLlinatgeResponsable:<b> ${ infoCert.primerLlinatgeResponsable}</b></li>
+                            </c:if>
+
+                            <c:if test="${ not empty infoCert.segonLlinatgeResponsable}">
+                               <li>segonLlinatgeResponsable:<b> ${ infoCert.segonLlinatgeResponsable}</b></li>
+                            </c:if>
+
+                            <c:if test="${ not empty infoCert.nomCompletResponsable}">
+                               <li>nomCompletResponsable:<b> ${ infoCert.nomCompletResponsable}</b></li>
+                            </c:if>
+
+                            <c:if test="${ not empty infoCert.llinatgesResponsable}">
+                               <li>apellidosResponsable:<b> ${ infoCert.llinatgesResponsable}</b></li>
                             </c:if>
                             
-                            <c:if test="${ not empty infoCert.organizacionEmisora}">
-                               <li>organizacionEmisora:<b> ${ infoCert.organizacionEmisora}</b></li>
-                            </c:if>
                             
-                            <c:if test="${ not empty infoCert.segundoApellidoResponsable}">
-                               <li>segundoApellidoResponsable:<b> ${ infoCert.segundoApellidoResponsable}</b></li>
-                            </c:if>
-                            
-                            <c:if test="${ not empty infoCert.versionPolitica}">
-                               <li>versionPolitica:<b> ${ infoCert.versionPolitica}</b></li>
-                            </c:if>
-                            
-                            <c:if test="${ not empty infoCert.usoCertificado}">
-                               <li>usoCertificado:<b> ${ infoCert.usoCertificado}</b></li>
-                            </c:if>
-                            
-                            <c:if test="${ not empty infoCert.pais}">
-                               <li>pais:<b> ${ infoCert.pais}</b></li>
+                            <c:if test="${ not empty infoCert.nifResponsable}">
+                               <li>nifResponsable:<b> ${ infoCert.nifResponsable}</b></li>
                             </c:if>
                             
                             <c:if test="${ not empty infoCert.subject}">
                                <li>subject:<b> ${ infoCert.subject}</b></li>
                             </c:if>
                             
-                            <c:if test="${ not empty infoCert.numeroSerie}">
-                               <li>numeroSerie:<b> ${ infoCert.numeroSerie}</b></li>
-                            </c:if>
                             
-                            <c:if test="${ not empty infoCert.primerApellidoResponsable}">
-                               <li>primerApellidoResponsable:<b> ${ infoCert.primerApellidoResponsable}</b></li>
+                            <c:if test="${ not empty infoCert.llocDeFeina}">
+                               <li>llocDeFeina:<b> ${ infoCert.llocDeFeina}</b></li>
                             </c:if>
-                            
-                            <c:if test="${ not empty infoCert.nombreApellidosResponsable}">
-                               <li>nombreApellidosResponsable:<b> ${ infoCert.nombreApellidosResponsable}</b></li>
+                            <c:if test="${ not empty infoCert.documentRepresentacio}">
+                               <li>documentRepresentacio:<b> ${ infoCert.documentRepresentacio}</b></li>
                             </c:if>
-                            
-                            <c:if test="${ not empty infoCert.validoDesde}">
-                               <li>validoDesde:<b> ${ infoCert.validoDesde}</b></li>
-                            </c:if>
-                            
-                            <c:if test="${ not empty infoCert.validoHasta}">
-                               <li>validoHasta:<b> ${ infoCert.validoHasta}</b></li>
-                            </c:if>
-                            
-                            <c:if test="${ not empty infoCert.idPolitica}">
-                               <li>idPolitica:<b> ${ infoCert.idPolitica}</b></li>
-                            </c:if>
-                            
-                            <c:if test="${ not empty infoCert.idEuropeo}">
-                               <li>idEuropeo:<b> ${ infoCert.idEuropeo}</b></li>
-                            </c:if>
-                            
-                            <c:if test="${ not empty infoCert.tipoCertificado}">
-                               <li>tipoCertificado:<b> ${ infoCert.tipoCertificado}</b></li>
-                            </c:if>
-                            
                             <c:if test="${ not empty infoCert.email}">
                                <li>email:<b> ${ infoCert.email}</b></li>
                             </c:if>
-                            
-                            <c:if test="${ not empty infoCert.clasificacion}">
-                               <li>clasificacion:<b> ${ infoCert.clasificacion}</b></li>
+                            <c:if test="${ not empty infoCert.dataNaixement}">
+                               <li>dataNaixement:<b> ${ infoCert.dataNaixement}</b></li>
                             </c:if>
-                            
-                            <c:if test="${ not empty infoCert.idEmisor}">
-                               <li>idEmisor:<b> ${ infoCert.idEmisor}</b></li>
+                            <c:if test="${ not empty infoCert.raoSocial}">
+                               <li>raoSocial:<b> ${ infoCert.raoSocial}</b></li>
                             </c:if>
-                            
-                            <c:if test="${ not empty infoCert.nifResponsable}">
-                               <li>nifResponsable:<b> ${ infoCert.nifResponsable}</b></li>
+                            <c:if test="${ not empty infoCert.pais}">
+                               <li>pais:<b> ${ infoCert.pais}</b></li>
                             </c:if>
-                            
-                            <c:if test="${ not empty infoCert.extensionUsoCertificado}">
-                               <li>extensionUsoCertificado:<b> ${ infoCert.extensionUsoCertificado}</b></li>
-                            </c:if>
-                            
-                            <c:if test="${ not empty infoCert.nombreResponsable}">
-                               <li>nombreResponsable:<b> ${ infoCert.nombreResponsable}</b></li>
-                            </c:if>
-                            
-                            <c:if test="${ not empty infoCert.politica}">
-                               <li>politica:<b> ${ infoCert.politica}</b></li>
-                            </c:if>
-                            
-                            <c:if test="${ not empty infoCert.nifEntidadSuscriptora}">
-                               <li>nifEntidadSuscriptora:<b> ${ infoCert.nifEntidadSuscriptora}</b></li>
-                            </c:if>
-                            
-                            <c:if test="${ not empty infoCert.entidadSuscriptora}">
-                               <li>entidadSuscriptora:<b> ${ infoCert.entidadSuscriptora}</b></li>
-                            </c:if>
-                            
-                            <c:if test="${ not empty infoCert.unidadOrganizativa}">
-                               <li>unidadOrganizativa:<b> ${ infoCert.unidadOrganizativa}</b></li>
-                            </c:if>
-                            
                             <c:if test="${ not empty infoCert.numeroIdentificacionPersonal}">
                                <li>numeroIdentificacionPersonal:<b> ${ infoCert.numeroIdentificacionPersonal}</b></li>
                             </c:if>
-                            
-                            <c:if test="${ not empty infoCert.organizacion}">
-                               <li>organizacion:<b> ${ infoCert.organizacion}</b></li>
+                            <c:if test="${ not empty infoCert.idlogOn}">
+                               <li>idlogOn:<b> ${ infoCert.idlogOn}</b></li>
+                            </c:if>
+                            <c:if test="${ not empty infoCert.idEuropeu}">
+                               <li>idEuropeu:<b> ${ infoCert.idEuropeu}</b></li>
+                            </c:if>
+                            <c:if test="${ not empty infoCert.oiEuropeu}">
+                               <li>oiEuropeu:<b> ${ infoCert.oiEuropeu}</b></li>
+                            </c:if>
+                            <c:if test="${ not empty infoCert.entitatSubscriptoraNom}">
+                               <li>entitatSubscriptoraNom:<b> ${ infoCert.entitatSubscriptoraNom}</b></li>
+                            </c:if>
+                            <c:if test="${ not empty infoCert.entitatSubscriptoraNif}">
+                               <li>entitatSubscriptoraNif:<b> ${ infoCert.entitatSubscriptoraNif}</b></li>
+                            </c:if>
+                            <c:if test="${ not empty infoCert.emissorOrganitzacio}">
+                               <li>emissorOrganitzacio:<b> ${ infoCert.emissorOrganitzacio}</b></li>
+                            </c:if>
+                            <c:if test="${ not empty infoCert.unitatOrganitzativaNifCif}">
+                               <li>unitatOrganitzativaNifCif:<b> ${ infoCert.unitatOrganitzativaNifCif}</b></li>
+                            </c:if>
+                            <c:if test="${ not empty infoCert.unitatOrganitzativa}">
+                               <li>unitatOrganitzativa:<b> ${ infoCert.unitatOrganitzativa}</b></li>
+                            </c:if>
+                            <c:if test="${ not empty infoCert.organitzacio}">
+                               <li>organitzacio:<b> ${ infoCert.organitzacio}</b></li>
+                            </c:if>
+                            <c:if test="${ not empty infoCert.emissorID}">
+                               <li>emissorID:<b> ${ infoCert.emissorID}</b></li>
                             </c:if>
                             
-                            <c:if test="${ not empty infoCert.puesto}">
-                               <li>puesto:<b> ${ infoCert.puesto}</b></li>
+                            <c:if test="${ not empty infoCert.nomDomini}">
+                               <li>nomDomini:<b> ${ infoCert.nomDomini}</b></li>
                             </c:if>
+                            <c:if test="${ not empty infoCert.denominacioSistemaComponent}">
+                               <li>denominacioSistemaComponent:<b> ${ infoCert.denominacioSistemaComponent}</b></li>
+                            </c:if>
+ 
+                            <c:if test="${ not empty infoCert.tipusCertificat}">
+                               <li>tipusCertificat:<b> ${ infoCert.tipusCertificat}</b></li>
+                            </c:if>
+
+                            <c:if test="${ not empty infoCert.classificacioEidas}">
+                               <li>classificacioEidas:<b> ${ infoCert.classificacioEidas}</b></li>
+                            </c:if>
+                            <c:if test="${ not empty infoCert.certificatQualificat}">
+                               <li>certificatQualificat:<b> ${ infoCert.certificatQualificat}</b></li>
+                            </c:if>
+                            <c:if test="${ not empty infoCert.creatAmbUnDispositiuSegur}">
+                               <li>creatAmbUnDispositiuSegur:<b> ${ infoCert.creatAmbUnDispositiuSegur}</b></li>
+                            </c:if>
+                            <c:if test="${ not empty infoCert.classificacio}">
+                               <li>classificacio:<b> ${ infoCert.classificacio}</b></li>
+                            </c:if>
+                            <c:if test="${ not empty infoCert.numeroSerie}">
+                               <li>numeroSerie:<b> ${ infoCert.numeroSerie}</b></li>
+                            </c:if>
+                            <c:if test="${ not empty infoCert.usCertificat}">
+                               <li>usCertificat:<b> ${ infoCert.usCertificat}</b></li>
+                            </c:if>
+                            <c:if test="${ not empty infoCert.usCertificatExtensio}">
+                               <li>usCertificatExtensio:<b> ${ infoCert.usCertificatExtensio}</b></li>
+                            </c:if>
+                            <c:if test="${ not empty infoCert.validFins}">
+                               <li>validFins:<b> ${ infoCert.validFins}</b></li>
+                            </c:if>
+                            <c:if test="${ not empty infoCert.validDesDe}">
+                               <li>validDesDe:<b> ${ infoCert.validDesDe}</b></li>
+                            </c:if>
+                            <c:if test="${ not empty infoCert.politica}">
+                               <li>politica:<b> ${ infoCert.politica}</b></li>
+                            </c:if>
+                            <c:if test="${ not empty infoCert.politicaVersio}">
+                               <li>politicaVersio:<b> ${ infoCert.politicaVersio}</b></li>
+                            </c:if>
+                            <c:if test="${ not empty infoCert.politicaID}">
+                               <li>politicaID:<b> ${ infoCert.politicaID}</b></li>
+                            </c:if>
+                            <c:if test="${ not empty infoCert.qcCompliance}">
+                               <li>qcCompliance:<b> ${ infoCert.qcCompliance}</b></li>
+                            </c:if>
+                            <c:if test="${ not empty infoCert.qcSSCD}">
+                               <li>qcSSCD:<b> ${ infoCert.qcSSCD}</b></li>
+                            </c:if>
+                            
+                               <li><b> FALTA IMPRIMIR ALTRES VALORS XYZ ZZZ</b></li>
 
                             </ul>
                               

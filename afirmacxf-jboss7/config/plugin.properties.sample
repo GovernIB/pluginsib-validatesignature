@@ -1,4 +1,4 @@
-
+# Class org.fundaciobit.plugins.validatesignature.afirmacxf.AfirmaCxfValidateSignaturePlugin
 
 # Obligatiori. Aplicació definida dins "Gestión de Aplicaciones" de @firma federat
 org.fundaciobit.exemple.base.plugins.validatesignature.afirmacxf.applicationID=gobbal.fbit.portafib

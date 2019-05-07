@@ -34,7 +34,6 @@ import javax.xml.ws.BindingProvider;
 
 import net.java.xades.security.xml.XMLSignatureElement;
 
-import org.apache.commons.lang3.reflect.FieldUtils;
 import org.bouncycastle.asn1.cms.ContentInfo;
 import org.bouncycastle.asn1.cms.SignedData;
 import org.bouncycastle.cms.CMSSignedData;
@@ -75,7 +74,6 @@ import es.gob.afirma.integraFacade.pojo.ProcessingDetail;
 import es.gob.afirma.integraFacade.pojo.VerifySignatureResponse;
 import es.gob.afirma.signature.SigningException;
 import es.gob.afirma.transformers.TransformersConstants;
-import es.gob.afirma.transformers.TransformersFacade;
 import es.gob.afirma.utils.Base64Coder;
 import es.gob.afirma.utils.DSSConstants;
 import es.gob.afirma.utils.GeneralConstants;
@@ -1319,21 +1317,60 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
     return (str1 == null ? str2 == null : str1.equals(str2));
   }
 
+  
+  
+  
   protected TransformersFacade getTransformersFacade() throws Exception {
 
-    String newClassPath = getPropertyRequired(TRANSFORMERSTEMPLATESPATH_PROPERTY);
-
-
-    addSoftwareLibrary(new File(newClassPath));
-
+    
     TransformersFacade transformersFacade = TransformersFacade.getInstance();
+    
+    if (transformersFacade == null) {
+      String newClassPath = getPropertyRequired(TRANSFORMERSTEMPLATESPATH_PROPERTY);
+  
+      File path = new File(newClassPath);
+      
+      Properties parserParamsProp = FileUtils.readPropertiesFromFile(new File(path, "parserParameters.properties"));
+      
+      Properties transformersProperties = FileUtils.readPropertiesFromFile(new File(path, "transformers.properties"));
+    
+      transformersProperties.setProperty("DSSAfirmaVerify.verify.1_0.request.transformerClass",
+                 //"es.gob.afirma.transformers.xmlTransformers.DSSXmlTransformer"
+             "org.fundaciobit.plugins.validatesignature.afirmacxf.DSSXmlTransformer");
+      
+      
+      
+      transformersProperties.setProperty("DSSAfirmaVerify.verify.1_0.parser.transformerClass", 
+           //"es.gob.afirma.transformers.parseTransformers.DSSParseTransformer"
+          "org.fundaciobit.plugins.validatesignature.afirmacxf.DSSParseTransformer");
+      
+      
+      
+      transformersProperties.setProperty("TransformersTemplatesPath", path.getAbsolutePath());
+      
+      
+      
+      
+      
 
-    Properties transfProp = (Properties) FieldUtils.readField(transformersFacade,
-        "transformersProperties", true);
+      TransformersProperties.init(transformersProperties);
+      ParserParameterProperties.init(parserParamsProp);
+
+    //addSoftwareLibrary(new File(newClassPath));
+        
+
+    // XYZ ZZZ
+      transformersFacade = TransformersFacade.init(transformersProperties, parserParamsProp);
+    }
+
+    
+
+    //Properties transfProp = (Properties) FieldUtils.readField(transformersFacade,
+    //    "transformersProperties", true);
 
     // S'obte d'una propietat
-    transfProp.put("TransformersTemplatesPath",
-        getPropertyRequired(TRANSFORMERSTEMPLATESPATH_PROPERTY));
+    //transfProp.put("TransformersTemplatesPath",
+    //    getPropertyRequired(TRANSFORMERSTEMPLATESPATH_PROPERTY));
 
     return transformersFacade;
   }

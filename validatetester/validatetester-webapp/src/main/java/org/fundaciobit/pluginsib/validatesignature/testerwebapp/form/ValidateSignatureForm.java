@@ -21,7 +21,7 @@ public class ValidateSignatureForm {
 
   protected boolean validateCertificateRevocation = false;
 
-  protected boolean returnCertificateInfo = false;
+  protected boolean returnCertificateInfo = true;
 
   protected boolean returnValidationChecks = false;
 

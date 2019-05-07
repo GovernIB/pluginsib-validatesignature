@@ -2,6 +2,7 @@ package org.fundaciobit.plugins.validatesignature.tester.ejb;
 
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import org.apache.log4j.Logger;
@@ -16,7 +17,7 @@ import org.fundaciobit.plugins.validatesignature.tester.utils.ValidateSignatureP
  * @author anadal
  *
  */
-@Stateless(name = "ValidateSignatureEJB")
+@Stateless(name = "ValidateSignatureEjb")
 public class ValidateSignatureEjb implements ValidateSignatureLocal {
 
   protected Logger log = Logger.getLogger(this.getClass());

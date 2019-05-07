@@ -42,19 +42,21 @@
                         
                         <tr>
                             <td><label><fmt:message
+                                        key="signatura" /> &nbsp;(*) </label></td>
+                            <td><form:errors path="signature"
+                                    cssClass="errorField alert alert-error" /> <form:input
+                                    path="signature" type="file" /></td>
+                        </tr>
+                        
+                        <tr>
+                            <td><label><fmt:message
                                         key="document" /> </label></td>
                             <td><form:errors path="document"
                                     cssClass="errorField alert alert-error" /> <form:input
                                     path="document" type="file" /></td>
                         </tr>
                         
-                        <tr>
-                            <td><label><fmt:message
-                                        key="signatura" /></label></td>
-                            <td><form:errors path="signature"
-                                    cssClass="errorField alert alert-error" /> <form:input
-                                    path="signature" type="file" /></td>
-                        </tr>
+
                         
 
                         <tr>

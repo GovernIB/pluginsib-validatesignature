@@ -14,9 +14,23 @@ import org.fundaciobit.plugins.validatesignature.tester.utils.Plugin;
  *
  */
 @Local
-public interface ValidateSignatureLocal {
+public interface ValidateSignatureLocal extends ValidateSignatureLocalJNDI {
   
-  public static final String JNDI_NAME = "validatesignature/ValidateSignatureEJB/local";
+  // JBOSS 5
+  //public static final String JNDI_NAME = "validatesignature/ValidateSignatureEjb/local";
+  
+  
+  // JBOSS 7
+//        java:global/validatesignature/pluginsib-validatesignature-tester-ejb-2.0.0/ValidateSignatureEjb!org.fundaciobit.plugins.validatesignature.tester.ejb.ValidateSignatureLocal
+//        java:app/pluginsib-validatesignature-tester-ejb-2.0.0/ValidateSignatureEjb!org.fundaciobit.plugins.validatesignature.tester.ejb.ValidateSignatureLocal
+//        java:module/ValidateSignatureEjb!org.fundaciobit.plugins.validatesignature.tester.ejb.ValidateSignatureLocal
+//        ejb:validatesignature/pluginsib-validatesignature-tester-ejb-2.0.0/ValidateSignatureEjb!org.fundaciobit.plugins.validatesignature.tester.ejb.ValidateSignatureLocal
+//        java:global/validatesignature/pluginsib-validatesignature-tester-ejb-2.0.0/ValidateSignatureEjb
+//        
+//        java:app/pluginsib-validatesignature-tester-ejb-2.0.0/ValidateSignatureEjb
+//        java:module/ValidateSignatureEjb
+  
+  //public static final String JNDI_NAME = "java:app/pluginsib-validatesignature-tester-ejb-2.0.0/ValidateSignatureEjb";
   
   
   public ValidateSignatureResponse validate(ValidateSignatureRequest validationRequest,
