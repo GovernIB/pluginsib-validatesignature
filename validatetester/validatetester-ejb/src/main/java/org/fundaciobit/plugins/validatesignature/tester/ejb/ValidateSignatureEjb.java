@@ -2,7 +2,6 @@ package org.fundaciobit.plugins.validatesignature.tester.ejb;
 
 import java.util.List;
 
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import org.apache.log4j.Logger;

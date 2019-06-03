@@ -1,12 +1,6 @@
 package org.fundaciobit.plugins.validatesignature.tester.ejb;
 
-import java.util.List;
-
 import javax.ejb.Local;
-
-import org.fundaciobit.plugins.validatesignature.api.ValidateSignatureRequest;
-import org.fundaciobit.plugins.validatesignature.api.ValidateSignatureResponse;
-import org.fundaciobit.plugins.validatesignature.tester.utils.Plugin;
 
 /**
  * 
