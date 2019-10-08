@@ -8,13 +8,9 @@ package org.fundaciobit.plugins.validatesignature.afirmacxf;
 
 import es.gob.afirma.i18n.Language;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.Date;
 import java.util.Properties;
 import org.apache.log4j.Logger;
 

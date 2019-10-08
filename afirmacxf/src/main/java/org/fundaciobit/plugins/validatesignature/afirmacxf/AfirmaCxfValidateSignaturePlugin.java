@@ -599,6 +599,8 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
       //inParams.put("dss:SignatureObject",  new String(signData));
       xadesFormat = getXAdESFormat(signData);
       
+      log.info("  xadesFormat => " + xadesFormat);
+      
       incorporateXMLSignature(inParams, signData, xadesFormat);
       /*
       inParams.put("dss:InputDocuments/dss:Document/dss:Base64XML",
@@ -623,10 +625,13 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
       String encodedDoc = new String(Base64Coder.encodeBase64(docData));
 
       if (CXFUtils.isXMLFormat(docData)) {
-        //dss_InputDocuments_dss_Document_dss_Base64Data
+        
         //dss_InputDocuments_dss_Document_dss_Base64XML
         inParams.put(DSSTagsRequest.BASE64XML, encodedDoc);
+        // "dss:InputDocuments/dss:Document@ID";
+        inParams.put(DSSTagsRequest.DOCUMENT_ATR_ID, System.nanoTime() + " " + System.currentTimeMillis());
       } else {
+        //dss_InputDocuments_dss_Document_dss_Base64Data
         inParams.put(DSSTagsRequest.BASE64DATA, encodedDoc);
       }
 
@@ -1491,8 +1496,8 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
     //  "XAdES Detached"
     return SIGNFORMAT_EXPLICIT_DETACHED;
   }
-  
-  
+
+
   /**
    * AQUEST MÈTODE ESTA DUPLICAT AL PLUGIN-INTEGR@  
    * @param signature
