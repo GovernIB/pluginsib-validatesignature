@@ -63,11 +63,11 @@ public final class XmlTransformersFactory {
         transfClassName.append(type).append(".");
         transfClassName.append("transformerClass");
         
-        logger.error(" transformerClass [PROPERTY] => " + transfClassName.toString());
+        logger.info(" transformerClass [PROPERTY] => " + transfClassName.toString());
         
         String res = properties.getProperty(transfClassName.toString());
         
-        logger.error(" transformerClass [PROPERTY VALUE] => " +res);
+        logger.info(" transformerClass [PROPERTY VALUE] => " +res);
         return res;
     }
 }
