@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>pluginsib-validatesignature-afirmacxf-jboss7</artifactId>
   <groupId>org.fundaciobit.pluginsib.validatesignature</groupId>
-  <version>2.0.2</version>
+  <version>2.0.3</version>
   <packaging>jar</packaging>
   <name>PluginsIB - Validate Signature - @FirmaCXF JBoss7</name>
   <parent>

@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
+import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.io.ByteArrayInputStream;
@@ -338,6 +339,7 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
       TimeStampInfo tsi = new TimeStampInfo();
 
       try {
+        dateFormatTimeStamp.setTimeZone(TimeZone.getTimeZone("UTC"));
         tsi.setCreationTime(dateFormatTimeStamp.parse(m.group(1)));
       } catch (ParseException e) {
         // TODO Auto-generated catch block
