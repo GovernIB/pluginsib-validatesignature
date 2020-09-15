@@ -1,68 +1,41 @@
-/afirmacxf/.project
-/afirmacxf/.settings
-/afirmacxf/.classpath
-/api/.project
-/api/.settings
-/api/.classpath
-/fake/.settings
-/fake/.classpath
-/fake/.project
-/api/target
-/afirmacxf/target
-/fake/target
+# Excloure del repositori
+# Fitxers i directoris del Maven
+target/
+dependency-reduced-pom.xml
+# Fitxers de projecte de Eclipse
+.classpath
+.project
+.settings/
+# Fitxers de projecte de IntelliJ IDEA
+*.iml
+.idea/
+# Fitxers de projecte de Netbeans
+nb-configuration.xml
+#
+## Preexistents dins el projecte
+# afirmacxf
 /afirmacxf/resultsXAdESORVE
 /afirmacxf/resultsCAdES
 /afirmacxf/resultsPDF
 /afirmacxf/resultsXAdES
-/integra/target
-/validatetester/validatetester-ear/.project
-/validatetester/validatetester-ear/.settings
-/validatetester/validatetester-ejb/.settings
-/validatetester/validatetester-ejb/target
-/validatetester/validatetester-ejb/.classpath
-/validatetester/validatetester-ejb/.project
-/validatetester/validatetester-webapp/.settings
-/validatetester/validatetester-webapp/.classpath
-/validatetester/validatetester-webapp/.project
-/validatetester/validatetester-ear/target
-/validatetester/validatetester-webapp/target
 /afirmacxf/config/plugin.properties
-<<<<<<< HEAD
-=======
+# fake
 /fake/bin
+# esignature
 /esignature/resources
 /esignature/resultsPDF
 /esignature/resultsXAdES
 /esignature/resultsCAdES
-/esignature/.project
-/esignature/dependency-reduced-pom.xml
-/esignature/target
-/esignature/.classpath
 /esignature/foto.jpg
 /esignature/setpath.bat
 /esignature/test.bat
 /esignature/test.properties
 /esignature/validations
->>>>>>> fc517b7cca11e2888094495897fa6f7dc2e2fb7b
-/integra/.classpath
-/integra/.project
-/integra/.settings/org.eclipse.core.resources.prefs
-/integra/.settings/org.eclipse.jdt.core.prefs
-/integra/.settings/org.eclipse.m2e.core.prefs
-<<<<<<< HEAD
-/validatetester/compil.bat
-=======
-/validatetester/.project
-/validatetester/.settings/org.eclipse.m2e.core.prefs
 /esignature/config/config.properties
->>>>>>> fc517b7cca11e2888094495897fa6f7dc2e2fb7b
-/target
-/esignature/.settings
-/afirmacxf-jboss7/target
-/afirmacxf-jboss7/.classpath
-/afirmacxf-jboss7/.project
+# validatetester
+/validatetester/compil.bat
+# afirmacxf-jboss7
 /afirmacxf-jboss7/deps.txt
-/afirmacxf-jboss7/.settings
 /afirmacxf-jboss7/resultats.txt
 /afirmacxf-jboss7/example.log
 /afirmacxf-jboss7/tester
