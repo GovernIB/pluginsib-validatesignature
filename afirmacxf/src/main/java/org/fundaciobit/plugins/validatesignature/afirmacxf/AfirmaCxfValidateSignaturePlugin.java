@@ -234,9 +234,6 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
       + "afirmacxf.";
   public static final String IGNORE_SERVER_CERTIFICATES = AFIRMACXF_BASE_PROPERTIES + "ignoreservercertificates";
 
-  public static final SimpleDateFormat dateFormatTimeStamp = new SimpleDateFormat(
-      "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", new Locale("es"));
-
   // TRANSFORMES XML
 
   public static final String APPLICATIONID_PROPERTY = AFIRMACXF_BASE_PROPERTIES
@@ -267,6 +264,15 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
       + "authorization.ks.cert.password";
 
   public static final String PRINT_XML = AFIRMACXF_BASE_PROPERTIES + "printxml";
+
+  private static final ThreadLocal<SimpleDateFormat> dateFormatTimeStamp =
+    new ThreadLocal<SimpleDateFormat>() {
+      protected SimpleDateFormat initialValue() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", new Locale("es"));
+        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        return dateFormat;
+      }
+    };
 
   public AfirmaCxfValidateSignaturePlugin() {
     super();
@@ -315,16 +321,14 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
 
     ArrayList<TimeStampInfo> list = new ArrayList<TimeStampInfo>();
 
+    SimpleDateFormat dateFormat = dateFormatTimeStamp.get();
 
     while (m.find()) {
 
       TimeStampInfo tsi = new TimeStampInfo();
-
       try {
-        dateFormatTimeStamp.setTimeZone(TimeZone.getTimeZone("UTC"));
-        tsi.setCreationTime(dateFormatTimeStamp.parse(m.group(1)));
+        tsi.setCreationTime(dateFormat.parse(m.group(1)));
       } catch (ParseException e) {
-        // TODO Auto-generated catch block
         e.printStackTrace();
       }
       tsi.setAlgorithm(localAlgorithmEnc2PluginAlgorithm.get(m.group(2)));
