@@ -274,6 +274,20 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
       }
     };
 
+  private static final Pattern timeStampPattern = Pattern.compile(
+            "<vr:Properties>.+<vr:CreationTime>(.+?)</vr:CreationTime>"
+            + ".*</vr:TimeStampContent><vr:MessageHashAlg Type=\"urn:afirma:dss:1.0:profile:XSS:detail:MessageHashAlg\"><dss:Code>(.+?)</dss:Code></vr:MessageHashAlg>"
+            + ".+<vr:CertificateValidity><vr:CertificateIdentifier><ds:X509IssuerName>(.+?)</ds:X509IssuerName>"
+            + ".+<vr:Subject>(.+?)</vr:Subject>.+</vr:Properties>");
+
+  private static final Pattern algorithmDigestPattern = Pattern.compile(
+          "<vr:DigestAlgAndValue><ds:DigestMethod Algorithm=\"(.+?)\"></ds:DigestMethod>" +
+                  "<ds:DigestValue><!\\[CDATA\\[(.+?)\\]\\]></ds:DigestValue>" +
+          "</vr:DigestAlgAndValue>");
+
+
+
+
   public AfirmaCxfValidateSignaturePlugin() {
     super();
   }
@@ -295,34 +309,10 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
 
   protected static TimeStampInfo[] parseTimeStamp(String xml) {
 
-    // String str =
-    // "<vr:DigestAlgAndValue><ds:DigestMethod Algorithm=\"(.+?)\"></ds:DigestMethod><ds:DigestValue><!\\[CDATA\\[(.+?)\\]\\]></ds:DigestValue></vr:DigestAlgAndValue>";
-
-    String str = "<vr:Properties>.+<vr:CreationTime>(.+?)</vr:CreationTime>" // =
-                                                                             // 2017-03-08T11:45:57.000Z
-        + ".*</vr:TimeStampContent><vr:MessageHashAlg Type=\"urn:afirma:dss:1.0:profile:XSS:detail:MessageHashAlg\"><dss:Code>(.+?)</dss:Code></vr:MessageHashAlg>" // http://www.w3.org/2001/04/xmlenc#sha512
-        // +
-        // ".*<vr:CertificateIdentifier><ds:X509IssuerName>(.+?)</ds:X509IssuerName>"
-        // // CN=MINISDEF-EC-WPG,OU=PKI,O=MDEF,C=ES
-        + ".+<vr:CertificateValidity><vr:CertificateIdentifier><ds:X509IssuerName>(.+?)</ds:X509IssuerName>" // CN=MINISDEF-EC-WPG,OU=PKI,O=MDEF,C=ES
-        + ".+<vr:Subject>(.+?)</vr:Subject>.+</vr:Properties>" // CN=Sello de tiempo TS@ - @firma
-                                             // -
-                                             // desarrollo,SERIALNUMBER=S2833002E,OU=PKI,O=MDEF,C=ES
-    ; // +".+"; //<vr:ValidityPeriodOK
-      // Type="urn:afirma:dss:1.0:profile:XSS:detail:Certificate"><dss:Code>urn:afirma:dss:1.0:profile:XSS:detail:Certificate:code:ValidPeriod</dss:Code></vr:ValidityPeriodOK><vr:ExtensionsOK
-      // Type="urn:afirma:dss:1.0:profile:XSS:detail:Certificate"><dss:Code>urn:afirma:dss:1.0:profile:XSS:detail:Certificate:code:ValidExtension</dss:Code></vr:ExtensionsOK><vr:SignatureOK><vr:SigMathOK
-      // Type="urn:afirma:dss:1.0:profile:XSS:detail:Certificate"><dss:Code>urn:afirma:dss:1.0:profile:XSS:detail:Certificate:code:ValidSignature</dss:Code></vr:SigMathOK></vr:SignatureOK><vr:CertificateStatus><vr:CertStatusOK
-      // Type="urn:afirma:dss:1.0:profile:XSS:detail:Certificate"><dss:Code>urn:afirma:dss:1.0:profile:XSS:detail:Certificate:code:ValidStatus</dss:Code></vr:CertStatusOK><vr:RevocationEvidence><vr:CRLValidity><vr:CRLIdentifier><xades:Issuer>CN=MINISDEF-EC-WPG,OU=PKI,O=MDEF,C=ES</xades:Issuer><xades:IssueTime>2017-03-14T10:29:40.000Z</xades:IssueTime><xades:Number>45713</xades:Number></vr:CRLIdentifier><vr:SignatureOK><vr:SigMathOK
-      // Type="urn:afirma:dss:1.0:profile:XSS:detail:RevocationStatusEvidence"><dss:Code>urn:afirma:dss:1.0:profile:XSS:detail:RevocationStatusEvidence:code:ValidSignature</dss:Code></vr:SigMathOK></vr:SignatureOK></vr:CRLValidity></vr:RevocationEvidence></vr:CertificateStatus></vr:CertificateValidity><vr:TrustOrigin
-      // Type="urn:oasis:names:tc:dss:1.0:trustorigin:certDataBase"></vr:TrustOrigin></vr:PathValidityDetail></vr:CertificatePathValidity></vr:SignatureTimeStamp></vr:UnsignedSignatureProperties></vr:UnsignedProperties></vr:Properties>";
-
-    Pattern p = Pattern.compile(str);
-    Matcher m = p.matcher(xml);
-
-    ArrayList<TimeStampInfo> list = new ArrayList<TimeStampInfo>();
-
+    List<TimeStampInfo> list = new ArrayList<TimeStampInfo>();
     SimpleDateFormat dateFormat = dateFormatTimeStamp.get();
 
+    Matcher m = timeStampPattern.matcher(xml);
     while (m.find()) {
 
       TimeStampInfo tsi = new TimeStampInfo();
@@ -337,7 +327,6 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
       tsi.setCertificateSubject(m.group(4));
 
       list.add(tsi);
-
     }
 
     if (list.size() == 0) {
@@ -350,12 +339,10 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
 
   protected static String[][] parseAlgorithDigest(String xml) {
 
-    String str = "<vr:DigestAlgAndValue><ds:DigestMethod Algorithm=\"(.+?)\"></ds:DigestMethod><ds:DigestValue><!\\[CDATA\\[(.+?)\\]\\]></ds:DigestValue></vr:DigestAlgAndValue>";
-    Pattern p = Pattern.compile(str);
-    Matcher m = p.matcher(xml);
+    List<String> entriesAlg = new ArrayList<String>();
+    List<String> entriesDig = new ArrayList<String>();
 
-    ArrayList<String> entriesAlg = new ArrayList<String>();
-    ArrayList<String> entriesDig = new ArrayList<String>();
+    Matcher m = algorithmDigestPattern.matcher(xml);
     while (m.find()) {
       entriesAlg.add(m.group(1));
       entriesDig.add(m.group(2));
@@ -366,7 +353,6 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
     }
 
     String[] entriesAlgStr = entriesAlg.toArray(new String[0]);
-
     String[] entriesDigStr = entriesDig.toArray(new String[0]);
 
     return new String[][] { entriesAlgStr, entriesDigStr };
@@ -377,7 +363,7 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
 
     String[] parts = xml.split(Pattern.quote(separator));
 
-    ArrayList<String[]> certs = new ArrayList<String[]>();
+    List<String[]> certs = new ArrayList<String[]>();
 
     for (String xmlPart : parts) {
 
@@ -403,7 +389,7 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
 
     int fromIndex = 0;
 
-    ArrayList<String> entries = new ArrayList<String>();
+    List<String> entries = new ArrayList<String>();
     while (true) {
 
       int preIndex = xml.indexOf(pre, fromIndex);
@@ -421,24 +407,6 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
 
     }
 
-    String[] entriesStr;
-    if (entries.size() == 0) {
-      entriesStr = null;
-    } else {
-      entriesStr = entries.toArray(new String[0]);
-    }
-    return entriesStr;
-  }
-
-  protected static String[] parseXmlTag(String xml, String pre, String post) {
-    Pattern p = Pattern.compile(pre + "(.+?)" + post);
-    Matcher m = p.matcher(xml);
-
-    ArrayList<String> entries = new ArrayList<String>();
-
-    while (m.find()) {
-      entries.add(m.group(1));
-    }
     String[] entriesStr;
     if (entries.size() == 0) {
       entriesStr = null;
