@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.util.Properties;
 
 import org.fundaciobit.pluginsib.core.utils.FileUtils;
-import org.fundaciobit.pluginsib.core.utils.XTrustProvider;
 import org.fundaciobit.plugins.certificate.InformacioCertificat;
 import org.fundaciobit.plugins.validatesignature.api.IValidateSignaturePlugin;
 import org.fundaciobit.plugins.validatesignature.api.SignatureDetailInfo;
@@ -21,7 +20,6 @@ import org.fundaciobit.plugins.validatesignature.api.ValidationStatus;
  */
 public class ValidateSignatureMain {
 
-  
   public static void main(String[] args) {
     
     if (args.length != 3) {
@@ -68,8 +66,6 @@ public class ValidateSignatureMain {
       System.exit(-1);
       return;
     }
-    
-    XTrustProvider.install();
     
     IValidateSignaturePlugin plugin;
     plugin = new AfirmaCxfValidateSignaturePlugin(packageBase, pluginProperties);
@@ -149,11 +145,5 @@ public class ValidateSignatureMain {
       System.out.println("\n\n\n");
 
 
-  };
-
-  public static boolean compareStr(String str1, String str2) {
-    return (str1 == null ? str2 == null : str1.equals(str2));
   }
-
-  
 }

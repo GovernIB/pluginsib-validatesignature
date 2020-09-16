@@ -148,8 +148,6 @@ public class TestEsborrar {
 
   public void run() throws Exception {
 
-    // XTrustProvider.install();
-
     IValidateSignaturePlugin plugin = instantiatePlugin();
 
     // byte[] signature = FileUtils.toByteArray(new FileInputStream(new

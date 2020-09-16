@@ -212,7 +212,6 @@ public class TestEsborrar {
   @SuppressWarnings({ "resource", "rawtypes" })
   public void run() throws Exception {
 
-    // XTrustProvider.install();
 
     IValidateSignaturePlugin plugin = instantiatePlugin();
 

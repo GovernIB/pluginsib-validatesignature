@@ -16,6 +16,7 @@
   </modules>
   <profiles>
     <profile>
+      <id>integra</id>
       <activation>
         <jdk>[1.7,)</jdk>
       </activation>

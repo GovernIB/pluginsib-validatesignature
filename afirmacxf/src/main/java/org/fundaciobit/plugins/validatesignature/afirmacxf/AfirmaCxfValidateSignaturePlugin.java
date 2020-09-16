@@ -2,7 +2,6 @@ package org.fundaciobit.plugins.validatesignature.afirmacxf;
 
 import java.security.Provider;
 import java.security.Security;
-import java.security.cert.X509Certificate;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,12 +20,8 @@ import java.io.InputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.lang.reflect.Method;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.nio.charset.Charset;
 
-import javax.net.ssl.X509TrustManager;
 import javax.xml.crypto.MarshalException;
 import javax.xml.crypto.dsig.Reference;
 import javax.xml.crypto.dsig.XMLSignature;
@@ -41,7 +36,6 @@ import org.bouncycastle.cms.CMSSignedData;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.util.encoders.Base64;
 import org.fundaciobit.pluginsib.core.utils.FileUtils;
-import org.fundaciobit.pluginsib.core.utils.XTrustProvider;
 import org.fundaciobit.pluginsib.utils.cxf.CXFUtils;
 import org.fundaciobit.pluginsib.utils.cxf.ClientHandler;
 import org.fundaciobit.pluginsib.utils.cxf.ClientHandlerCertificate;
@@ -188,28 +182,28 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
           SIGNPROFILE_PADES_LTV); // = "urn:afirma:dss:1.0:profile:XSS:PAdES:1.1.2:forms:LTV";
 
 
-      /**
+      /*
        * TODO Constant DSSConstants.SignatureForm.B_LEVEL
        *  Attribute that represents B_LEVEL identifier form.
        */
       localSignProfile2PluginSignProfile.put("urn:afirma:dss:1.0:profile:XSS:AdES:forms:B-Level",
           SIGNPROFILE_BES); 
 
-      /**
+      /*
        * TODO Constant DSSConstants.SignatureForm.T_LEVEL
        *  Attribute that represents T_LEVEL identifier form.
        */
       localSignProfile2PluginSignProfile.put("urn:afirma:dss:1.0:profile:XSS:AdES:forms:T-Level",
           SIGNPROFILE_T); 
 
-      /**
+      /*
        * TODO Constant DSSConstants.SignatureForm.LT_LEVEL
        *  Attribute that represents LT_LEVEL identifier form..
        */
       localSignProfile2PluginSignProfile.put("urn:afirma:dss:1.0:profile:XSS:AdES:forms:LT-Level",
           SIGNPROFILE_XL); 
 
-      /**
+      /*
        * TODO Constant DSSConstants.SignatureForm.LTA_LEVEL
        *  Attribute that represents LT_LEVEL identifier form.
        */
@@ -238,9 +232,7 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
 
   public static final String AFIRMACXF_BASE_PROPERTIES = VALIDATE_SIGNATURE_BASE_PROPERTY
       + "afirmacxf.";
-
-  public static final SimpleDateFormat dateFormat = new SimpleDateFormat(
-      "yyyy-MM-dd EEE HH:mm:ss Z", new Locale("es"));
+  public static final String IGNORE_SERVER_CERTIFICATES = AFIRMACXF_BASE_PROPERTIES + "ignoreservercertificates";
 
   public static final SimpleDateFormat dateFormatTimeStamp = new SimpleDateFormat(
       "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", new Locale("es"));
@@ -275,25 +267,15 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
       + "authorization.ks.cert.password";
 
   public static final String PRINT_XML = AFIRMACXF_BASE_PROPERTIES + "printxml";
-  
-  /**
-   * 
-   */
+
   public AfirmaCxfValidateSignaturePlugin() {
     super();
   }
 
-  /**
-   * @param propertyKeyBase
-   * @param properties
-   */
   public AfirmaCxfValidateSignaturePlugin(String propertyKeyBase, Properties properties) {
     super(propertyKeyBase, properties);
   }
 
-  /**
-   * @param propertyKeyBase
-   */
   public AfirmaCxfValidateSignaturePlugin(String propertyKeyBase) {
     super(propertyKeyBase);
   }
@@ -358,7 +340,7 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
       return null;
     }
 
-    return list.toArray(new TimeStampInfo[list.size()]);
+    return list.toArray(new TimeStampInfo[0]);
 
   }
 
@@ -379,9 +361,9 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
       return null;
     }
 
-    String[] entriesAlgStr = entriesAlg.toArray(new String[entriesAlg.size()]);
+    String[] entriesAlgStr = entriesAlg.toArray(new String[0]);
 
-    String[] entriesDigStr = entriesDig.toArray(new String[entriesDig.size()]);
+    String[] entriesDigStr = entriesDig.toArray(new String[0]);
 
     return new String[][] { entriesAlgStr, entriesDigStr };
   }
@@ -393,9 +375,8 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
 
     ArrayList<String[]> certs = new ArrayList<String[]>();
 
-    for (int i = 0; i < parts.length; i++) {
+    for (String xmlPart : parts) {
 
-      String xmlPart = parts[i];
       String[] values = parseXmlByIndexOf(xmlPart, pre, post);
 
       if (values != null) {
@@ -440,7 +421,7 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
     if (entries.size() == 0) {
       entriesStr = null;
     } else {
-      entriesStr = entries.toArray(new String[entries.size()]);
+      entriesStr = entries.toArray(new String[0]);
     }
     return entriesStr;
   }
@@ -458,7 +439,7 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
     if (entries.size() == 0) {
       entriesStr = null;
     } else {
-      entriesStr = entries.toArray(new String[entries.size()]);
+      entriesStr = entries.toArray(new String[0]);
     }
     return entriesStr;
   }
@@ -543,7 +524,7 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
       inParams.put(DSSTagsRequest.CHECK_CERTIFICATE_STATUS, "true");
     }
 
-    /**
+    /*
      * OK OptionalParameters optParam = new OptionalParameters();
      * verSigReq.setOptionalParameters(optParam);
      * optParam.setAdditionalReportOption(true);
@@ -588,7 +569,7 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
     }
     
     
-    String xadesFormat = null;
+    String xadesFormat;
     boolean isXAdES;
     
     isXAdES = CXFUtils.isXMLFormat(signData);
@@ -940,7 +921,7 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
 
       String profilePlugin = localSignProfile2PluginSignProfile.get(profile);
       
-      if (pluginType != null && (SIGNTYPE_PAdES.equals(pluginType) || SIGNTYPE_CAdES.equals(pluginType) )) {
+      if ((SIGNTYPE_PAdES.equals(pluginType) || SIGNTYPE_CAdES.equals(pluginType))) {
 
         List<IndividualSignatureReport> reports = verSigRes.getVerificationReport();
         if (reports != null && reports.size() !=0) {
@@ -1138,7 +1119,7 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
             + report.getSignaturePolicyIdentifier());
 
         if (report.getSigPolicyDocument() != null) {
-          log.info("  SING report.getSigPolicyDocument()" + report.getSigPolicyDocument());
+          log.info("  SING report.getSigPolicyDocument()" + Arrays.toString(report.getSigPolicyDocument()));
         }
 
       }
@@ -1200,12 +1181,12 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
       return "";
     }
 
-    StringBuffer str = new StringBuffer(" +++++  DETAIL " + title + " +++++\n");
+    StringBuilder str = new StringBuilder(" +++++  DETAIL " + title + " +++++\n");
     int d = 0;
     for (Detail detail : details) {
-      str.append(d + ".-CODE=" + detail.getCode() + "\n");
-      str.append(d + ".-MESS=" + detail.getMessage() + "\n");
-      str.append(d + ".-TYPE=" + detail.getType() + "\n");
+      str.append(d).append(".-CODE=").append(detail.getCode()).append("\n");
+      str.append(d).append(".-MESS=").append(detail.getMessage()).append("\n");
+      str.append(d).append(".-TYPE=").append(detail.getType()).append("\n");
     }
     str.append("\n");
     return str.toString();
@@ -1224,8 +1205,10 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
     checkNullProperty(ENDPOINT, endPoint);
     
     if (endPoint.toLowerCase().startsWith("https")) {
-      if ("true".equalsIgnoreCase(getProperty(AFIRMACXF_BASE_PROPERTIES + "ignoreservercertificates"))) {
-        XTrustProvider.install();
+      if ("true".equalsIgnoreCase(getProperty(IGNORE_SERVER_CERTIFICATES))) {
+        throw new UnsupportedOperationException("La propietat [" + IGNORE_SERVER_CERTIFICATES + "] ja no està soportada." +
+                "Si necessita connectar a un servidor SSL amb un certificat no reconegut per la JVM, " +
+                "incorpori'l al trustStore.");
       }
     }
     
@@ -1287,25 +1270,6 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
 
   }
 
-  
-  public class TrustAllX509TrustManager implements X509TrustManager {
-
-    @Override
-    public X509Certificate[] getAcceptedIssuers() {
-      return null;
-    }
-
-    @Override
-    public void checkClientTrusted(X509Certificate[] certs, String authType) {
-    }
-
-    @Override
-    public void checkServerTrusted(X509Certificate[] certs, String authType) {
-    }
-
-  }
-  
-
   // ----------------------------------------------------------------------------
   // ----------------------------------------------------------------------------
   // ------------- METODES COMUNICACIO AFIRMA FEDERAT
@@ -1313,20 +1277,6 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
   // ----------------------------------------------------------------------------
   // ----------------------------------------------------------------------------
 
-  private static void addSoftwareLibrary(File file) throws Exception {
-    Method method = URLClassLoader.class
-        .getDeclaredMethod("addURL", new Class[] { URL.class });
-    method.setAccessible(true);
-    method.invoke(ClassLoader.getSystemClassLoader(), new Object[] { file.toURI().toURL() });
-  }
-
-  public static boolean compareStr(String str1, String str2) {
-    return (str1 == null ? str2 == null : str1.equals(str2));
-  }
-
-  
-  
-  
   protected TransformersFacade getTransformersFacade() throws Exception {
 
     
@@ -1385,8 +1335,7 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
   
   public static final Charset UTF_8 = Charset.forName("UTF-8");
  
-  public void incorporateXMLSignature(Map<String, Object> inputParameters, byte[] signature, String xadesFormat)
-      throws Exception {
+  public void incorporateXMLSignature(Map<String, Object> inputParameters, byte[] signature, String xadesFormat) {
 
     if (SIGNFORMAT_IMPLICIT_ENVELOPING_ATTACHED.equals(xadesFormat)) { // "XAdES Enveloping"
       inputParameters.put("dss:SignatureObject", new String(signature, UTF_8));
@@ -1407,10 +1356,6 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
   
   /**
    * AQUEST MÈTODE ESTA DUPLICAT AL PLUGIN-INTEGR@
-   * @param signType
-   * @param signData
-   * @return
-   * @throws Exception
    */
   protected String getSignFormat(String signType, final byte[] signData) throws Exception {
     String signFormat;
@@ -1453,10 +1398,7 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
   
   
   /**
-   * AQUEST MÈTODE ESTA DUPLICAT AL PLUGIN-INTEGR@ 
-   * @param eSignature
-   * @return
-   * @throws SigningException
+   * AQUEST MÈTODE ESTA DUPLICAT AL PLUGIN-INTEGR@
    */
   public static String getXAdESFormat(byte[] signature) throws Exception {
     
@@ -1489,8 +1431,8 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
       throw new SigningException(Language.getResIntegra("XS005"), e);
     }
     List<?> references = xmlSignature.getSignedInfo().getReferences();
-    for (int i = 0; i < references.size(); ++i) {
-      if (!"".equals(((Reference) references.get(i)).getURI()))
+    for (Object reference : references) {
+      if (!"".equals(((Reference) reference).getURI()))
         continue;
       //  "XAdES Enveloped"
       return SIGNFORMAT_IMPLICIT_ENVELOPED_ATTACHED;
@@ -1501,10 +1443,7 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
 
 
   /**
-   * AQUEST MÈTODE ESTA DUPLICAT AL PLUGIN-INTEGR@  
-   * @param signature
-   * @return
-   * @throws Exception
+   * AQUEST MÈTODE ESTA DUPLICAT AL PLUGIN-INTEGR@
    */
   public static String getCAdESFormat(byte[] signature) throws Exception {
 
