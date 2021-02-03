@@ -34,8 +34,8 @@ import org.bouncycastle.asn1.cms.SignedData;
 import org.bouncycastle.cms.CMSSignedData;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.util.encoders.Base64;
+import org.fundaciobit.plugins.validatesignature.afirmacxf.utils.XMLUtil;
 import org.fundaciobit.pluginsib.core.utils.FileUtils;
-import org.fundaciobit.pluginsib.utils.cxf.CXFUtils;
 import org.fundaciobit.pluginsib.utils.cxf.ClientHandler;
 import org.fundaciobit.pluginsib.utils.cxf.ClientHandlerCertificate;
 import org.fundaciobit.pluginsib.utils.cxf.ClientHandlerUsernamePassword;
@@ -629,7 +629,7 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
     
     
     String xadesFormat;
-    boolean isXAdES = CXFUtils.isXMLFormat(signData);
+    boolean isXAdES = XMLUtil.isXml(signData);
     log.debug("\n\n ES XADES ?? " + isXAdES + " \n\n");
     if (isXAdES) {
 
@@ -654,7 +654,7 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
 
       String encodedDoc = new String(Base64Coder.encodeBase64(docData));
 
-      if (CXFUtils.isXMLFormat(docData)) {
+      if (XMLUtil.isXml(docData)) {
         
         //dss_InputDocuments_dss_Document_dss_Base64XML
         inParams.put(DSSTagsRequest.BASE64XML, encodedDoc);
