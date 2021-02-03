@@ -39,3 +39,4 @@ nb-configuration.xml
 /afirmacxf-jboss7/resultats.txt
 /afirmacxf-jboss7/example.log
 /afirmacxf-jboss7/tester
+/afirmacxf-jboss7/config/*.jks
