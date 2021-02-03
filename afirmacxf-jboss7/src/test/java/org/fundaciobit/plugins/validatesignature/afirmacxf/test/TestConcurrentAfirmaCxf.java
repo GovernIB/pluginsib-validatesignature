@@ -68,9 +68,21 @@ public class TestConcurrentAfirmaCxf {
     @Test
     public void testValidacio() {
 
+        System.out.println("iniciant warmapp");
+        // WARMMMM
+        for (final String file : tests.keySet()) {
+            try {
+                testValidacio(file, tests.get(file));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
         ExecutorService executor = Executors.newFixedThreadPool(30);
 
         final AtomicInteger firmes = new AtomicInteger(0);
+
+        System.out.println("iniciant test");
 
         long startTime = System.nanoTime();
 
