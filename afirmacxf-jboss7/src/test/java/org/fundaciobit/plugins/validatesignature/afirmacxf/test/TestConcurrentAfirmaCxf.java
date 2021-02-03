@@ -75,6 +75,7 @@ public class TestConcurrentAfirmaCxf {
                 testValidacio(file, tests.get(file));
             } catch (Exception e) {
                 e.printStackTrace();
+                Assert.fail();
             }
         }
 

@@ -462,13 +462,10 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
 
     List<String[]> certs = new ArrayList<String[]>();
 
-    for (String xmlPart : parts) {
-
-      String[] values = parseXmlByIndexOf(xmlPart, pre, post);
-
-      if (values != null) {
-        certs.add(values);
-      }
+    // hem de començar per 1, perquè el primer tros és el principi del document
+    for (int i = 1, partsLength = parts.length; i < partsLength; i++) {
+      String[] values = parseXmlByIndexOf(parts[i], pre, post);
+      certs.add(values);
     }
 
     String[][] entriesStr;
@@ -478,7 +475,6 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
       entriesStr = certs.toArray(new String[certs.size()][]);
     }
     return entriesStr;
-
   }
 
   private String[] parseXmlByIndexOf(String xml, String pre, String post) {
@@ -841,13 +837,6 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
 
     }
 
-    // XYZ ZZZ
-//    FileWriter fw = new FileWriter("esborrar.txt");
-//    fw.write(xmlOutput);
-//    fw.flush();
-//    fw.close();
-
-    // ALGORTIHM & DIGEST
     {
       String[][] values = parseAlgorithDigest(xmlOutput);
 
@@ -864,34 +853,7 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
 
     }
     // Certificate
-    {
-      // TODO Es pega amb la informació de Segell de Temps ???
-      final String splitBy = "<vr:IndividualSignatureReport>"; // <vr:CertificatePathValidity>";
-
-      final String preA = "<vr:CertificateValue><![CDATA[";
-      final String postA = "]]></vr:CertificateValue>";
-
-      String[][] certificatesB64 = parseXmlByIndexOfAndByGroup(xmlOutput, splitBy, preA, postA);
-
-      if (certificatesB64 != null) {
-
-        initArray(signatureInfo, certificatesB64.length);
-        SignatureDetailInfo[] detailInfo = signatureInfo.getSignatureDetailInfo();
-
-        for (int j = 0; j < detailInfo.length; j++) {
-          String[] certificatesBySign = certificatesB64[j];
-
-          byte[][] chain = new byte[certificatesBySign.length][];
-          for (int i = 0; i < chain.length; i++) {
-            chain[i] = Base64.decode(certificatesBySign[i]);
-          }
-
-          detailInfo[j].setCertificateChain(chain);
-        }
-
-      }
-
-    }
+    extractCertificateChain(xmlOutput, signatureInfo);
 
     // Informació TimeStamp
     TimeStampInfo[] allTSI = parseTimeStamp(xmlOutput);
@@ -1046,6 +1008,35 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
 
   }
 
+  protected void extractCertificateChain(String xmlOutput, ValidateSignatureResponse signatureInfo) {
+    // TODO Es pega amb la informació de Segell de Temps ???
+    final String splitBy = "<vr:IndividualSignatureReport>"; // <vr:CertificatePathValidity>";
+
+    final String preA = "<vr:CertificateValue><![CDATA[";
+    final String postA = "]]></vr:CertificateValue>";
+
+    String[][] certificatesB64 = parseXmlByIndexOfAndByGroup(xmlOutput, splitBy, preA, postA);
+
+    if (certificatesB64 != null) {
+
+      initArray(signatureInfo, certificatesB64.length);
+      SignatureDetailInfo[] detailInfo = signatureInfo.getSignatureDetailInfo();
+
+      for (int j = 0; j < detailInfo.length; j++) {
+        String[] certificatesBySign = certificatesB64[j];
+        if (certificatesBySign != null) {
+          byte[][] chain = new byte[certificatesBySign.length][];
+          for (int i = 0; i < chain.length; i++) {
+            chain[i] = Base64.decode(certificatesBySign[i]);
+          }
+
+          detailInfo[j].setCertificateChain(chain);
+        }
+      }
+
+    }
+  }
+
   protected boolean containsTimeStamp(byte[] signature) {
     try {
       PdfReader reader = new PdfReader(signature);
@@ -1152,7 +1143,6 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
   }
 
   protected void initArray(ValidateSignatureResponse si, int size) {
-
     if (si.getSignatureDetailInfo() == null) {
       SignatureDetailInfo[] array = new SignatureDetailInfo[size];
       si.setSignatureDetailInfo(array);
