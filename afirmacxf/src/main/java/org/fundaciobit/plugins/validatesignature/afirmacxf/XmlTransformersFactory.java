@@ -14,37 +14,40 @@ import java.util.Properties;
 import org.apache.log4j.Logger;
 
 public final class XmlTransformersFactory {
-    private static Logger logger = Logger.getLogger(XmlTransformersFactory.class);
+
+    private static final Logger logger = Logger.getLogger(XmlTransformersFactory.class);
 
     private XmlTransformersFactory() {
     }
 
     public static Class<?> getXmlTransformer(String serviceReq, String method, String type, String version) throws TransformersException {
-        Class res = null;
+        Class<?> res;
         try {
             if (serviceReq == null || method == null || version == null) {
-                throw new TransformersException(Language.getFormatResIntegra("XTF001", new Object[]{serviceReq, method, version}));
+                throw new TransformersException(Language.getFormatResIntegra("XTF001",
+                        new Object[]{serviceReq, method, version}));
             }
             String transformerClass = XmlTransformersFactory.getTransformerClassName(serviceReq, method, type, version);
             if (transformerClass == null) {
-                throw new TransformersException(Language.getFormatResIntegra("XTF002", new Object[]{serviceReq, method, version}));
+                throw new TransformersException(Language.getFormatResIntegra("XTF002",
+                        new Object[]{serviceReq, method, version}));
             }
             res = Class.forName(transformerClass);
             Class<?>[] interfaces = res.getInterfaces();
             boolean found = false;
             for (int i = 0; i < interfaces.length && !found; ++i) {
-                Class c = interfaces[i];
+                Class<?> c = interfaces[i];
                 if (!c.getName().equals(IXmlTransformer.class.getName())) continue;
                 found = true;
             }
             if (!found) {
-                res = null;
-                throw new TransformersException(Language.getFormatResIntegra("XTF003", new Object[]{transformerClass, IXmlTransformer.class.getName()}));
+                throw new TransformersException(Language.getFormatResIntegra("XTF003",
+                        new Object[]{transformerClass, IXmlTransformer.class.getName()}));
             }
-            logger.debug((Object)Language.getFormatResIntegra("XTF004", new Object[]{transformerClass}));
+            logger.debug(Language.getFormatResIntegra("XTF004", new Object[]{transformerClass}));
         }
         catch (ClassNotFoundException e) {
-            logger.error((Object)e);
+            logger.error(e);
             throw new TransformersException(e.getMessage(), e);
         }
         return res;
@@ -57,17 +60,19 @@ public final class XmlTransformersFactory {
         } else if (type.equals("response")) {
             properties = TransformersProperties.getMethodResponseTransformersProperties(serviceReq, method, version);
         }
-        StringBuffer transfClassName = new StringBuffer(serviceReq).append(".");
+        StringBuilder transfClassName = new StringBuilder(serviceReq).append(".");
         transfClassName.append(method).append(".");
         transfClassName.append(version).append(".");
         transfClassName.append(type).append(".");
         transfClassName.append("transformerClass");
-        
-        logger.info(" transformerClass [PROPERTY] => " + transfClassName.toString());
-        
+
+        if (logger.isDebugEnabled()) {
+            logger.debug(" transformerClass [PROPERTY] => " + transfClassName.toString());
+        }
         String res = properties.getProperty(transfClassName.toString());
-        
-        logger.info(" transformerClass [PROPERTY VALUE] => " +res);
+        if (logger.isDebugEnabled()) {
+            logger.debug(" transformerClass [PROPERTY VALUE] => " + res);
+        }
         return res;
     }
 }

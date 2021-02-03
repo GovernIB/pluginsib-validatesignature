@@ -2,7 +2,7 @@ package org.fundaciobit.plugins.validatesignature.afirmacxf;
 
 /*
  * Decompiled with CFR 0_118.
- * 
+ *
  * Could not load the following classes:
  *  org.apache.log4j.Logger
  */
@@ -23,6 +23,7 @@ import org.w3c.dom.Document;
 
 public final class TransformersFacade {
     private static final Logger LOGGER = Logger.getLogger(TransformersFacade.class);
+
     private static TransformersFacade instance;
     private final Properties transformersProperties;
     private final Properties parserParamsProp;
@@ -140,12 +141,9 @@ public final class TransformersFacade {
             LOGGER.error((Object)errorMsg);
             throw new TransformersException(errorMsg);
         }
-        String res = null;
+        String res;
         try {
-            Class transformerClass = XmlTransformersFactory.getXmlTransformer(service, method, "request", version);
-            
-            //LOGGER.info(" transformerClass => " + transformerClass );
-            
+            Class<?> transformerClass = XmlTransformersFactory.getXmlTransformer(service, method, "request", version);
             res = (String)this.invokeCommonXmlTransf(transformerClass, parameters, service, method, "request", version);
         }
         catch (Exception e) {
