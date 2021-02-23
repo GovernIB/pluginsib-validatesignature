@@ -231,7 +231,6 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
 
   private static final String AFIRMACXF_BASE_PROPERTIES = VALIDATE_SIGNATURE_BASE_PROPERTY
       + "afirmacxf.";
-  private static final String IGNORE_SERVER_CERTIFICATES = AFIRMACXF_BASE_PROPERTIES + "ignoreservercertificates";
 
   // TRANSFORMES XML
 
@@ -384,14 +383,6 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
   private String getEndpoint() throws Exception {
     String endPoint = getPropertyRequired(ENDPOINT);
     checkNullProperty(ENDPOINT, endPoint);
-
-    if (endPoint.toLowerCase().startsWith("https")) {
-      if ("true".equalsIgnoreCase(getProperty(IGNORE_SERVER_CERTIFICATES))) {
-        throw new UnsupportedOperationException("La propietat [" + IGNORE_SERVER_CERTIFICATES + "] ja no està soportada." +
-                "Si necessita connectar a un servidor SSL amb un certificat no reconegut per la JVM, " +
-                "incorpori'l al trustStore.");
-      }
-    }
     return endPoint;
   }
 
@@ -940,67 +931,7 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
       // Info de Certificat
       Map<String, Object> certificateInfo = report.getReadableCertificateInfo();
       if (certificateInfo != null && certificateInfo.size() != 0) {
-
-        /*
-        InformacioCertificat ci = new InformacioCertificat();
-        ci.setApellidosResponsable((String) certificateInfo.get("ApellidosResponsable"));
-        ci.setOrganizacionEmisora((String) certificateInfo.get("OrganizacionEmisora"));
-        ci.setSegundoApellidoResponsable((String) certificateInfo
-            .get("segundoApellidoResponsable"));
-        ci.setVersionPolitica((String) certificateInfo.get("versionPolitica"));
-        ci.setUsoCertificado((String) certificateInfo.get("usoCertificado"));
-        ci.setPais((String) certificateInfo.get("pais"));
-        ci.setSubject((String) certificateInfo.get("subject"));
-        ci.setNumeroSerie((String) certificateInfo.get("numeroSerie"));
-        ci.setPrimerApellidoResponsable((String) certificateInfo
-            .get("primerApellidoResponsable"));
-        ci.setNombreApellidosResponsable((String) certificateInfo
-            .get("NombreApellidosResponsable"));
-        String hasta = (String) certificateInfo.get("validoHasta");
-        if (hasta != null) {
-          ci.setValidoHasta(dateFormat.parse(hasta));
-        }
-        ci.setIdPolitica((String) certificateInfo.get("idPolitica"));
-        ci.setIdEuropeo((String) certificateInfo.get("ID_europeo"));
-        String desde = (String) certificateInfo.get("validoDesde");
-        if (desde != null) {
-          ci.setValidoDesde(dateFormat.parse(desde));
-        }
-        ci.setTipoCertificado((String) certificateInfo.get("tipoCertificado"));
-        ci.setEmail((String) certificateInfo.get("email"));
-        ci.setClasificacion((String) certificateInfo.get("clasificacion"));
-        ci.setIdEmisor((String) certificateInfo.get("idEmisor"));
-        ci.setNifResponsable((String) certificateInfo.get("NIFResponsable"));
-        ci.setExtensionUsoCertificado((String) certificateInfo.get("extensionUsoCertificado"));
-        ci.setNombreResponsable((String) certificateInfo.get("nombreResponsable"));
-        ci.setPolitica((String) certificateInfo.get("politica"));
-        // Empleat Public
-        ci.setNifEntidadSuscriptora((String) certificateInfo.get("NIFEntidadSuscriptora"));
-        ci.setEntidadSuscriptora((String) certificateInfo.get("entidadSuscriptora"));
-        ci.setUnidadOrganizativa((String) certificateInfo.get("unidadOrganizativa"));
-        ci.setNumeroIdentificacionPersonal((String) certificateInfo
-            .get("numeroIdentificacionPersonal"));
-        ci.setOrganizacion((String) certificateInfo.get("organizacion"));
-        ci.setPuesto((String) certificateInfo.get("puesto"));
-        */
-
-        /*
-         * InfoCert[NIFEntidadSuscriptora] = S0711001H
-         * InfoCert[entidadSuscriptora] = COMUNITAT AUTONOMA DE LES ILLES
-         * BALEARS InfoCert[IDlogOn] = null InfoCert[unidadOrganizativa] =
-         * FUNDACIÓ BALEAR D'INNOVACIÓ I TECNOLOGIA - ADMINISTRACÍO DIGITAL
-         * InfoCert[nombreResponsable] = ANTONI
-         * InfoCert[numeroIdentificacionPersonal] = U80067
-         * InfoCert[organizacion] = COMUNITAT AUTONOMA DE LES ILLES BALEARS
-         * InfoCert[puesto] = CONSULTOR SENIOR InfoCert[extensionUsoCertificado]
-         * = KeyPurposeId 0: Any extended key usage
-         */
-
-        // TODO XYZ ZZZ Falta resta de propietats
-        // ci.setOtherProperties(otherProperties);
-
         di.setCertificateInfo(InfoCertificatUtils.processInfoCertificate(certificateInfo));
-
       }
     }
 
