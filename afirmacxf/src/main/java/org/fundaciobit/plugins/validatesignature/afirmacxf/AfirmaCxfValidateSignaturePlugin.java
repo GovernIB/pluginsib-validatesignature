@@ -357,7 +357,7 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
       getClientHandler().addSecureHeader(api);
 
     } catch (Exception e) {
-      throw new RuntimeException("Error inicialitzant API WS");
+      throw new RuntimeException("Error inicialitzant API WS", e);
     }
   }
 
