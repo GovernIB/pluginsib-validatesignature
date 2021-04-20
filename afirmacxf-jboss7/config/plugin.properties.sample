@@ -9,7 +9,7 @@ org.fundaciobit.exemple.base.plugins.validatesignature.afirmacxf.debug=true
 org.fundaciobit.exemple.base.plugins.validatesignature.afirmacxf.printxml=true
 
 # Timeouts de connexió en milisegons. Els valors per defecte són 20000 = 20 segons
-org.fundaciobit.exemple.base.plugins.validatesignature.afirmacxf.connecTimeout=10000
+org.fundaciobit.exemple.base.plugins.validatesignature.afirmacxf.connectTimeout=10000
 org.fundaciobit.exemple.base.plugins.validatesignature.afirmacxf.readTimeout=10000
 
 org.fundaciobit.exemple.base.plugins.validatesignature.afirmacxf.TransformersTemplatesPath=D:/dades/dades/CarpetesPersonals/Programacio/pluginsib-1.0/plugins-validatesignature/afirmacxf/config/transformersTemplates
