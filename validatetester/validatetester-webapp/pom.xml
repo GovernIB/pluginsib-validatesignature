@@ -4,14 +4,14 @@
 
     <artifactId>pluginsib-validatesignature-tester-webapp</artifactId>
     <groupId>org.fundaciobit.pluginsib.validatesignature</groupId>
-    <version>2.0.0</version>
+    <version>2.0.6</version>
     <packaging>war</packaging>
 
     <name> PluginsIB - Validate Signature - Validate Tester - WebApp</name>
 
     <parent>
         <groupId>org.fundaciobit.pluginsib.validatesignature</groupId>
-        <version>2.0.0</version>
+        <version>2.0.6</version>
         <artifactId>pluginsib-validatesignature-tester</artifactId>
     </parent>
 
@@ -28,7 +28,7 @@
         <dependency>
             <groupId>org.fundaciobit.pluginsib.validatesignature</groupId>
             <artifactId>pluginsib-validatesignature-api</artifactId>
-            <version>2.0.0</version>
+            <version>2.0.6</version>
             <scope>provided</scope>
         </dependency>
 
@@ -38,7 +38,7 @@
         <dependency>
             <artifactId>pluginsib-validatesignature-tester-ejb</artifactId>
             <groupId>org.fundaciobit.pluginsib.validatesignature</groupId>
-            <version>2.0.0</version>
+            <version>2.0.6</version>
             <scope>provided</scope>
         </dependency>
 

@@ -4,11 +4,11 @@
   <groupId>org.fundaciobit.pluginsib.validatesignature</groupId>
   <artifactId>pluginsib-validatesignature-fake</artifactId>
   <packaging>jar</packaging>
-  <version>2.0.0</version>
+  <version>2.0.6</version>
   <name>PluginsIB - Validate Signature - Fake</name>
   <parent>
     <groupId>org.fundaciobit.pluginsib.validatesignature</groupId>
-    <version>2.0.0</version>
+    <version>2.0.6</version>
     <artifactId>pluginsib-validatesignature</artifactId>
   </parent>
   <url>http://maven.apache.org</url>
@@ -16,7 +16,7 @@
     <dependency>
       <groupId>org.fundaciobit.pluginsib.validatesignature</groupId>
       <artifactId>pluginsib-validatesignature-api</artifactId>
-      <version>2.0.0</version>
+      <version>2.0.6</version>
     </dependency>
   </dependencies>
   <build>
