@@ -29,6 +29,10 @@ import javax.xml.ws.BindingProvider;
 import freemarker.cache.ClassTemplateLoader;
 import net.java.xades.security.xml.XMLSignatureElement;
 
+import org.apache.cxf.endpoint.Client;
+import org.apache.cxf.frontend.ClientProxy;
+import org.apache.cxf.transport.http.HTTPConduit;
+import org.apache.cxf.transports.http.configuration.HTTPClientPolicy;
 import org.bouncycastle.asn1.cms.ContentInfo;
 import org.bouncycastle.asn1.cms.SignedData;
 import org.bouncycastle.cms.CMSSignedData;
@@ -263,6 +267,10 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
 
   private static final String PRINT_XML = AFIRMACXF_BASE_PROPERTIES + "printxml";
 
+  private static final String CONNECT_TIMEOUT = AFIRMACXF_BASE_PROPERTIES + "connectTimeout";
+
+  private static final String READ_TIMEOUT = AFIRMACXF_BASE_PROPERTIES + "readTimeout";
+
   private static final ThreadLocal<SimpleDateFormat> dateFormatTimeStamp =
     new ThreadLocal<SimpleDateFormat>() {
       protected SimpleDateFormat initialValue() {
@@ -353,7 +361,16 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
 
       Map<String, Object> reqContext = ((BindingProvider) api).getRequestContext();
       reqContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, getEndpoint());
+
       getClientHandler().addSecureHeader(api);
+
+      // Fixar timeout
+      HTTPClientPolicy httpClientPolicy = new HTTPClientPolicy();
+      httpClientPolicy.setConnectionTimeout(getConnectTimeout());
+      httpClientPolicy.setReceiveTimeout(getReadTimeout());
+
+      Client client = ClientProxy.getClient(api);
+      ((HTTPConduit) client.getConduit()).setClient(httpClientPolicy);
 
     } catch (Exception e) {
       throw new RuntimeException("Error inicialitzant API WS", e);
@@ -381,20 +398,22 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
   }
 
   private String getEndpoint() throws Exception {
-    String endPoint = getPropertyRequired(ENDPOINT);
-    checkNullProperty(ENDPOINT, endPoint);
-    return endPoint;
+    return getPropertyRequired(ENDPOINT);
+  }
+
+  private long getConnectTimeout() {
+    String connectTimeoutProperty = getProperty(CONNECT_TIMEOUT, "20000");
+    return Long.parseLong(connectTimeoutProperty);
+
+  }
+
+  private long getReadTimeout() {
+    String readTimeoutProperty = getProperty(READ_TIMEOUT, "20000");
+    return Long.parseLong(readTimeoutProperty);
   }
 
   ///////////////////////////////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////////////
-
-  private void checkNullProperty(String key, String value) throws Exception {
-    if (value == null) {
-      throw new Exception("Property " + key + " for " + this.getClass().getName()
-          + " must be defined.");
-    }
-  }
 
   private TimeStampInfo[] parseTimeStamp(String xml) {
 
