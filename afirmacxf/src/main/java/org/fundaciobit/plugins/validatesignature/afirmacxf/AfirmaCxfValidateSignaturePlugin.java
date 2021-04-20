@@ -43,7 +43,7 @@ import org.fundaciobit.pluginsib.core.utils.FileUtils;
 import org.fundaciobit.pluginsib.utils.cxf.ClientHandler;
 import org.fundaciobit.pluginsib.utils.cxf.ClientHandlerCertificate;
 import org.fundaciobit.pluginsib.utils.cxf.ClientHandlerUsernamePassword;
-import org.fundaciobit.plugins.certificate.afirmacxf.InfoCertificatUtils;
+import org.fundaciobit.pluginsib.validatecertificate.afirmacxf.InfoCertificatUtils;
 import org.fundaciobit.plugins.validatesignature.afirmacxf.validarfirmaapi.DSSSignature;
 import org.fundaciobit.plugins.validatesignature.afirmacxf.validarfirmaapi.DSSSignatureService;
 import org.fundaciobit.plugins.validatesignature.api.AbstractValidateSignaturePlugin;

@@ -44,7 +44,7 @@ import org.fundaciobit.pluginsib.validatesignature.esignature.ws.SoapDocumentVal
 import org.fundaciobit.pluginsib.validatesignature.esignature.ws.SoapDocumentValidationServiceImplService;
 import org.fundaciobit.pluginsib.validatesignature.esignature.ws.Timestamp;
 import org.fundaciobit.pluginsib.validatesignature.esignature.ws.TrustedList;
-import org.fundaciobit.plugins.certificate.InformacioCertificat;
+import org.fundaciobit.pluginsib.validatecertificate.InformacioCertificat;
 import org.fundaciobit.plugins.validatesignature.api.AbstractValidateSignaturePlugin;
 import org.fundaciobit.plugins.validatesignature.api.IValidateSignaturePlugin;
 import org.fundaciobit.plugins.validatesignature.api.SignatureDetailInfo;

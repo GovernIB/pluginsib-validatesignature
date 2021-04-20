@@ -6,7 +6,7 @@ import java.util.Locale;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
-import org.fundaciobit.plugins.certificate.InformacioCertificat;
+import org.fundaciobit.pluginsib.validatecertificate.InformacioCertificat;
 import org.fundaciobit.pluginsib.core.utils.AbstractPluginPropertiesTranslations;
 
 /**
