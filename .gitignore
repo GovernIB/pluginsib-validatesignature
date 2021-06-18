@@ -19,6 +19,7 @@ nb-configuration.xml
 /afirmacxf/resultsPDF
 /afirmacxf/resultsXAdES
 /afirmacxf/config/plugin.properties
+/afirmacxf/config/*.jks
 # fake
 /fake/bin
 # esignature
@@ -32,11 +33,3 @@ nb-configuration.xml
 /esignature/test.properties
 /esignature/validations
 /esignature/config/config.properties
-# validatetester
-/validatetester/compil.bat
-# afirmacxf-jboss7
-/afirmacxf-jboss7/deps.txt
-/afirmacxf-jboss7/resultats.txt
-/afirmacxf-jboss7/example.log
-/afirmacxf-jboss7/tester
-/afirmacxf-jboss7/config/*.jks

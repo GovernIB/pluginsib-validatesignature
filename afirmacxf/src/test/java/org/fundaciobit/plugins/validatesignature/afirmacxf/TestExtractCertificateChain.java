@@ -1,5 +1,6 @@
 package org.fundaciobit.plugins.validatesignature.afirmacxf;
 
+import org.fundaciobit.plugins.validatesignature.afirmacxf.AfirmaCxfValidateSignaturePlugin;
 import org.fundaciobit.plugins.validatesignature.api.ValidateSignatureResponse;
 import org.fundaciobit.pluginsib.core.utils.FileUtils;
 import org.junit.Assert;
@@ -8,7 +9,6 @@ import org.junit.Test;
 
 import java.io.FileInputStream;
 import java.util.Properties;
-import java.util.regex.Pattern;
 
 public class TestExtractCertificateChain {
 

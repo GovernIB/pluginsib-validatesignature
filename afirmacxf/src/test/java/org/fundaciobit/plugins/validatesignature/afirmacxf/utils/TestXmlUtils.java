@@ -1,5 +1,6 @@
 package org.fundaciobit.plugins.validatesignature.afirmacxf.utils;
 
+import org.fundaciobit.plugins.validatesignature.afirmacxf.utils.XMLUtil;
 import org.fundaciobit.pluginsib.core.utils.FileUtils;
 import org.junit.Assert;
 import org.junit.Test;

@@ -55,6 +55,28 @@ public class TestAfirmaCXF extends AbstractTestValidateSignature {
       
       
     }
+    
+    // XYZ ZZZ
+   /*
+    currentTests.clear();
+    
+    String[][] FIRMA_DOCUMENT = new String[][] {
+
+        { "miniapplet_epes_segelltemps_catcert.pdf", null, SIGNTYPE_PAdES, SIGNPROFILE_EPES, //SIGNPROFILE_T,
+          SIGNFORMAT_IMPLICIT_ENVELOPED_ATTACHED , null },
+      { "miniapplet_epes_segelltemps_afirma.pdf", null, SIGNTYPE_PAdES, SIGNPROFILE_EPES, //SIGNPROFILE_T,
+            SIGNFORMAT_IMPLICIT_ENVELOPED_ATTACHED , null },
+      
+        
+ };
+      
+      
+      for (int i = 0; i < FIRMA_DOCUMENT.length; i++) {
+        currentTests.put(FIRMA_DOCUMENT[i][0], FIRMA_DOCUMENT[i]);
+      }
+   
+    */
+    
     return currentTests;
   }
 
