@@ -1,0 +1,14 @@
+
+plugins.validatesignature=fake,afirmacxf
+
+plugins.validatesignature.fake.class=org.fundaciobit.plugins.validatesignature.fake.FakeValidateSignaturePlugin
+plugins.validatesignature.afirmacxf.class=org.fundaciobit.plugins.validatesignature.afirmacxf.AfirmaCxfValidateSignaturePlugin
+
+plugins.validatesignature.afirmacxf.TransformersTemplatesPath=C:/ruta/transformersTemplates
+plugins.validatesignature.afirmacxf.debug=false
+plugins.validatesignature.afirmacxf.printxml=false
+plugins.validatesignature.afirmacxf.applicationID=APPID
+plugins.validatesignature.afirmacxf.endpoint=https://server/afirmaws/services/DSSAfirmaVerify
+plugins.validatesignature.afirmacxf.authorization.username=USERNAME
+plugins.validatesignature.afirmacxf.authorization.password=PASS
+

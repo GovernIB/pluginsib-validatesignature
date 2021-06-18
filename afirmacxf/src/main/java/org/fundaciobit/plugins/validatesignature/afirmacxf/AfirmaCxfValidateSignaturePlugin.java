@@ -36,7 +36,6 @@ import org.apache.cxf.transports.http.configuration.HTTPClientPolicy;
 import org.bouncycastle.asn1.cms.ContentInfo;
 import org.bouncycastle.asn1.cms.SignedData;
 import org.bouncycastle.cms.CMSSignedData;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.util.encoders.Base64;
 import org.fundaciobit.plugins.validatesignature.afirmacxf.utils.XMLUtil;
 import org.fundaciobit.pluginsib.core.utils.FileUtils;
@@ -97,10 +96,6 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
   static {
     DOCUMENT_BUILDER_FACTORY = DocumentBuilderFactory.newInstance();
     DOCUMENT_BUILDER_FACTORY.setNamespaceAware(true);
-
-    if (Security.getProvider(BouncyCastleProvider.PROVIDER_NAME) == null) {
-      Security.addProvider(new BouncyCastleProvider());
-    }
 
     supportedSignatureRequestedInformation.setReturnCertificateInfo(true);
     supportedSignatureRequestedInformation.setReturnCertificates(true);

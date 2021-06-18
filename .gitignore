@@ -33,3 +33,6 @@ nb-configuration.xml
 /esignature/test.properties
 /esignature/validations
 /esignature/config/config.properties
+# Validat
+/validatesignaturetester/test.properties
+/validatesignaturetester/plugin.properties

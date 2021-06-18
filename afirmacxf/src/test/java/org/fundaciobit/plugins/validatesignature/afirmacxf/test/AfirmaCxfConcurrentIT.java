@@ -29,7 +29,7 @@ import static org.fundaciobit.plugins.validatesignature.api.ValidateSignatureCon
 import static org.fundaciobit.plugins.validatesignature.api.ValidationStatus.SIGNATURE_INVALID;
 import static org.fundaciobit.plugins.validatesignature.api.ValidationStatus.SIGNATURE_VALID;
 
-public class TestConcurrentAfirmaCxf extends BaseAfirmaCxfTest {
+public class AfirmaCxfConcurrentIT extends BaseAfirmaCxfIT {
 
     private static IValidateSignaturePlugin plugin;
 

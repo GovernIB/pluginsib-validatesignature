@@ -16,7 +16,7 @@ import org.fundaciobit.plugins.validatesignature.api.test.SignatureValidationTes
  * @author anadal
  *
  */
-public class TestAfirmaCXF extends AbstractTestValidateSignature {
+public class AfirmaCxfIT extends AbstractTestValidateSignature {
 
   public IValidateSignaturePlugin instantiatePlugin() throws Exception {
     Properties pluginProperties = new Properties();
@@ -108,7 +108,7 @@ public class TestAfirmaCXF extends AbstractTestValidateSignature {
   public static void main(String[] args) {
 
     try {
-      new TestAfirmaCXF().testBasic();
+      new AfirmaCxfIT().testBasic();
     } catch (Exception e) {
       // TODO Auto-generated catch block
       e.printStackTrace();

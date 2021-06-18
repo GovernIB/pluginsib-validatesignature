@@ -4,7 +4,7 @@ import org.fundaciobit.plugins.validatesignature.api.ValidateSignatureResponse;
 import org.fundaciobit.pluginsib.core.utils.FileUtils;
 import org.junit.Assert;
 
-public abstract class BaseAfirmaCxfTest {
+public abstract class BaseAfirmaCxfIT {
 
 
     protected byte[] getResource(String path) throws Exception {

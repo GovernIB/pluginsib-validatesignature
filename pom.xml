@@ -24,6 +24,7 @@
         <module>afirmacxf</module>
         <module>integra</module>
         <module>esignature</module>
+        <module>validatesignaturetester</module>
     </modules>
 
     <dependencyManagement>
