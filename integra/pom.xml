@@ -19,6 +19,12 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.3.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>es.gob.afirma</groupId>
             <artifactId>integra</artifactId>
             <version>1.3.1</version>
@@ -35,6 +41,10 @@
                 <exclusion>
                     <groupId>org.apache.axis</groupId>
                     <artifactId>axis-saaj</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>sun-jaxws</groupId>
+                    <artifactId>stax-ex</artifactId>
                 </exclusion>
                 <exclusion>
                     <groupId>org.apache.santuario</groupId>
@@ -76,11 +86,12 @@
             </exclusions>
         </dependency>
 
+        <!--
         <dependency>
             <groupId>xml-security</groupId>
             <artifactId>xmlsec</artifactId>
             <version>1.3.0</version>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>org.fundaciobit.pluginsib.validatesignature</groupId>
