@@ -13,7 +13,7 @@ public class XMLUtil {
     static final DocumentBuilderFactory DBF = DocumentBuilderFactory.newInstance();
 
     public static boolean isXml(byte[] data) throws ParserConfigurationException, IOException {
-        if (data == null || data.length < 7 || data[0] != '<') {
+        if (data == null || data[0] != '<') {
             return false;
         }
 

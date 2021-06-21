@@ -1,11 +1,13 @@
 package org.fundaciobit.plugins.validatesignature.afirmacxf;
 
 import java.net.URL;
+import java.security.Provider;
 import java.security.Security;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -15,7 +17,6 @@ import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.nio.charset.Charset;
@@ -26,9 +27,11 @@ import javax.xml.crypto.dsig.XMLSignature;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.ws.BindingProvider;
 
+import es.gob.afirma.transformers.TransformersFacade;
 import freemarker.cache.ClassTemplateLoader;
 import net.java.xades.security.xml.XMLSignatureElement;
 
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.cxf.endpoint.Client;
 import org.apache.cxf.frontend.ClientProxy;
 import org.apache.cxf.transport.http.HTTPConduit;
@@ -36,9 +39,7 @@ import org.apache.cxf.transports.http.configuration.HTTPClientPolicy;
 import org.bouncycastle.asn1.cms.ContentInfo;
 import org.bouncycastle.asn1.cms.SignedData;
 import org.bouncycastle.cms.CMSSignedData;
-import org.bouncycastle.util.encoders.Base64;
 import org.fundaciobit.plugins.validatesignature.afirmacxf.utils.XMLUtil;
-import org.fundaciobit.pluginsib.core.utils.FileUtils;
 import org.fundaciobit.pluginsib.utils.cxf.ClientHandler;
 import org.fundaciobit.pluginsib.utils.cxf.ClientHandlerCertificate;
 import org.fundaciobit.pluginsib.utils.cxf.ClientHandlerUsernamePassword;
@@ -71,7 +72,6 @@ import es.gob.afirma.integraFacade.pojo.ProcessingDetail;
 import es.gob.afirma.integraFacade.pojo.VerifySignatureResponse;
 import es.gob.afirma.signature.SigningException;
 import es.gob.afirma.transformers.TransformersConstants;
-import es.gob.afirma.utils.Base64Coder;
 import es.gob.afirma.utils.DSSConstants;
 import es.gob.afirma.utils.GeneralConstants;
 import es.gob.afirma.utils.DSSConstants.DSSTagsRequest;
@@ -312,7 +312,7 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
   /* inicialitzacions */
   private void init() {
     initConfiguration();
-    initTransformerFacade();
+    initTransformersFacade();
     initApi();
   }
 
@@ -323,30 +323,20 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
               new ClassTemplateLoader(this.getClass(), "/template_afirma_validation"));
   }
 
-  private void initTransformerFacade() {
+  private void initTransformersFacade() {
     try {
-      File path = new File(getPropertyRequired(TRANSFORMERSTEMPLATESPATH_PROPERTY));
+      System.setProperty("integra.config", getPropertyRequired(TRANSFORMERSTEMPLATESPATH_PROPERTY));
 
-      Properties parserParamsProp = FileUtils.readPropertiesFromFile(new File(path, "parserParameters.properties"));
-      Properties transformersProperties = FileUtils.readPropertiesFromFile(new File(path, "transformers.properties"));
+      transformersFacade = TransformersFacade.getInstance();
 
-      transformersProperties.setProperty("DSSAfirmaVerify.verify.1_0.request.transformerClass",
-              //"es.gob.afirma.transformers.xmlTransformers.DSSXmlTransformer"
-              "org.fundaciobit.plugins.validatesignature.afirmacxf.DSSXmlTransformer");
-      transformersProperties.setProperty("DSSAfirmaVerify.verify.1_0.parser.transformerClass",
-              //"es.gob.afirma.transformers.parseTransformers.DSSParseTransformer"
-              "org.fundaciobit.plugins.validatesignature.afirmacxf.DSSParseTransformer");
-      transformersProperties.setProperty("TransformersTemplatesPath", path.getAbsolutePath());
+      Properties transfProp = (Properties) FieldUtils.readField(transformersFacade,
+              "transformersProperties", true);
+      transfProp.put("TransformersTemplatesPath", getPropertyRequired(TRANSFORMERSTEMPLATESPATH_PROPERTY));
 
-      TransformersProperties.init(transformersProperties);
-      ParserParameterProperties.init(parserParamsProp);
-
-      transformersFacade = TransformersFacade.init(transformersProperties, parserParamsProp);
     } catch (Exception e) {
       throw new RuntimeException("Error inicialitzant TransformersFacade", e);
     }
   }
-
   private void initApi()  {
     try {
       URL wsdlUrl = getClass().getResource("/wsdl/DSSAfirmaVerify.wsdl");
@@ -644,7 +634,7 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
       incorporateXMLSignature(inParams, signData, xadesFormat);
 
     } else {
-      inParams.put(DSSTagsRequest.SIGNATURE_BASE64, new String(Base64.encode(signData)));
+      inParams.put(DSSTagsRequest.SIGNATURE_BASE64, Base64.getEncoder().encodeToString(signData));
     }
 
     // Ok verSigReq.setDocument(txtSignedFile);
@@ -657,7 +647,7 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
     if (docData != null) {
       // GenerateMessageRequest.generateVerifySignRequest(verSigReq);
 
-      String encodedDoc = new String(Base64Coder.encodeBase64(docData));
+      String encodedDoc = Base64.getMimeEncoder(76, new byte[] {'\n'}).encodeToString(docData);
 
       if (XMLUtil.isXml(docData)) {
         
@@ -739,8 +729,7 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
       xmlInput = processExpressionLanguage("xades_input_template.xml", keys);
     }
 
-   // String xmlInput = new String(FileUtils.readFromFile(file2));
-    
+
     if (debug || "true".equals(getProperty(PRINT_XML))) {
       log.debug("IN_XML = \n" + xmlInput);
     }
@@ -972,7 +961,7 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
         if (certificatesBySign != null) {
           byte[][] chain = new byte[certificatesBySign.length][];
           for (int i = 0; i < chain.length; i++) {
-            chain[i] = Base64.decode(certificatesBySign[i]);
+            chain[i] = Base64.getDecoder().decode(certificatesBySign[i]);
           }
 
           detailInfo[j].setCertificateChain(chain);
@@ -1142,7 +1131,7 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
       inputParameters.put("dss:InputDocuments/dss:Document@ID", idSignaturePtr);
 
       inputParameters.put("dss:InputDocuments/dss:Document/dss:Base64XML",
-          new String(Base64.encode(signature)));
+              Base64.getEncoder().encodeToString(signature));
     }
 
   }
@@ -1199,7 +1188,6 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
     Document eSignature = DOCUMENT_BUILDER_FACTORY.newDocumentBuilder().parse(
         new ByteArrayInputStream(signature));
 
-    XMLSignature xmlSignature;
     String rootName = eSignature.getDocumentElement().getNodeName();
     if (rootName.equalsIgnoreCase("ds:Signature") || rootName.equals("ROOT_COSIGNATURES")) {
       //  "XAdES Enveloping"
@@ -1216,11 +1204,14 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
       throw new SigningException(Language.getResIntegra("XS003"));
     }
     Node signatureNode = signsList.item(0);
+
+    XMLSignature xmlSignature;
     try {
       xmlSignature = new XMLSignatureElement((Element) signatureNode).getXMLSignature();
     } catch (MarshalException e) {
       throw new SigningException(Language.getResIntegra("XS005"), e);
     }
+
     List<?> references = xmlSignature.getSignedInfo().getReferences();
     for (Object reference : references) {
       if (!"".equals(((Reference) reference).getURI()))
@@ -1239,48 +1230,24 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
   private String getCAdESFormat(byte[] signature) throws Exception {
 
     CMSSignedData cmsSignedData = new CMSSignedData(signature);
+    ContentInfo contentInfo = cmsSignedData.toASN1Structure();
+    SignedData signedData = SignedData.getInstance(contentInfo.getContent());
 
-    ContentInfo contentInfo;
-    try {
-      java.lang.reflect.Method method;
-      method = cmsSignedData.getClass().getMethod("toASN1Structure");
-
-      contentInfo = (ContentInfo) method.invoke(cmsSignedData);
-
-    } catch (Exception e) {
-      java.lang.reflect.Method method;
-      method = cmsSignedData.getClass().getMethod("getContentInfo");
-      contentInfo = (ContentInfo) method.invoke(cmsSignedData);
-    }
-
-    java.lang.reflect.Method method;
-    method = contentInfo.getClass().getMethod("getContent");
-
-    Object encodable = method.invoke(contentInfo);
-
-    SignedData signedData = SignedData.getInstance(encodable);
-    ContentInfo contentInfo2 = signedData.getEncapContentInfo();
-    boolean isImplicit = false;
-    if (contentInfo2 != null) {
-
-      // signedData.getEncapContentInfo().getContent() != null) {
-      java.lang.reflect.Method method2;
-      method2 = contentInfo2.getClass().getMethod("getContent");
-
-      Object obj = method2.invoke(contentInfo2);
-
-      if (obj != null) {
-        isImplicit = true;
-      }
-    }
-
-    if (isImplicit) {
+    if (isImplicit(signedData)) {
       //  "CAdES attached/implicit signature";
       return SIGNFORMAT_IMPLICIT_ENVELOPING_ATTACHED;
     } else {
       //  "CAdES detached/explicit signature"
       return SIGNFORMAT_EXPLICIT_DETACHED;
     }
+  }
+
+  private boolean isImplicit(SignedData signedData) {
+    boolean isImplicit = false;
+    if (signedData.getEncapContentInfo() != null) {
+      isImplicit = signedData.getEncapContentInfo().getContent() != null;
+    }
+    return isImplicit;
   }
 
   private String processExpressionLanguage(String plantilla, Map<String, Object> custodyParameters) throws Exception {
