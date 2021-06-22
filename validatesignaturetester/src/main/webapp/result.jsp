@@ -11,9 +11,9 @@
 
     <span id="status"><c:out value="${validateResponse.validationStatus.status}" /></span>
     <span id="errorMsg"><c:out value="${validateResponse.validationStatus.errorMsg}" /></span>       
-    <ol>
+    <ol id="signatures">
         <c:forEach var="detail" items="${validateResponse.signatureDetailInfo}">
-            <li>${detail.certificateInfo.nomCompletResponsable}</li>       
+            <li>${detail.certificateInfo.nomCompletResponsable}</li>
         </c:forEach>
     </ol>
 </body>

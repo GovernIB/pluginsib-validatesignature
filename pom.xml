@@ -23,7 +23,6 @@
         <module>fake</module>
         <module>afirmacxf</module>
         <module>integra</module>
-        <module>esignature</module>
         <module>validatesignaturetester</module>
     </modules>
 
@@ -137,6 +136,28 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <!-- Profile per executar els tests d'integració -->
+            <id>testsIntegracio</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>integration-test</goal>
+                                    <goal>verify</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
     <repositories>
         <repository>
