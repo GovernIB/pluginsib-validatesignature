@@ -22,7 +22,6 @@
         <module>api</module>
         <module>fake</module>
         <module>afirmacxf</module>
-        <module>integra</module>
         <module>validatesignaturetester</module>
     </modules>
 

@@ -1,4 +1,4 @@
-package org.fundaciobit.plugins.validatesignature.afirmacxf.test;
+package org.fundaciobit.plugins.validatesignature.afirmacxf;
 
 import es.gob.afirma.transformers.TransformersException;
 import org.junit.Assert;

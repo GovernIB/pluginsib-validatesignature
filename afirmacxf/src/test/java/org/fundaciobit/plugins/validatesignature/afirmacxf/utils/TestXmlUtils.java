@@ -1,9 +1,10 @@
 package org.fundaciobit.plugins.validatesignature.afirmacxf.utils;
 
-import org.fundaciobit.plugins.validatesignature.afirmacxf.utils.XMLUtil;
 import org.fundaciobit.pluginsib.core.utils.FileUtils;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.nio.charset.StandardCharsets;
 
 public class TestXmlUtils {
 
@@ -26,7 +27,7 @@ public class TestXmlUtils {
     @Test
     public void testXmlInvalid() throws Exception {
         String resource = "<hola>dddd</hol";
-        Assert.assertFalse(XMLUtil.isXml(resource.getBytes("UTF-8")));
+        Assert.assertFalse(XMLUtil.isXml(resource.getBytes(StandardCharsets.UTF_8)));
     }
 
 }

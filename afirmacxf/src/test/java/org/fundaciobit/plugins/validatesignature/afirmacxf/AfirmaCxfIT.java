@@ -1,4 +1,4 @@
-package org.fundaciobit.plugins.validatesignature.afirmacxf.test;
+package org.fundaciobit.plugins.validatesignature.afirmacxf;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.TreeMap;
 
-import org.fundaciobit.plugins.validatesignature.afirmacxf.AfirmaCxfValidateSignaturePlugin;
 import org.fundaciobit.plugins.validatesignature.api.IValidateSignaturePlugin;
 import org.fundaciobit.plugins.validatesignature.api.test.AbstractTestValidateSignature;
 import org.fundaciobit.plugins.validatesignature.api.test.SignatureValidationTestResult;

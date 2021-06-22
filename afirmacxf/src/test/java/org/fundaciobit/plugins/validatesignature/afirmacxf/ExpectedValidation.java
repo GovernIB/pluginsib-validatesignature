@@ -1,4 +1,4 @@
-package org.fundaciobit.plugins.validatesignature.api.test;
+package org.fundaciobit.plugins.validatesignature.afirmacxf;
 
 public class ExpectedValidation {
 

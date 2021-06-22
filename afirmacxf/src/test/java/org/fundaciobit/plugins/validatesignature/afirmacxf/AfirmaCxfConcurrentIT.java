@@ -1,12 +1,9 @@
-package org.fundaciobit.plugins.validatesignature.afirmacxf.test;
+package org.fundaciobit.plugins.validatesignature.afirmacxf;
 
-import org.fundaciobit.plugins.validatesignature.afirmacxf.AfirmaCxfValidateSignaturePlugin;
 import org.fundaciobit.plugins.validatesignature.api.IValidateSignaturePlugin;
 import org.fundaciobit.plugins.validatesignature.api.SignatureRequestedInformation;
 import org.fundaciobit.plugins.validatesignature.api.ValidateSignatureRequest;
 import org.fundaciobit.plugins.validatesignature.api.ValidateSignatureResponse;
-import org.fundaciobit.plugins.validatesignature.api.test.BaseIT;
-import org.fundaciobit.plugins.validatesignature.api.test.ExpectedValidation;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
