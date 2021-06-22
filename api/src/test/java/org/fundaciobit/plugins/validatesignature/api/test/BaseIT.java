@@ -1,10 +1,11 @@
-package org.fundaciobit.plugins.validatesignature.afirmacxf.test;
+package org.fundaciobit.plugins.validatesignature.api.test;
 
 import org.fundaciobit.plugins.validatesignature.api.ValidateSignatureResponse;
+import org.fundaciobit.plugins.validatesignature.api.test.ExpectedValidation;
 import org.fundaciobit.pluginsib.core.utils.FileUtils;
 import org.junit.Assert;
 
-public abstract class BaseAfirmaCxfIT {
+public abstract class BaseIT {
 
 
     protected byte[] getResource(String path) throws Exception {
@@ -16,6 +17,8 @@ public abstract class BaseAfirmaCxfIT {
         Assert.assertEquals(expected.signType, response.getSignType());
         Assert.assertEquals(expected.signProfile, response.getSignProfile());
         Assert.assertEquals(expected.signFormat, response.getSignFormat());
-        Assert.assertEquals(expected.signatureDetailLength, response.getSignatureDetailInfo().length);
+        if (expected.signatureDetailLength > 0) {
+            Assert.assertEquals(expected.signatureDetailLength, response.getSignatureDetailInfo().length);
+        }
     }
 }

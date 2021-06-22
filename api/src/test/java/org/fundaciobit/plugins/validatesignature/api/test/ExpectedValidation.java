@@ -1,6 +1,6 @@
-package org.fundaciobit.plugins.validatesignature.afirmacxf.test;
+package org.fundaciobit.plugins.validatesignature.api.test;
 
-class ExpectedValidation {
+public class ExpectedValidation {
 
     final int validationStatus;
     final String signType;

@@ -5,6 +5,8 @@ import org.fundaciobit.plugins.validatesignature.api.IValidateSignaturePlugin;
 import org.fundaciobit.plugins.validatesignature.api.SignatureRequestedInformation;
 import org.fundaciobit.plugins.validatesignature.api.ValidateSignatureRequest;
 import org.fundaciobit.plugins.validatesignature.api.ValidateSignatureResponse;
+import org.fundaciobit.plugins.validatesignature.api.test.BaseIT;
+import org.fundaciobit.plugins.validatesignature.api.test.ExpectedValidation;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -29,7 +31,7 @@ import static org.fundaciobit.plugins.validatesignature.api.ValidateSignatureCon
 import static org.fundaciobit.plugins.validatesignature.api.ValidationStatus.SIGNATURE_INVALID;
 import static org.fundaciobit.plugins.validatesignature.api.ValidationStatus.SIGNATURE_VALID;
 
-public class AfirmaCxfConcurrentIT extends BaseAfirmaCxfIT {
+public class AfirmaCxfConcurrentIT extends BaseIT {
 
     private static IValidateSignaturePlugin plugin;
 

@@ -86,12 +86,10 @@
             </exclusions>
         </dependency>
 
-        <!--
         <dependency>
-            <groupId>xml-security</groupId>
+            <groupId>org.apache.santuario</groupId>
             <artifactId>xmlsec</artifactId>
-            <version>1.3.0</version>
-        </dependency>-->
+        </dependency>
 
         <dependency>
             <groupId>org.fundaciobit.pluginsib.validatesignature</groupId>
