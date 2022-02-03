@@ -21,7 +21,7 @@ public class ValidationStatus {
 
   protected int status = SIGNATURE_ERROR;
 
-  protected String errorMsg = "Estat no definit";
+  protected String errorMsg = null;
 
   protected Throwable errorException;
   
