@@ -368,6 +368,7 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
       HTTPClientPolicy httpClientPolicy = new HTTPClientPolicy();
       httpClientPolicy.setConnectionTimeout(getConnectTimeout());
       httpClientPolicy.setReceiveTimeout(getReadTimeout());
+      httpClientPolicy.setAllowChunking(false);
 
       Client client = ClientProxy.getClient(api);
       ((HTTPConduit) client.getConduit()).setClient(httpClientPolicy);
