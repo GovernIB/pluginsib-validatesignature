@@ -3,7 +3,7 @@ package org.fundaciobit.plugins.validatesignature.api.test;
 import java.util.Map;
 import java.util.TreeMap;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.fundaciobit.pluginsib.core.utils.FileUtils;
 import org.fundaciobit.plugins.validatesignature.api.IValidateSignaturePlugin;

@@ -1,8 +1,6 @@
 package org.fundaciobit.plugins.validatesignature.afirmacxf;
 
 import java.net.URL;
-import java.security.Provider;
-import java.security.Security;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -279,7 +277,9 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
             "<vr:Properties>.+<vr:CreationTime>(.+?)</vr:CreationTime>"
             + ".*</vr:TimeStampContent><vr:MessageHashAlg Type=\"urn:afirma:dss:1.0:profile:XSS:detail:MessageHashAlg\"><dss:Code>(.+?)</dss:Code></vr:MessageHashAlg>"
             + ".+<vr:CertificateValidity><vr:CertificateIdentifier><ds:X509IssuerName>(.+?)</ds:X509IssuerName>"
-            + ".+<vr:Subject>(.+?)</vr:Subject>.+</vr:Properties>");
+            + ".+<vr:Subject>(.+?)</vr:Subject>.+"
+            // TODO + ".+<vr:Subject>(.+?)</vr:Subject>.+"
+            + "</vr:Properties>");
 
   private static final Pattern algorithmDigestPattern = Pattern.compile(
           "<vr:DigestAlgAndValue><ds:DigestMethod Algorithm=\"(.+?)\"></ds:DigestMethod>" +
@@ -592,8 +592,8 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
     }
 
     // OK optParam.setReturnProcessingDetails(true);
-    // Indicamos que queremos devolver informaci�n acerca de los
-    // procesos de validaci�n llevados a cabo
+    // Indicamos que queremos devolver información acerca de los
+    // procesos de validación llevados a cabo
     // == Retorna CODE/MESS/TYPE que es informacio especifica de les validacions
     // que s'han passat i quines són vàlides i quines invalides
     if (Boolean.TRUE.equals(sri.getReturnValidationChecks())) {
@@ -728,6 +728,24 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
 
       xmlInput = processExpressionLanguage("xades_input_template.xml", keys);
     }
+    
+    
+    
+    
+    if (Boolean.TRUE.equals(sri.getReturnTimeStampInfo())) {
+        
+        
+        
+        String search = "<afxp:IncludeProperty Type=\"urn:afirma:dss:1.0:profile:XSS:SignatureProperty:SignatureTimeStamp\"/>";
+        
+        String add = "\n\t\t\t\t" + "<afxp:IncludeProperty Type=\"urn:afirma:dss:1.0:profile:XSS:SignatureProperty:ArchiveTimeStamp\"/>";
+        
+        if (xmlInput.indexOf(search) != -1) {
+            xmlInput = xmlInput.replace(search,search + add);
+        }
+      }
+
+    
 
 
     if (debug || "true".equals(getProperty(PRINT_XML))) {
