@@ -273,13 +273,13 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
       }
     };
 
-  private static final Pattern timeStampPattern = Pattern.compile(
+  private static final Pattern TIMESTAMP_PATTERN = Pattern.compile(
             "<vr:Properties>.+<vr:CreationTime>(.+?)</vr:CreationTime>"
             + ".*</vr:TimeStampContent><vr:MessageHashAlg Type=\"urn:afirma:dss:1.0:profile:XSS:detail:MessageHashAlg\"><dss:Code>(.+?)</dss:Code></vr:MessageHashAlg>"
             + ".+<vr:CertificateValidity><vr:CertificateIdentifier><ds:X509IssuerName>(.+?)</ds:X509IssuerName>"
-            + ".+<vr:Subject>(.+?)</vr:Subject>.+"
-            // TODO + ".+<vr:Subject>(.+?)</vr:Subject>.+"
-            + "</vr:Properties>");
+            + ".+<vr:Subject>(.+?)</vr:Subject>"
+            + ".+<vr:CertificateValue><!\\[CDATA\\[(.+?)\\]\\]></vr:CertificateValue>"
+            + ".+</vr:Properties>");
 
   private static final Pattern algorithmDigestPattern = Pattern.compile(
           "<vr:DigestAlgAndValue><ds:DigestMethod Algorithm=\"(.+?)\"></ds:DigestMethod>" +
@@ -405,7 +405,7 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
     List<TimeStampInfo> list = new ArrayList<TimeStampInfo>();
     SimpleDateFormat dateFormat = dateFormatTimeStamp.get();
 
-    Matcher m = timeStampPattern.matcher(xml);
+    Matcher m = TIMESTAMP_PATTERN.matcher(xml);
     while (m.find()) {
 
       TimeStampInfo tsi = new TimeStampInfo();
@@ -418,6 +418,12 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
 
       tsi.setCertificateIssuer(m.group(3));
       tsi.setCertificateSubject(m.group(4));
+      
+      String certB64 =  m.group(5);
+      if (certB64 != null && certB64.trim().length() != 0) {
+         byte[] cert =  Base64.getDecoder().decode(certB64);
+         tsi.setCertificate(cert);
+      }
 
       list.add(tsi);
     }
