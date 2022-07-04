@@ -3,7 +3,7 @@ package org.fundaciobit.plugins.validatesignature.api;
 import java.util.Date;
 import java.util.List;
 
-import org.fundaciobit.pluginsib.validatecertificate.InformacioCertificat;
+import org.fundaciobit.plugins.certificate.InformacioCertificat;
 
 /**
  * 
