@@ -533,7 +533,7 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
       sri = new SignatureRequestedInformation();
     }
     
-    final boolean debug = log.isDebugEnabled() || isDebug();
+    final boolean debug = isDebug();
 
     final String applicationID = getPropertyRequired(APPLICATIONID_PROPERTY);
 
@@ -752,10 +752,9 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
         }
       }
 
-    
+    final boolean printXML = "true".equals(getProperty(PRINT_XML));
 
-
-    if (debug || "true".equals(getProperty(PRINT_XML))) {
+    if (printXML) {
       log.debug("IN_XML = \n" + xmlInput);
     }
 
@@ -768,7 +767,7 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
         TransformersConstants.VERSION_10);
 
 
-    if (debug || "true".equals(getProperty(PRINT_XML))) {
+    if (printXML) {
       log.debug("OUT_XML = \n" + xmlOutput);
     }
 
