@@ -1,6 +1,6 @@
 package org.fundaciobit.plugins.validatesignature.api.test;
 
-import org.fundaciobit.plugins.validatesignature.api.ValidateSignatureResponse;
+import org.fundaciobit.pluginsib.validatesignature.api.ValidateSignatureResponse;
 
 /**
  * 

@@ -1,9 +1,9 @@
 package org.fundaciobit.plugins.validatesignature.tester;
 
-import org.fundaciobit.plugins.validatesignature.api.IValidateSignaturePlugin;
-import org.fundaciobit.plugins.validatesignature.api.SignatureRequestedInformation;
-import org.fundaciobit.plugins.validatesignature.api.ValidateSignatureRequest;
-import org.fundaciobit.plugins.validatesignature.api.ValidateSignatureResponse;
+import org.fundaciobit.pluginsib.validatesignature.api.IValidateSignaturePlugin;
+import org.fundaciobit.pluginsib.validatesignature.api.SignatureRequestedInformation;
+import org.fundaciobit.pluginsib.validatesignature.api.ValidateSignatureRequest;
+import org.fundaciobit.pluginsib.validatesignature.api.ValidateSignatureResponse;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -25,7 +25,8 @@ public class ValidateServlet extends HttpServlet {
     private PluginMapBean pluginMapBean;
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
         Part fitxer = request.getPart("fitxer");
         if (fitxer == null || fitxer.getSize() == 0) {

@@ -1,14 +1,14 @@
 
-plugins.validatesignature=fake,afirmacxf
+pluginsib.validatesignature=fake,afirmacxf
 
-plugins.validatesignature.fake.class=org.fundaciobit.plugins.validatesignature.fake.FakeValidateSignaturePlugin
-plugins.validatesignature.afirmacxf.class=org.fundaciobit.plugins.validatesignature.afirmacxf.AfirmaCxfValidateSignaturePlugin
+pluginsib.validatesignature.fake.class=org.fundaciobit.pluginsib.validatesignature.fake.FakeValidateSignaturePlugin
+pluginsib.validatesignature.afirmacxf.class=org.fundaciobit.pluginsib.validatesignature.afirmacxf.AfirmaCxfValidateSignaturePlugin
 
-plugins.validatesignature.afirmacxf.TransformersTemplatesPath=C:/ruta/transformersTemplates
-plugins.validatesignature.afirmacxf.debug=false
-plugins.validatesignature.afirmacxf.printxml=false
-plugins.validatesignature.afirmacxf.applicationID=APPID
-plugins.validatesignature.afirmacxf.endpoint=https://server/afirmaws/services/DSSAfirmaVerify
-plugins.validatesignature.afirmacxf.authorization.username=USERNAME
-plugins.validatesignature.afirmacxf.authorization.password=PASS
+pluginsib.validatesignature.afirmacxf.TransformersTemplatesPath=C:/ruta/transformersTemplates
+pluginsib.validatesignature.afirmacxf.debug=false
+pluginsib.validatesignature.afirmacxf.printxml=false
+pluginsib.validatesignature.afirmacxf.applicationID=APPID
+pluginsib.validatesignature.afirmacxf.endpoint=https://server/afirmaws/services/DSSAfirmaVerify
+pluginsib.validatesignature.afirmacxf.authorization.username=USERNAME
+pluginsib.validatesignature.afirmacxf.authorization.password=PASS
 

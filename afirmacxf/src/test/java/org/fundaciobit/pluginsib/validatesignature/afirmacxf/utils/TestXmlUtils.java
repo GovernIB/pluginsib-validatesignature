@@ -1,0 +1,33 @@
+package org.fundaciobit.pluginsib.validatesignature.afirmacxf.utils;
+
+import org.fundaciobit.pluginsib.core.v3.utils.FileUtils;
+import org.junit.Assert;
+import org.junit.Test;
+
+import java.nio.charset.StandardCharsets;
+
+public class TestXmlUtils {
+
+    private byte[] getResource(String path) throws Exception {
+        return FileUtils.toByteArray(getClass().getResourceAsStream(path));
+    }
+
+    @Test
+    public void testFitxerValid() throws Exception {
+        byte[] resource = getResource("/responses/validacioValidInvalid.xml");
+        Assert.assertTrue(XMLUtil.isXml(resource));
+    }
+
+    @Test
+    public void testFitxerInvalid() throws Exception {
+        byte[] resource = getResource("/firmes/dibuix.png_acosigned.csig");
+        Assert.assertFalse(XMLUtil.isXml(resource));
+    }
+
+    @Test
+    public void testXmlInvalid() throws Exception {
+        String resource = "<hola>dddd</hol";
+        Assert.assertFalse(XMLUtil.isXml(resource.getBytes(StandardCharsets.UTF_8)));
+    }
+
+}

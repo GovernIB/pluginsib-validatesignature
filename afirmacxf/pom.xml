@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.fundaciobit.pluginsib.validatesignature</groupId>
         <artifactId>pluginsib-validatesignature</artifactId>
-        <version>2.1.0-SNAPSHOT</version>
+        <version>3.0.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>pluginsib-validatesignature-afirmacxf</artifactId>
@@ -27,51 +28,122 @@
 
         <dependency>
             <groupId>org.fundaciobit.pluginsib.utils</groupId>
-            <artifactId>pluginsib-utils-cxfjboss7</artifactId>
-            <version>2.0.0</version>
+            <artifactId>pluginsib-utils-cxf</artifactId>
+            <version>3.0.0-SNAPSHOT</version>
+        </dependency>
+        
+        <!-- NOU SISTEMA
+        
+        <dependency>
+    <groupId>javax.xml.bind</groupId>
+    <artifactId>jaxb-api</artifactId>
+    <version>2.3.0</version>
+</dependency>
+
+<dependency>
+    <groupId>com.sun.xml.bind</groupId>
+    <artifactId>jaxb-core</artifactId>
+    <version>2.3.0</version>
+</dependency>
+
+<dependency>
+    <groupId>com.sun.xml.bind</groupId>
+    <artifactId>jaxb-impl</artifactId>
+    <version>2.3.0</version>
+</dependency>
+
+<dependency>
+    <groupId>javax.annotation</groupId>
+    <artifactId>javax.annotation-api</artifactId>
+    <version>1.3</version>
+</dependency>
+
+<dependency>
+    <groupId>com.sun.xml.ws</groupId>
+    <artifactId>jaxws-rt</artifactId>
+    <version>2.3.0</version>
+                <exclusions>
+
+                <exclusion>
+                    <groupId>org.jvnet.mimepull</groupId>
+                    <artifactId>mimepull</artifactId>
+                </exclusion>
+
+                <exclusion>
+                    <groupId>org.jvnet.staxex</groupId>
+                    <artifactId>stax-ex</artifactId>
+                </exclusion>
+            </exclusions>
+</dependency>
+
+        <dependency>
+            <groupId>org.jvnet.mimepull</groupId>
+            <artifactId>mimepull</artifactId>
+            <version>1.9.13</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.jvnet.staxex</groupId>
+            <artifactId>stax-ex</artifactId>
+            <version>1.7.8</version>
+        </dependency>
+
+<dependency>
+    <groupId>javax.xml.ws</groupId>
+    <artifactId>jaxws-api</artifactId>
+    <version>2.3.0</version>
+</dependency>
+        
+   -->     
+        
+        
+
+<!--  OK --> 
+<!--
         <dependency>
             <groupId>javax.jws</groupId>
             <artifactId>jsr181-api</artifactId>
             <scope>provided</scope>
         </dependency>
+      
 
         <dependency>
-            <groupId>com.sun.xml.messaging.saaj</groupId>
-            <artifactId>saaj-impl</artifactId>
-            <scope>provided</scope>
+            <groupId>jakarta.xml.ws</groupId>
+            <artifactId>jakarta.xml.ws-api</artifactId>
+            <version>2.3.3</version>
         </dependency>
 
         <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-frontend-jaxws</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-ws-security</artifactId>
-            <scope>provided</scope>
+            <groupId>com.sun.xml.ws</groupId>
+            <artifactId>jaxws-rt</artifactId>
+            <version>2.3.0</version>
+            <scope>runtime</scope>
             <exclusions>
                 <exclusion>
-                    <groupId>org.bouncycastle</groupId>
-                    <artifactId>bcprov-jdk15</artifactId>
+                    <groupId>org.jvnet.mimepull</groupId>
+                    <artifactId>mimepull</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.jvnet.staxex</groupId>
+                    <artifactId>stax-ex</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
-
+  -->
+        <!-- Problemes amb Enforcer  -->
+<!--
         <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-transports-http</artifactId>
-            <scope>provided</scope>
+            <groupId>org.jvnet.staxex</groupId>
+            <artifactId>stax-ex</artifactId>
+            <version>1.7.8</version>
         </dependency>
-
         <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-bindings-soap</artifactId>
-            <scope>provided</scope>
+            <groupId>org.jvnet.mimepull</groupId>
+            <artifactId>mimepull</artifactId>
+            <version>1.9.13</version>
         </dependency>
+        -->
+<!-- FINAL OK -->
 
         <dependency>
             <groupId>es.gob.afirma</groupId>
@@ -161,18 +233,27 @@
             <!--reuse src/test/java code from plugin-validatesignature-api-->
             <groupId>org.fundaciobit.pluginsib.validatesignature</groupId>
             <artifactId>pluginsib-validatesignature-api</artifactId>
-            <version>2.1.0-SNAPSHOT</version>
+            <version>3.0.0-SNAPSHOT</version>
             <scope>test</scope>
             <classifier>tests</classifier>
+        </dependency>
+        
+        
+        
+                
+                <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-runtime</artifactId>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-jdk14</artifactId>
+            <artifactId>slf4j-simple</artifactId>
             <version>1.7.22</version>
             <scope>test</scope>
         </dependency>
-        
+
     </dependencies>
 
 </project>

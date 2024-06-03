@@ -1,7 +1,7 @@
 package org.fundaciobit.plugins.validatesignature.tester;
 
-import org.fundaciobit.plugins.validatesignature.api.IValidateSignaturePlugin;
-import org.fundaciobit.pluginsib.core.utils.PluginsManager;
+import org.fundaciobit.pluginsib.validatesignature.api.IValidateSignaturePlugin;
+import org.fundaciobit.pluginsib.core.v3.utils.PluginsManager;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
@@ -24,7 +24,7 @@ public class PluginMapBean {
 
     @PostConstruct
     protected void init() {
-        String configDir = System.getProperty("org.fundaciobit.plugins.validatesignature.path");
+        String configDir = System.getProperty("org.fundaciobit.pluginsib.validatesignature.path");
         Properties properties = new Properties();
         try (var inputStream = new FileInputStream(configDir + "/plugin.properties")) {
             properties.load(inputStream);
@@ -32,12 +32,11 @@ public class PluginMapBean {
             throw new RuntimeException("Error llegint plugin.properties", ioException);
         }
 
-
         String[] pluginNames = properties.getProperty("plugins.validatesignature").split(",");
         for (String pluginName : pluginNames) {
-            String classProperty = "plugins.validatesignature." + pluginName + ".class";
-            IValidateSignaturePlugin plugin =
-                    (IValidateSignaturePlugin) PluginsManager.instancePluginByProperty(classProperty, "", properties);
+            String classProperty = "pluginsib.validatesignature." + pluginName + ".class";
+            IValidateSignaturePlugin plugin = (IValidateSignaturePlugin) PluginsManager
+                    .instancePluginByProperty(classProperty, "", properties);
             pluginMap.put(pluginName, plugin);
             LOG.info("Inicialitzat: " + pluginName);
         }
