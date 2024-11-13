@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.util.Properties;
 
 import org.fundaciobit.pluginsib.core.v3.utils.FileUtils;
+import org.fundaciobit.pluginsib.utils.signature.SignatureCommonUtils;
 import org.fundaciobit.pluginsib.validatecertificate.InformacioCertificat;
 import org.fundaciobit.pluginsib.validatesignature.api.IValidateSignaturePlugin;
 import org.fundaciobit.pluginsib.validatesignature.api.SignatureDetailInfo;
@@ -108,7 +109,7 @@ public class ValidateSignatureMain {
         }
 
         System.out.println("response.getSignType() = " + response.getSignType());
-        System.out.println("response.getSignFormat() = " + response.getSignFormat());
+        System.out.println("response.getSignFormat() = " + SignatureCommonUtils.signModeToString(response.getSignMode()));
         System.out.println("response.getSignProfile() = " + response.getSignProfile());
 
         SignatureDetailInfo[] certificatesInfo = response.getSignatureDetailInfo();

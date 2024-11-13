@@ -1,6 +1,7 @@
 package org.fundaciobit.pluginsib.validatesignature.afirmacxf;
 
 
+import org.fundaciobit.pluginsib.utils.signature.SignatureConstants;
 import org.fundaciobit.pluginsib.validatesignature.api.IValidateSignaturePlugin;
 import org.fundaciobit.pluginsib.validatesignature.api.SignatureRequestedInformation;
 import org.fundaciobit.pluginsib.validatesignature.api.ValidateSignatureRequest;
@@ -10,13 +11,6 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import static org.fundaciobit.pluginsib.validatesignature.api.ValidateSignatureConstants.SIGNFORMAT_EXPLICIT_DETACHED;
-import static org.fundaciobit.pluginsib.validatesignature.api.ValidateSignatureConstants.SIGNFORMAT_IMPLICIT_ENVELOPED_ATTACHED;
-import static org.fundaciobit.pluginsib.validatesignature.api.ValidateSignatureConstants.SIGNFORMAT_IMPLICIT_ENVELOPING_ATTACHED;
-import static org.fundaciobit.pluginsib.validatesignature.api.ValidateSignatureConstants.SIGNPROFILE_BES;
-import static org.fundaciobit.pluginsib.validatesignature.api.ValidateSignatureConstants.SIGNTYPE_CAdES;
-import static org.fundaciobit.pluginsib.validatesignature.api.ValidateSignatureConstants.SIGNTYPE_PAdES;
-import static org.fundaciobit.pluginsib.validatesignature.api.ValidateSignatureConstants.SIGNTYPE_XAdES;
 import static org.fundaciobit.pluginsib.validatesignature.api.ValidationStatus.SIGNATURE_INVALID;
 import static org.fundaciobit.pluginsib.validatesignature.api.ValidationStatus.SIGNATURE_VALID;
 
@@ -29,7 +23,12 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class AfirmaCxfConcurrentIT extends BaseIT {
+/**
+ * 
+ * @author anadal
+ * 6 nov 2024 8:38:45
+ */
+public class AfirmaCxfConcurrentIT extends BaseIT implements SignatureConstants {
 
     private static IValidateSignaturePlugin plugin;
 
@@ -45,19 +44,19 @@ public class AfirmaCxfConcurrentIT extends BaseIT {
         plugin = new AfirmaCxfValidateSignaturePlugin(propertyKeyBase, pluginProperties);
 
         tests.put("/firmes/pdf-1signed.pdf", new ExpectedValidation(SIGNATURE_VALID,
-                SIGNTYPE_PAdES, SIGNPROFILE_BES, SIGNFORMAT_IMPLICIT_ENVELOPED_ATTACHED, 1));
+                SIGNTYPE_PAdES, SIGNPROFILE_BES, SignatureConstants.SIGN_MODE_ATTACHED_ENVELOPED, 1));
 
         tests.put("/firmes/pdf-2signed.pdf", new ExpectedValidation(SIGNATURE_INVALID,
-                SIGNTYPE_PAdES, SIGNPROFILE_BES, SIGNFORMAT_IMPLICIT_ENVELOPED_ATTACHED, 2));
+                SIGNTYPE_PAdES, SIGNPROFILE_BES, SignatureConstants.SIGN_MODE_ATTACHED_ENVELOPED, 2));
 
         tests.put("/firmes/Document.txt_asigned.csig", new ExpectedValidation(SIGNATURE_VALID,
-                SIGNTYPE_CAdES, SIGNPROFILE_BES, SIGNFORMAT_IMPLICIT_ENVELOPING_ATTACHED, 1));
+                SIGNTYPE_CAdES, SIGNPROFILE_BES, SignatureConstants.SIGN_MODE_ATTACHED_ENVELOPING, 1));
 
         tests.put("/firmes/dibuix.png_acosigned.csig", new ExpectedValidation(SIGNATURE_VALID,
-                SIGNTYPE_CAdES, SIGNPROFILE_BES, SIGNFORMAT_IMPLICIT_ENVELOPING_ATTACHED, 2));
+                SIGNTYPE_CAdES, SIGNPROFILE_BES, SignatureConstants.SIGN_MODE_DETACHED, 2));
 
         tests.put("/firmes/pdf-xades-signat-cosignat.xsig", new ExpectedValidation(SIGNATURE_VALID,
-                SIGNTYPE_XAdES, SIGNPROFILE_BES, SIGNFORMAT_EXPLICIT_DETACHED, 2));
+                SIGNTYPE_XAdES, SIGNPROFILE_BES, SignatureConstants.SIGN_MODE_DETACHED, 2));
     }
 
 

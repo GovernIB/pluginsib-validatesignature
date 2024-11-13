@@ -14,32 +14,25 @@ import java.util.Properties;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.io.ByteArrayInputStream;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.nio.charset.Charset;
 
-import javax.xml.crypto.MarshalException;
-import javax.xml.crypto.dsig.Reference;
-import javax.xml.crypto.dsig.XMLSignature;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.ws.BindingProvider;
 
 import es.gob.afirma.transformers.TransformersFacade;
 import freemarker.cache.ClassTemplateLoader;
-import net.java.xades.security.xml.XMLSignatureElement;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.cxf.endpoint.Client;
 import org.apache.cxf.frontend.ClientProxy;
 import org.apache.cxf.transport.http.HTTPConduit;
 import org.apache.cxf.transports.http.configuration.HTTPClientPolicy;
-import org.bouncycastle.asn1.cms.ContentInfo;
-import org.bouncycastle.asn1.cms.SignedData;
-import org.bouncycastle.cms.CMSSignedData;
 import org.fundaciobit.pluginsib.utils.cxf.ClientHandler;
 import org.fundaciobit.pluginsib.utils.cxf.ClientHandlerCertificate;
 import org.fundaciobit.pluginsib.utils.cxf.ClientHandlerUsernamePassword;
+import org.fundaciobit.pluginsib.utils.signature.SignatureCommonUtils;
 import org.fundaciobit.pluginsib.validatecertificate.afirmacxf.InfoCertificatUtils;
 import org.fundaciobit.pluginsib.validatesignature.afirmacxf.utils.XMLUtil;
 import org.fundaciobit.pluginsib.validatesignature.afirmacxf.validarfirmaapi.DSSSignature;
@@ -52,23 +45,17 @@ import org.fundaciobit.pluginsib.validatesignature.api.TimeStampInfo;
 import org.fundaciobit.pluginsib.validatesignature.api.ValidateSignatureRequest;
 import org.fundaciobit.pluginsib.validatesignature.api.ValidateSignatureResponse;
 import org.fundaciobit.pluginsib.validatesignature.api.ValidationStatus;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 import com.itextpdf.text.pdf.AcroFields;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.security.PdfPKCS7;
 
-import es.gob.afirma.i18n.Language;
 import es.gob.afirma.integraFacade.GenerateMessageResponse;
 import es.gob.afirma.integraFacade.pojo.DataInfo;
 import es.gob.afirma.integraFacade.pojo.Detail;
 import es.gob.afirma.integraFacade.pojo.IndividualSignatureReport;
 import es.gob.afirma.integraFacade.pojo.ProcessingDetail;
 import es.gob.afirma.integraFacade.pojo.VerifySignatureResponse;
-import es.gob.afirma.signature.SigningException;
 import es.gob.afirma.transformers.TransformersConstants;
 import es.gob.afirma.utils.DSSConstants;
 import es.gob.afirma.utils.GeneralConstants;
@@ -171,22 +158,22 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
         localSignProfile2PluginSignProfile.put("urn:afirma:dss:1.0:profile:XSS:AdES:forms:LTA-Level", SIGNPROFILE_A);
 
         localAlgorithm2PluginAlgorithm.put("http://www.w3.org/2000/09/xmldsig#sha1",
-                SignatureDetailInfo.SIGN_ALGORITHM_SHA1);
+                SIGN_ALGORITHM_SHA1);
         localAlgorithm2PluginAlgorithm.put("http://www.w3.org/2000/09/xmldsig#sha256",
-                SignatureDetailInfo.SIGN_ALGORITHM_SHA256);
+                SIGN_ALGORITHM_SHA256);
         localAlgorithm2PluginAlgorithm.put("http://www.w3.org/2000/09/xmldsig#sha384",
-                SignatureDetailInfo.SIGN_ALGORITHM_SHA384);
+                SIGN_ALGORITHM_SHA384);
         localAlgorithm2PluginAlgorithm.put("http://www.w3.org/2000/09/xmldsig#sha512",
-                SignatureDetailInfo.SIGN_ALGORITHM_SHA512);
+                SIGN_ALGORITHM_SHA512);
 
         localAlgorithmEnc2PluginAlgorithm.put("http://www.w3.org/2001/04/xmlenc#sha1",
-                SignatureDetailInfo.SIGN_ALGORITHM_SHA1);
+                SIGN_ALGORITHM_SHA1);
         localAlgorithmEnc2PluginAlgorithm.put("http://www.w3.org/2001/04/xmlenc#sha256",
-                SignatureDetailInfo.SIGN_ALGORITHM_SHA256);
+                SIGN_ALGORITHM_SHA256);
         localAlgorithmEnc2PluginAlgorithm.put("http://www.w3.org/2001/04/xmlenc#sha384",
-                SignatureDetailInfo.SIGN_ALGORITHM_SHA384);
+                SIGN_ALGORITHM_SHA384);
         localAlgorithmEnc2PluginAlgorithm.put("http://www.w3.org/2001/04/xmlenc#sha512",
-                SignatureDetailInfo.SIGN_ALGORITHM_SHA512);
+                SIGN_ALGORITHM_SHA512);
     }
 
     private static final String AFIRMACXF_BASE_PROPERTIES = VALIDATE_SIGNATURE_BASE_PROPERTY + "afirmacxf.";
@@ -577,12 +564,12 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
             throw new Exception("El valor de la signatura és null.");
         }
 
-        String xadesFormat;
+        int xadesFormat;
         boolean isXAdES = XMLUtil.isXml(signData);
         log.debug("\n\n ES XADES ?? " + isXAdES + " \n\n");
         if (isXAdES) {
-
-            xadesFormat = getXAdESFormat(signData);
+            boolean inputParams = true;
+            xadesFormat = SignatureCommonUtils.getXAdESMode(signData, inputParams);
             log.debug("  xadesFormat => " + xadesFormat);
 
             incorporateXMLSignature(inParams, signData, xadesFormat);
@@ -839,8 +826,8 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
 
             if (pluginSignType != null) {
                 // Cercarem el format: implicit(attached), explicit (detached)
-                String signFormat = getSignFormat(pluginSignType, signData);
-                signatureInfo.setSignFormat(signFormat);
+                int signFormat = SignatureCommonUtils.getSignMode(pluginSignType, signData);
+                signatureInfo.setSignMode(signFormat);
             }
         }
 
@@ -1073,12 +1060,12 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
 
     private static final Charset UTF_8 = Charset.forName("UTF-8");
 
-    protected void incorporateXMLSignature(Map<String, Object> inputParameters, byte[] signature, String xadesFormat) {
+    protected void incorporateXMLSignature(Map<String, Object> inputParameters, byte[] signature, int xadesFormat) {
 
-        if (SIGNFORMAT_IMPLICIT_ENVELOPING_ATTACHED.equals(xadesFormat)) { // "XAdES Enveloping"
+        if (SIGN_MODE_ATTACHED_ENVELOPING == xadesFormat) { // "XAdES Enveloping"
             inputParameters.put("dss:SignatureObject", new String(signature, UTF_8));
-        } else if ((SIGNFORMAT_IMPLICIT_ENVELOPED_ATTACHED.equals(xadesFormat)) // "XAdES Enveloped"
-                || (SIGNFORMAT_EXPLICIT_DETACHED.equals(xadesFormat))) { // "XAdES Detached"
+        } else if (SIGN_MODE_ATTACHED_ENVELOPED == xadesFormat // "XAdES Enveloped"
+                || SIGN_MODE_DETACHED == xadesFormat) { // "XAdES Detached"
 
             String idSignaturePtr = String.valueOf(Math.random() * 9999.0D);
             inputParameters.put("dss:SignatureObject/dss:SignaturePtr@WhichDocument", idSignaturePtr);
@@ -1090,115 +1077,6 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
 
     }
 
-    /**
-     * AQUEST MÈTODE ESTA DUPLICAT AL PLUGIN-INTEGR@
-     */
-    protected String getSignFormat(String signType, final byte[] signData) throws Exception {
-        String signFormat;
-        if (SIGNTYPE_CMS.equals(signType)) { // "CMS";
-            // TODO Això no se si es correcte !!!!!!!
-            try {
-                signFormat = getCAdESFormat(signData);
-            } catch (Throwable th) {
-                log.error("Error intentant obtenir el format d'una firma CMS emprant el mètode getCAdESFormat(): "
-                        + th.getMessage(), th);
-                signFormat = null;
-            }
-        } else if (SIGNTYPE_CAdES.equals(signType)) { // "CAdES";
-            signFormat = getCAdESFormat(signData);
-        } else if (SIGNTYPE_XAdES.equals(signType)) { // "XAdES";
-            signFormat = getXAdESFormat(signData);
-        } else if (SIGNTYPE_ODF.equals(signType)) { // "ODF";
-            signFormat = SIGNFORMAT_IMPLICIT_ENVELOPED_ATTACHED;
-        } else if (SIGNTYPE_PDF.equals(signType)) { // "PDF"; // ?????
-            signFormat = SIGNFORMAT_IMPLICIT_ENVELOPED_ATTACHED;
-        } else if (SIGNTYPE_PAdES.equals(signType)) { // "PAdES";
-            signFormat = SIGNFORMAT_IMPLICIT_ENVELOPED_ATTACHED;
-        } else if (SIGNTYPE_OOXML.equals(signType)) { // "OOXML";
-            signFormat = SIGNFORMAT_IMPLICIT_ENVELOPED_ATTACHED;
-        } else if (SIGNTYPE_XML_DSIG.equals(signType)) { // "XML_DSIG";
-            // TODO Això no se si es correcte !!!!!!!
-            try {
-                signFormat = getXAdESFormat(signData);
-            } catch (Throwable th) {
-                log.error("Error intentant obtenir el format d'una firma XML_DSIG emprant el"
-                        + " mètode getXAdESFormat(): " + th.getMessage(), th);
-                signFormat = null;
-            }
-        } else {
-            log.warn("Error intentant trobar el format de una firma amb tipus desconegut: " + signType,
-                    new Exception());
-            signFormat = null;
-        }
-        return signFormat;
-    }
-
-    /**
-     * AQUEST MÈTODE ESTA DUPLICAT AL PLUGIN-INTEGR@
-     */
-    private String getXAdESFormat(byte[] signature) throws Exception {
-
-        Document eSignature = DOCUMENT_BUILDER_FACTORY.newDocumentBuilder().parse(new ByteArrayInputStream(signature));
-
-        String rootName = eSignature.getDocumentElement().getNodeName();
-        if (rootName.equalsIgnoreCase("ds:Signature") || rootName.equals("ROOT_COSIGNATURES")) {
-            //  "XAdES Enveloping"
-            return SIGNFORMAT_IMPLICIT_ENVELOPING_ATTACHED;
-        }
-        NodeList signatureNodeLs = eSignature.getElementsByTagName("ds:Manifest");
-        if (signatureNodeLs.getLength() > 0) {
-            //  "XAdES Externally Detached
-            return SIGNFORMAT_EXPLICIT_EXTERNALLY_DETACHED;
-        }
-        NodeList signsList = eSignature.getElementsByTagNameNS("http://www.w3.org/2000/09/xmldsig#", "Signature");
-        if (signsList.getLength() == 0) {
-            throw new SigningException(Language.getResIntegra("XS003"));
-        }
-        Node signatureNode = signsList.item(0);
-
-        XMLSignature xmlSignature;
-        try {
-            xmlSignature = new XMLSignatureElement((Element) signatureNode).getXMLSignature();
-        } catch (MarshalException e) {
-            throw new SigningException(Language.getResIntegra("XS005"), e);
-        }
-
-        List<?> references = xmlSignature.getSignedInfo().getReferences();
-        for (Object reference : references) {
-            if (!"".equals(((Reference) reference).getURI()))
-                continue;
-            //  "XAdES Enveloped"
-            return SIGNFORMAT_IMPLICIT_ENVELOPED_ATTACHED;
-        }
-        //  "XAdES Detached"
-        return SIGNFORMAT_EXPLICIT_DETACHED;
-    }
-
-    /**
-     * AQUEST MÈTODE ESTA DUPLICAT AL PLUGIN-INTEGR@
-     */
-    private String getCAdESFormat(byte[] signature) throws Exception {
-
-        CMSSignedData cmsSignedData = new CMSSignedData(signature);
-        ContentInfo contentInfo = cmsSignedData.toASN1Structure();
-        SignedData signedData = SignedData.getInstance(contentInfo.getContent());
-
-        if (isImplicit(signedData)) {
-            //  "CAdES attached/implicit signature";
-            return SIGNFORMAT_IMPLICIT_ENVELOPING_ATTACHED;
-        } else {
-            //  "CAdES detached/explicit signature"
-            return SIGNFORMAT_EXPLICIT_DETACHED;
-        }
-    }
-
-    private boolean isImplicit(SignedData signedData) {
-        boolean isImplicit = false;
-        if (signedData.getEncapContentInfo() != null) {
-            isImplicit = signedData.getEncapContentInfo().getContent() != null;
-        }
-        return isImplicit;
-    }
 
     private String processExpressionLanguage(String plantilla, Map<String, Object> custodyParameters) throws Exception {
         try {

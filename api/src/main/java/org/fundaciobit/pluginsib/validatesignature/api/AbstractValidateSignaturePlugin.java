@@ -8,6 +8,8 @@ import java.util.Properties;
 import org.fundaciobit.pluginsib.validatecertificate.InformacioCertificat;
 import org.jboss.logging.Logger;
 import org.fundaciobit.pluginsib.core.v3.utils.AbstractPluginPropertiesTranslations;
+import org.fundaciobit.pluginsib.utils.signature.SignatureCommonUtils;
+import org.fundaciobit.pluginsib.utils.signature.SignatureConstants;
 
 /**
  * 
@@ -15,7 +17,7 @@ import org.fundaciobit.pluginsib.core.v3.utils.AbstractPluginPropertiesTranslati
  *
  */
 public abstract class AbstractValidateSignaturePlugin extends AbstractPluginPropertiesTranslations
-        implements IValidateSignaturePlugin, ValidateSignatureConstants {
+        implements IValidateSignaturePlugin, SignatureConstants {
 
     protected Logger log = Logger.getLogger(this.getClass());
 
@@ -119,7 +121,7 @@ public abstract class AbstractValidateSignaturePlugin extends AbstractPluginProp
         }
 
         System.out.println(" vs.getSignType() = " + vs.getSignType());
-        System.out.println(" vs.getSignFormat() = " + vs.getSignFormat());
+        System.out.println(" vs.getSignFormat() = " + SignatureCommonUtils.signModeToString(vs.getSignMode()));
         System.out.println(" vs.getSignProfile() = " + vs.getSignProfile());
 
         SignatureDetailInfo[] diList = vs.getSignatureDetailInfo();
@@ -198,5 +200,6 @@ public abstract class AbstractValidateSignaturePlugin extends AbstractPluginProp
         str.append("\n");
         return str.toString();
     }
+
 
 }

@@ -13,61 +13,57 @@ import org.fundaciobit.pluginsib.validatesignature.api.ValidationStatus;
  * @author anadal
  *
  */
-public class FakeValidateSignaturePlugin extends AbstractValidateSignaturePlugin  {
+public class FakeValidateSignaturePlugin extends AbstractValidateSignaturePlugin {
 
-  /**
-   * 
-   */
-  public FakeValidateSignaturePlugin() {
-    super();
-  }
+    /**
+     * 
+     */
+    public FakeValidateSignaturePlugin() {
+        super();
+    }
 
-  /**
-   * @param propertyKeyBase
-   * @param properties
-   */
-  public FakeValidateSignaturePlugin(String propertyKeyBase, Properties properties) {
-    super(propertyKeyBase, properties);
-  }
+    /**
+     * @param propertyKeyBase
+     * @param properties
+     */
+    public FakeValidateSignaturePlugin(String propertyKeyBase, Properties properties) {
+        super(propertyKeyBase, properties);
+    }
 
-  /**
-   * @param propertyKeyBase
-   */
-  public FakeValidateSignaturePlugin(String propertyKeyBase) {
-    super(propertyKeyBase);
-  }
+    /**
+     * @param propertyKeyBase
+     */
+    public FakeValidateSignaturePlugin(String propertyKeyBase) {
+        super(propertyKeyBase);
+    }
 
+    @Override
+    public SignatureRequestedInformation getSupportedSignatureRequestedInformation() {
+        SignatureRequestedInformation sri = new SignatureRequestedInformation();
+        return sri;
+    }
 
+    @Override
+    public SignatureRequestedInformation getSupportedSignatureRequestedInformationBySignatureType(String signType) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-  @Override
-  public SignatureRequestedInformation getSupportedSignatureRequestedInformation() {
-    SignatureRequestedInformation sri = new SignatureRequestedInformation();
-    return sri;
-  }
+    @Override
+    public ValidateSignatureResponse validateSignature(ValidateSignatureRequest validationRequest) throws Exception {
+        ValidateSignatureResponse si = new ValidateSignatureResponse();
 
-  @Override
-  public SignatureRequestedInformation getSupportedSignatureRequestedInformationBySignatureType(
-      String signType) {
-    // TODO Auto-generated method stub
-    return null;
-  }
+        ValidationStatus validationStatus = new ValidationStatus();
 
-  @Override
-  public ValidateSignatureResponse validateSignature(ValidateSignatureRequest validationRequest)
-      throws Exception {
-    ValidateSignatureResponse si = new ValidateSignatureResponse();
+        validationStatus.setStatus(ValidationStatus.SIGNATURE_VALID);
 
-    ValidationStatus validationStatus = new ValidationStatus();
+        si.setValidationStatus(validationStatus);
 
-    validationStatus.setStatus(ValidationStatus.SIGNATURE_VALID);
+        return si;
+    }
 
-    si.setValidationStatus(validationStatus);
-
-    return si;
-  }
-
-  @Override
-  public String getResourceBundleName() {
-  	return "validatesignature-fake";
-  }
+    @Override
+    public String getResourceBundleName() {
+        return "validatesignature-fake";
+    }
 }

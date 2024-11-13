@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.fundaciobit.pluginsib.validatesignature</groupId>
         <artifactId>pluginsib-validatesignature</artifactId>
-        <version>3.0.0-SNAPSHOT</version>
+        <version>3.1.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>pluginsib-validatesignature-api</artifactId>
@@ -14,6 +14,13 @@
     <name>PluginsIB - Validate Signature - API</name>
 
     <dependencies>
+
+        <dependency>
+            <artifactId>pluginsib-utils-signature</artifactId>
+            <groupId>org.fundaciobit.pluginsib.utils</groupId>
+            <version>3.0.0-SNAPSHOT</version>
+        </dependency>
+
         <dependency>
             <groupId>org.fundaciobit.pluginsib.validatecertificate</groupId>
             <artifactId>pluginsib-validatecertificate-api</artifactId>

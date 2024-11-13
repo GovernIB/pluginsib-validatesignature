@@ -3,6 +3,7 @@ package org.fundaciobit.pluginsib.validatesignature.api;
 import java.util.Date;
 import java.util.List;
 
+import org.fundaciobit.pluginsib.utils.signature.SignatureConstants;
 import org.fundaciobit.pluginsib.validatecertificate.InformacioCertificat;
 
 /**
@@ -10,124 +11,112 @@ import org.fundaciobit.pluginsib.validatecertificate.InformacioCertificat;
  * @author anadal
  *
  */
-public class SignatureDetailInfo {
+public class SignatureDetailInfo implements SignatureConstants {
 
-  public static final String SIGN_ALGORITHM_SHA1 = "SHA-1";
-  public static final String SIGN_ALGORITHM_SHA256 = "SHA-256";
-  public static final String SIGN_ALGORITHM_SHA384 = "SHA-384";
-  public static final String SIGN_ALGORITHM_SHA512 = "SHA-512";
+    protected String algorithm;
 
-  protected String algorithm;
+    protected String digestValue;
 
-  protected String digestValue;
-  
-  protected Date signDate;
+    protected Date signDate;
 
-  /**
-   * 
-   */
-  protected List<SignatureCheck> validChecks;
+    /**
+     * 
+     */
+    protected List<SignatureCheck> validChecks;
 
-  protected List<SignatureCheck> invalidChecks;
+    protected List<SignatureCheck> invalidChecks;
 
-  protected List<SignatureCheck> indeterminateChecks;
+    protected List<SignatureCheck> indeterminateChecks;
 
-  /**
-   * En firmes EPES retorna l'identificaor de la política de firma
-   */
-  protected String policyIdentifier;
+    /**
+     * En firmes EPES retorna l'identificaor de la política de firma
+     */
+    protected String policyIdentifier;
 
-  protected InformacioCertificat certificateInfo;
-  
-  
-  protected byte[][] certificateChain;
-  
-  
-  protected TimeStampInfo timeStampInfo;
-  
-  
+    protected InformacioCertificat certificateInfo;
 
-  public InformacioCertificat getCertificateInfo() {
-    return certificateInfo;
-  }
+    protected byte[][] certificateChain;
 
-  public void setCertificateInfo(InformacioCertificat certificateInfo) {
-    this.certificateInfo = certificateInfo;
-  }
+    protected TimeStampInfo timeStampInfo;
 
-  public String getAlgorithm() {
-    return algorithm;
-  }
+    public InformacioCertificat getCertificateInfo() {
+        return certificateInfo;
+    }
 
-  public void setAlgorithm(String algorithm) {
-    this.algorithm = algorithm;
-  }
+    public void setCertificateInfo(InformacioCertificat certificateInfo) {
+        this.certificateInfo = certificateInfo;
+    }
 
-  public String getDigestValue() {
-    return digestValue;
-  }
+    public String getAlgorithm() {
+        return algorithm;
+    }
 
-  public void setDigestValue(String digestValue) {
-    this.digestValue = digestValue;
-  }
+    public void setAlgorithm(String algorithm) {
+        this.algorithm = algorithm;
+    }
 
-  public String getPolicyIdentifier() {
-    return policyIdentifier;
-  }
+    public String getDigestValue() {
+        return digestValue;
+    }
 
-  public void setPolicyIdentifier(String policyIdentifier) {
-    this.policyIdentifier = policyIdentifier;
-  }
+    public void setDigestValue(String digestValue) {
+        this.digestValue = digestValue;
+    }
 
-  public List<SignatureCheck> getValidChecks() {
-    return validChecks;
-  }
+    public String getPolicyIdentifier() {
+        return policyIdentifier;
+    }
 
-  public void setValidChecks(List<SignatureCheck> validChecks) {
-    this.validChecks = validChecks;
-  }
+    public void setPolicyIdentifier(String policyIdentifier) {
+        this.policyIdentifier = policyIdentifier;
+    }
 
-  public List<SignatureCheck> getInvalidChecks() {
-    return invalidChecks;
-  }
+    public List<SignatureCheck> getValidChecks() {
+        return validChecks;
+    }
 
-  public void setInvalidChecks(List<SignatureCheck> invalidChecks) {
-    this.invalidChecks = invalidChecks;
-  }
+    public void setValidChecks(List<SignatureCheck> validChecks) {
+        this.validChecks = validChecks;
+    }
 
-  public List<SignatureCheck> getIndeterminateChecks() {
-    return indeterminateChecks;
-  }
+    public List<SignatureCheck> getInvalidChecks() {
+        return invalidChecks;
+    }
 
-  public void setIndeterminateChecks(List<SignatureCheck> indeterminateChecks) {
-    this.indeterminateChecks = indeterminateChecks;
-  }
+    public void setInvalidChecks(List<SignatureCheck> invalidChecks) {
+        this.invalidChecks = invalidChecks;
+    }
 
+    public List<SignatureCheck> getIndeterminateChecks() {
+        return indeterminateChecks;
+    }
 
+    public void setIndeterminateChecks(List<SignatureCheck> indeterminateChecks) {
+        this.indeterminateChecks = indeterminateChecks;
+    }
 
-  public Date getSignDate() {
-    return signDate;
-  }
+    public Date getSignDate() {
+        return signDate;
+    }
 
-  public void setSignDate(Date signDate) {
-    this.signDate = signDate;
-  }
+    public void setSignDate(Date signDate) {
+        this.signDate = signDate;
+    }
 
-  public byte[][] getCertificateChain() {
-    return certificateChain;
-  }
+    public byte[][] getCertificateChain() {
+        return certificateChain;
+    }
 
-  public void setCertificateChain(byte[][] certificateChain) {
-    this.certificateChain = certificateChain;
-  }
+    public void setCertificateChain(byte[][] certificateChain) {
+        this.certificateChain = certificateChain;
+    }
 
-  public TimeStampInfo getTimeStampInfo() {
-    return timeStampInfo;
-  }
+    public TimeStampInfo getTimeStampInfo() {
+        return timeStampInfo;
+    }
 
-  public void setTimeStampInfo(TimeStampInfo timeStampInfo) {
-    this.timeStampInfo = timeStampInfo;
-  }
-
+    public void setTimeStampInfo(TimeStampInfo timeStampInfo) {
+        this.timeStampInfo = timeStampInfo;
+    }
 
 }

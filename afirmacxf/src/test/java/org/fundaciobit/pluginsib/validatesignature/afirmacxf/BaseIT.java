@@ -7,6 +7,11 @@ import org.junit.Assert;
 
 import java.security.Security;
 
+/**
+ * 
+ * @author anadal
+ * 5 nov 2024 8:05:33
+ */
 public abstract class BaseIT {
 
     static {
@@ -21,7 +26,7 @@ public abstract class BaseIT {
         Assert.assertEquals(expected.validationStatus, response.getValidationStatus().getStatus());
         Assert.assertEquals(expected.signType, response.getSignType());
         Assert.assertEquals(expected.signProfile, response.getSignProfile());
-        Assert.assertEquals(expected.signFormat, response.getSignFormat());
+        Assert.assertEquals(expected.signMode, response.getSignMode());
         if (expected.signatureDetailLength > 0) {
             Assert.assertEquals(expected.signatureDetailLength, response.getSignatureDetailInfo().length);
         }
