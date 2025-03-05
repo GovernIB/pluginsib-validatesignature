@@ -8,12 +8,17 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
+/**
+ * 
+ * @author anadal
+ * 5 mar 2025 8:49:24
+ */
 public class XMLUtil {
 
     static final DocumentBuilderFactory DBF = DocumentBuilderFactory.newInstance();
 
     public static boolean isXml(byte[] data) throws ParserConfigurationException, IOException {
-        if (data == null || data[0] != '<') {
+        if (data == null || data.length == 0 || data[0] != '<') {
             return false;
         }
 
