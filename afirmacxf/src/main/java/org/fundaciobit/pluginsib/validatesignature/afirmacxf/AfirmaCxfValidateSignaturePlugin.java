@@ -157,23 +157,15 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
          */
         localSignProfile2PluginSignProfile.put("urn:afirma:dss:1.0:profile:XSS:AdES:forms:LTA-Level", SIGNPROFILE_A);
 
-        localAlgorithm2PluginAlgorithm.put("http://www.w3.org/2000/09/xmldsig#sha1",
-                SIGN_ALGORITHM_SHA1);
-        localAlgorithm2PluginAlgorithm.put("http://www.w3.org/2000/09/xmldsig#sha256",
-                SIGN_ALGORITHM_SHA256);
-        localAlgorithm2PluginAlgorithm.put("http://www.w3.org/2000/09/xmldsig#sha384",
-                SIGN_ALGORITHM_SHA384);
-        localAlgorithm2PluginAlgorithm.put("http://www.w3.org/2000/09/xmldsig#sha512",
-                SIGN_ALGORITHM_SHA512);
+        localAlgorithm2PluginAlgorithm.put("http://www.w3.org/2000/09/xmldsig#sha1", SIGN_ALGORITHM_SHA1);
+        localAlgorithm2PluginAlgorithm.put("http://www.w3.org/2000/09/xmldsig#sha256", SIGN_ALGORITHM_SHA256);
+        localAlgorithm2PluginAlgorithm.put("http://www.w3.org/2000/09/xmldsig#sha384", SIGN_ALGORITHM_SHA384);
+        localAlgorithm2PluginAlgorithm.put("http://www.w3.org/2000/09/xmldsig#sha512", SIGN_ALGORITHM_SHA512);
 
-        localAlgorithmEnc2PluginAlgorithm.put("http://www.w3.org/2001/04/xmlenc#sha1",
-                SIGN_ALGORITHM_SHA1);
-        localAlgorithmEnc2PluginAlgorithm.put("http://www.w3.org/2001/04/xmlenc#sha256",
-                SIGN_ALGORITHM_SHA256);
-        localAlgorithmEnc2PluginAlgorithm.put("http://www.w3.org/2001/04/xmlenc#sha384",
-                SIGN_ALGORITHM_SHA384);
-        localAlgorithmEnc2PluginAlgorithm.put("http://www.w3.org/2001/04/xmlenc#sha512",
-                SIGN_ALGORITHM_SHA512);
+        localAlgorithmEnc2PluginAlgorithm.put("http://www.w3.org/2001/04/xmlenc#sha1", SIGN_ALGORITHM_SHA1);
+        localAlgorithmEnc2PluginAlgorithm.put("http://www.w3.org/2001/04/xmlenc#sha256", SIGN_ALGORITHM_SHA256);
+        localAlgorithmEnc2PluginAlgorithm.put("http://www.w3.org/2001/04/xmlenc#sha384", SIGN_ALGORITHM_SHA384);
+        localAlgorithmEnc2PluginAlgorithm.put("http://www.w3.org/2001/04/xmlenc#sha512", SIGN_ALGORITHM_SHA512);
     }
 
     private static final String AFIRMACXF_BASE_PROPERTIES = VALIDATE_SIGNATURE_BASE_PROPERTY + "afirmacxf.";
@@ -720,7 +712,7 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
         }
 
         if (debug) {
-            internalPrint(verSigRes);
+            log.debug(verifySignatureResponse2String(verSigRes));
         }
 
         // ************* FINAL PRINT ********************
@@ -752,6 +744,13 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
             // Error de Comunicacio o de Servidor
             if (DSSConstants.ResultProcessIds.REQUESTER_ERROR.equals(major)
                     || DSSConstants.ResultProcessIds.RESPONDER_ERROR.equals(major)) {
+
+                log.error("IN_XML = \n" + xmlInput);
+
+                log.error("OUT_XML = \n" + xmlOutput);
+
+                log.error("VerifySignatureResponse = \n" + verifySignatureResponse2String(verSigRes));
+
                 throw new Exception(msg + "(" + major + ")");
             }
 
@@ -940,46 +939,53 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
         return false;
     }
 
-    protected void internalPrint(VerifySignatureResponse verSigRes) {
+    protected static String verifySignatureResponse2String(VerifySignatureResponse verSigRes) {
 
-        log.debug("RESULT MAJOR= " + verSigRes.getResult().getResultMajor());
-        log.debug("RESULT MINOR= " + verSigRes.getResult().getResultMinor());
-        log.debug("RESULT MESSAGE= " + verSigRes.getResult().getResultMessage());
+        StringBuilder str = new StringBuilder();
 
-        log.debug("FORMAT = " + verSigRes.getSignatureFormat());
+        str.append('\n').append("RESULT MAJOR= " + verSigRes.getResult().getResultMajor());
+        str.append('\n').append("RESULT MINOR= " + verSigRes.getResult().getResultMinor());
+        str.append('\n').append("RESULT MESSAGE= " + verSigRes.getResult().getResultMessage());
+
+        str.append('\n').append("FORMAT = " + verSigRes.getSignatureFormat());
 
         List<IndividualSignatureReport> reports = verSigRes.getVerificationReport();
         int r = 0;
         for (IndividualSignatureReport report : reports) {
-            log.debug(" ---- REPORT SIGNATURE[" + r++ + "] ---- ");
+            str.append('\n').append(" ---- REPORT SIGNATURE[" + r++ + "] ---- ");
 
             if (report.getDetailedReport() != null) {
-                log.debug("  report.getDetailedReport(): " + report.getDetailedReport());
+                str.append('\n').append("  report.getDetailedReport(): " + report.getDetailedReport());
             }
 
             ProcessingDetail pd = report.getProcessingDetails();
             if (pd != null) {
-                log.debug(printDetail(pd.getListInvalidDetail(), "INVALIT"));
-                log.debug(printDetail(pd.getListIndeterminateDetail(), "INDETERMINATE"));
-                log.debug(printDetail(pd.getListValidDetail(), "VALIT"));
+                str.append('\n').append(printDetail(pd.getListInvalidDetail(), "INVALIT"));
+                str.append('\n').append(printDetail(pd.getListIndeterminateDetail(), "INDETERMINATE"));
+                str.append('\n').append(printDetail(pd.getListValidDetail(), "VALIT"));
             }
 
             Map<String, Object> certificateInfo = report.getReadableCertificateInfo();
             if (certificateInfo != null && certificateInfo.size() != 0) {
 
                 for (String k : certificateInfo.keySet()) {
-                    log.debug("  InfoCert[" + k + "] = " + certificateInfo.get(k));
+                    str.append('\n').append("  InfoCert[" + k + "] = " + certificateInfo.get(k));
                 }
             }
 
-            log.debug("  SIGN report.getResult().getResultMajor(): " + report.getResult().getResultMajor());
-            log.debug("  SIGN report.getResult().getResultMinor(): " + report.getResult().getResultMinor());
-            log.debug("  SIGN report.getResult().getResultMessage(): " + report.getResult().getResultMessage());
+            str.append('\n')
+                    .append("  SIGN report.getResult().getResultMajor(): " + report.getResult().getResultMajor());
+            str.append('\n')
+                    .append("  SIGN report.getResult().getResultMinor(): " + report.getResult().getResultMinor());
+            str.append('\n')
+                    .append("  SIGN report.getResult().getResultMessage(): " + report.getResult().getResultMessage());
 
-            log.debug("  SIGN report.getSignaturePolicyIdentifier(): " + report.getSignaturePolicyIdentifier());
+            str.append('\n')
+                    .append("  SIGN report.getSignaturePolicyIdentifier(): " + report.getSignaturePolicyIdentifier());
 
             if (report.getSigPolicyDocument() != null) {
-                log.debug("  SING report.getSigPolicyDocument()" + Arrays.toString(report.getSigPolicyDocument()));
+                str.append('\n').append(
+                        "  SING report.getSigPolicyDocument()" + Arrays.toString(report.getSigPolicyDocument()));
             }
 
         }
@@ -987,23 +993,25 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
         List<DataInfo> dataList = verSigRes.getSignedDataInfo();
         int n = 0;
         for (DataInfo dataInfo : dataList) {
-            log.debug(" ---- SIGN[" + n++ + "] ---- ");
+            str.append('\n').append(" ---- SIGN[" + n++ + "] ---- ");
 
             if (dataInfo.getSignedDataRefs() != null) {
-                log.debug("    dataInfo.getSignedDataRefs() = "
+                str.append('\n').append("    dataInfo.getSignedDataRefs() = "
                         + Arrays.toString(dataInfo.getSignedDataRefs().toArray()));
             }
             if (dataInfo.getContentData() != null) {
-                log.debug("    dataInfo.getContentData().length = " + dataInfo.getContentData().length);
+                str.append('\n').append("    dataInfo.getContentData().length = " + dataInfo.getContentData().length);
             }
 
-            log.debug("    dataInfo.getDocumentHash().getDigestMethod() = "
+            str.append('\n').append("    dataInfo.getDocumentHash().getDigestMethod() = "
                     + dataInfo.getDocumentHash().getDigestMethod());
 
-            log.debug("    dataInfo.getDocumentHash().getDigestValue().length = "
+            str.append('\n').append("    dataInfo.getDocumentHash().getDigestValue().length = "
                     + dataInfo.getDocumentHash().getDigestValue().length);
 
         }
+
+        return str.toString();
     }
 
     protected List<SignatureCheck> convertDetail(List<Detail> details) {
@@ -1030,7 +1038,7 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
 
     }
 
-    public String printDetail(List<Detail> details, String title) {
+    public static String printDetail(List<Detail> details, String title) {
 
         if (details == null || details.size() == 0) {
             return "";
@@ -1076,7 +1084,6 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
         }
 
     }
-
 
     private String processExpressionLanguage(String plantilla, Map<String, Object> custodyParameters) throws Exception {
         try {
