@@ -613,8 +613,14 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
         String xmlInput;
 
         if (!isXAdES) {
-            xmlInput = transformersFacade.generateXml(inParams, GeneralConstants.DSS_AFIRMA_VERIFY_REQUEST,
+            try {
+               xmlInput = transformersFacade.generateXml(inParams, GeneralConstants.DSS_AFIRMA_VERIFY_REQUEST,
                     GeneralConstants.DSS_AFIRMA_VERIFY_METHOD, TransformersConstants.VERSION_10);
+            } catch (es.gob.afirma.transformers.TransformersException e) {
+                init();
+                xmlInput = transformersFacade.generateXml(inParams, GeneralConstants.DSS_AFIRMA_VERIFY_REQUEST,
+                        GeneralConstants.DSS_AFIRMA_VERIFY_METHOD, TransformersConstants.VERSION_10);
+            }
 
         } else {
             // Generar XML XADES MANUALMENT
