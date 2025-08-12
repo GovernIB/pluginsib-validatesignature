@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -14,6 +15,7 @@ import java.util.Properties;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.io.File;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.nio.charset.Charset;
@@ -29,10 +31,18 @@ import org.apache.cxf.endpoint.Client;
 import org.apache.cxf.frontend.ClientProxy;
 import org.apache.cxf.transport.http.HTTPConduit;
 import org.apache.cxf.transports.http.configuration.HTTPClientPolicy;
+import org.apache.pdfbox.io.RandomAccessRead;
+import org.apache.pdfbox.io.RandomAccessReadBuffer;
+import org.apache.pdfbox.io.RandomAccessReadBufferedFile;
+import org.apache.pdfbox.pdfparser.PDFParser;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.interactive.digitalsignature.PDSignature;
+import org.fundaciobit.pluginsib.core.v3.utils.CertificateUtils;
 import org.fundaciobit.pluginsib.utils.cxf.ClientHandler;
 import org.fundaciobit.pluginsib.utils.cxf.ClientHandlerCertificate;
 import org.fundaciobit.pluginsib.utils.cxf.ClientHandlerUsernamePassword;
 import org.fundaciobit.pluginsib.utils.signature.SignatureCommonUtils;
+import org.fundaciobit.pluginsib.validatecertificate.InformacioCertificat;
 import org.fundaciobit.pluginsib.validatecertificate.afirmacxf.InfoCertificatUtils;
 import org.fundaciobit.pluginsib.validatesignature.afirmacxf.utils.XMLUtil;
 import org.fundaciobit.pluginsib.validatesignature.afirmacxf.validarfirmaapi.DSSSignature;
@@ -614,8 +624,8 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
 
         if (!isXAdES) {
             try {
-               xmlInput = transformersFacade.generateXml(inParams, GeneralConstants.DSS_AFIRMA_VERIFY_REQUEST,
-                    GeneralConstants.DSS_AFIRMA_VERIFY_METHOD, TransformersConstants.VERSION_10);
+                xmlInput = transformersFacade.generateXml(inParams, GeneralConstants.DSS_AFIRMA_VERIFY_REQUEST,
+                        GeneralConstants.DSS_AFIRMA_VERIFY_METHOD, TransformersConstants.VERSION_10);
             } catch (es.gob.afirma.transformers.TransformersException e) {
                 init();
                 xmlInput = transformersFacade.generateXml(inParams, GeneralConstants.DSS_AFIRMA_VERIFY_REQUEST,
@@ -738,6 +748,7 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
 
         if (DSSConstants.ResultProcessIds.VALID_SIGNATURE.equals(major)) {
             status.setStatus(ValidationStatus.SIGNATURE_VALID);
+            status.setErrorMsg(null);
         } else {
 
             String msg = verSigRes.getResult().getResultMessage();
@@ -887,12 +898,135 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
             // Info de Certificat
             Map<String, Object> certificateInfo = report.getReadableCertificateInfo();
             if (certificateInfo != null && certificateInfo.size() != 0) {
-                di.setCertificateInfo(InfoCertificatUtils.processInfoCertificate(certificateInfo));
+                InformacioCertificat ic = InfoCertificatUtils.processInfoCertificate(certificateInfo);
+                di.setCertificateInfo(ic);
+
+                //di.setSignDate(null)
+            }
+        }
+
+        // TODO Extreure data de signatura en PDFs
+
+        if (SIGNTYPE_PAdES.equals(signatureInfo.getSignType())) {
+            Map<String, Calendar> datesByCN = getSignDateOfPdf(validationRequest.getSignatureData());
+            if (datesByCN != null) {
+                for (SignatureDetailInfo di : signatureInfo.getSignatureDetailInfo()) {
+                    if (di.getSignDate() == null) {
+                        String subject = di.getCertificateInfo().getSubject();
+                        if (subject != null) {
+                            String cn = CertificateUtils.getCN(subject);
+                            Calendar cal = datesByCN.get(cn);
+                            if (cal != null) {
+                                di.setSignDate(cal.getTime());
+                            }
+                        }
+                    }
+                }
             }
         }
 
         return signatureInfo;
 
+    }
+
+    /*
+    public static void main(String[] args) {
+        //File file = new File("./datafirma/testSignPdf_result_testSignPdf_1753255937861.pdf");
+
+        File file = new File("./personal/holacaracola_signed_1.pdf");
+
+
+        try {
+
+            Map<String, Calendar> calendar = getSignDateOfPdf(file);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    */
+
+    protected static Map<String, Calendar> getSignDateOfPdf(File file) throws Exception {
+
+        RandomAccessRead rar = new RandomAccessReadBufferedFile(file);
+
+        return getSignDateOfPdf(rar);
+    }
+
+    protected static Map<String, Calendar> getSignDateOfPdf(byte[] file) throws Exception {
+
+        RandomAccessRead rar = new RandomAccessReadBuffer(file);
+
+        return getSignDateOfPdf(rar);
+    }
+
+    protected static Map<String, Calendar> getSignDateOfPdf(RandomAccessRead rar) throws Exception {
+
+        PDFParser parser = new PDFParser(rar);
+
+        PDDocument document = parser.parse();
+
+        Map<String, Calendar> cal = new HashMap<String, Calendar>();
+
+        List<PDSignature> signatureDictionaries = document.getSignatureDictionaries();
+        if (signatureDictionaries.isEmpty()) {
+            return cal;
+        }
+
+        for (PDSignature signature : signatureDictionaries) {
+/*
+            System.out.println(" -----------------------------------");
+            System.out.println(" CN:" + signature.getName());
+
+            System.out.println(" CI:" + signature.getContactInfo());
+
+            System.out.println(" SU:" + signature.getSubFilter());
+            System.out.println(" FI:" + signature.getFilter());
+
+            System.out.println(" PB:" + signature.getPropBuild());
+*/
+            Calendar signDate = signature.getSignDate();
+            if (signDate != null) {
+                //System.out.println("     - Fecha de firma: " + signDate.getTime());
+                cal.put(signature.getName(), signDate);
+            } /*else {
+                System.out.println("      - No se pudo obtener la fecha de firma.");
+            } */
+/*
+            byte[] contents = signature.getContents();
+            if (contents == null || contents.length == 0) {
+                System.out.println("Firma vacía.");
+                continue;
+            }
+
+            CMSSignedData cms = new CMSSignedData(contents);
+            SignerInformationStore signers = cms.getSignerInfos();
+            Collection<SignerInformation> signerInfos = signers.getSigners();
+
+            // Obtener el certificado (solo el primero en este ejemplo)
+            Collection<X509CertificateHolder> certHolders = cms.getCertificates().getMatches(null);
+            JcaX509CertificateConverter certConverter = new JcaX509CertificateConverter();
+
+            for (SignerInformation signer : signerInfos) {
+
+                for (X509CertificateHolder certHolder : certHolders) {
+                    if (signer.getSID().match(certHolder)) {
+                        X509Certificate cert = certConverter.getCertificate(certHolder);
+                        System.out.println("Certificado:");
+
+                        System.out.println("  CN: " + CertificateUtils.getCN(cert));
+
+                        System.out.println("  Sujeto: " + cert.getSubjectDN());
+                        System.out.println("  Emisor: " + cert.getIssuerDN());
+                        System.out.println("  Válido desde: " + cert.getNotBefore());
+                        System.out.println("  Válido hasta: " + cert.getNotAfter());
+                        break;
+                    }
+                }
+            }
+*/
+        }
+
+        return cal;
     }
 
     protected void extractCertificateChain(String xmlOutput, ValidateSignatureResponse signatureInfo) {
@@ -933,14 +1067,15 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
 
             String signatureName = names.get(names.size() - 1);
 
+            System.out.println("\n\nSignature Name: " + signatureName + "\n\n");
+
             PdfPKCS7 pkcs7 = fields.verifySignature(signatureName);
 
             if (pkcs7.getTimeStampDate() != null && pkcs7.getTimeStampToken() != null) {
                 return true;
             }
         } catch (Exception e) {
-            e.printStackTrace();
-
+            //e.printStackTrace();
         }
         return false;
     }
@@ -1056,6 +1191,7 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
             str.append(d).append(".-CODE=").append(detail.getCode()).append("\n");
             str.append(d).append(".-MESS=").append(detail.getMessage()).append("\n");
             str.append(d).append(".-TYPE=").append(detail.getType()).append("\n");
+            d++;
         }
         str.append("\n");
         return str.toString();
