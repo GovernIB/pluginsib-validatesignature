@@ -908,16 +908,21 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
         // TODO Extreure data de signatura en PDFs
 
         if (SIGNTYPE_PAdES.equals(signatureInfo.getSignType())) {
-            Map<String, Calendar> datesByCN = getSignDateOfPdf(validationRequest.getSignatureData());
+            Map<String, List<Calendar>> datesByCN = getSignDateOfPdf(validationRequest.getSignatureData());
             if (datesByCN != null) {
                 for (SignatureDetailInfo di : signatureInfo.getSignatureDetailInfo()) {
                     if (di.getSignDate() == null) {
                         String subject = di.getCertificateInfo().getSubject();
                         if (subject != null) {
                             String cn = CertificateUtils.getCN(subject);
-                            Calendar cal = datesByCN.get(cn);
-                            if (cal != null) {
-                                di.setSignDate(cal.getTime());
+                            
+                            List<Calendar> calList = datesByCN.get(cn);
+                            if (calList != null && !calList.isEmpty()) {
+                                Calendar cal = calList.get(0);
+                                calList.remove(0); // Esborram la primera i per altres CN repetits ja collira les següents
+                                if (cal != null) {
+                                    di.setSignDate(cal.getTime());
+                                }
                             }
                         }
                     }
@@ -945,27 +950,27 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
     }
     */
 
-    protected static Map<String, Calendar> getSignDateOfPdf(File file) throws Exception {
+    protected static Map<String, List<Calendar>> getSignDateOfPdf(File file) throws Exception {
 
         RandomAccessRead rar = new RandomAccessReadBufferedFile(file);
 
         return getSignDateOfPdf(rar);
     }
 
-    protected static Map<String, Calendar> getSignDateOfPdf(byte[] file) throws Exception {
+    protected static Map<String, List<Calendar>> getSignDateOfPdf(byte[] file) throws Exception {
 
         RandomAccessRead rar = new RandomAccessReadBuffer(file);
 
         return getSignDateOfPdf(rar);
     }
 
-    protected static Map<String, Calendar> getSignDateOfPdf(RandomAccessRead rar) throws Exception {
+    protected static Map<String, List<Calendar>> getSignDateOfPdf(RandomAccessRead rar) throws Exception {
 
         PDFParser parser = new PDFParser(rar);
 
         PDDocument document = parser.parse();
 
-        Map<String, Calendar> cal = new HashMap<String, Calendar>();
+        Map<String, List<Calendar>> cal = new HashMap<String, List<Calendar>>();
 
         List<PDSignature> signatureDictionaries = document.getSignatureDictionaries();
         if (signatureDictionaries.isEmpty()) {
@@ -987,7 +992,12 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
             Calendar signDate = signature.getSignDate();
             if (signDate != null) {
                 //System.out.println("     - Fecha de firma: " + signDate.getTime());
-                cal.put(signature.getName(), signDate);
+                List<Calendar> listCal = cal.get(signature.getName());
+                if (listCal == null) {
+                    listCal = new ArrayList<Calendar>();
+                    cal.put(signature.getName(), listCal);
+                }
+                listCal.add(signDate);
             } /*else {
                 System.out.println("      - No se pudo obtener la fecha de firma.");
             } */
