@@ -912,16 +912,18 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
             if (datesByCN != null) {
                 for (SignatureDetailInfo di : signatureInfo.getSignatureDetailInfo()) {
                     if (di.getSignDate() == null) {
-                        String subject = di.getCertificateInfo().getSubject();
-                        if (subject != null) {
-                            String cn = CertificateUtils.getCN(subject);
-                            
-                            List<Calendar> calList = datesByCN.get(cn);
-                            if (calList != null && !calList.isEmpty()) {
-                                Calendar cal = calList.get(0);
-                                calList.remove(0); // Esborram la primera i per altres CN repetits ja collira les següents
-                                if (cal != null) {
-                                    di.setSignDate(cal.getTime());
+                        if (di.getCertificateInfo() != null) {
+                            String subject = di.getCertificateInfo().getSubject();
+                            if (subject != null) {
+                                String cn = CertificateUtils.getCN(subject);
+                                
+                                List<Calendar> calList = datesByCN.get(cn);
+                                if (calList != null && !calList.isEmpty()) {
+                                    Calendar cal = calList.get(0);
+                                    calList.remove(0); // Esborram la primera i per altres CN repetits ja collira les següents
+                                    if (cal != null) {
+                                        di.setSignDate(cal.getTime());
+                                    }
                                 }
                             }
                         }
