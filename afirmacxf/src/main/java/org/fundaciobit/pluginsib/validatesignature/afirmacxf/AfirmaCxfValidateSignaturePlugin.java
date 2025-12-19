@@ -1079,7 +1079,7 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
 
             String signatureName = names.get(names.size() - 1);
 
-            System.out.println("\n\nSignature Name: " + signatureName + "\n\n");
+            //System.out.println("\n\nSignature Name: " + signatureName + "\n\n");
 
             PdfPKCS7 pkcs7 = fields.verifySignature(signatureName);
 
