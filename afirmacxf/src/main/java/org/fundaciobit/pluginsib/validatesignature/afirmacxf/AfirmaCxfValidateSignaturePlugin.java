@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -916,7 +917,7 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
                             String subject = di.getCertificateInfo().getSubject();
                             if (subject != null) {
                                 String cn = CertificateUtils.getCN(subject);
-                                
+
                                 List<Calendar> calList = datesByCN.get(cn);
                                 if (calList != null && !calList.isEmpty()) {
                                     Calendar cal = calList.get(0);
@@ -932,6 +933,27 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
             }
         }
 
+        if (signatureInfo.getSignatureDetailInfo() != null) {
+
+            Arrays.sort(signatureInfo.getSignatureDetailInfo(), new Comparator<SignatureDetailInfo>() {
+                @Override
+                public int compare(SignatureDetailInfo o1, SignatureDetailInfo o2) {
+                    try {
+                        if (o1.getSignDate() == null) {
+                            return o2.getDigestValue().hashCode() - o1.getDigestValue().hashCode();
+                        } else if (o2.getSignDate() == null) {
+                            return o2.getDigestValue().hashCode() - o1.getDigestValue().hashCode();
+                        } else {
+                            return o1.getSignDate().compareTo(o2.getSignDate());
+                        }
+                    } catch (Throwable t) {
+                        return 0;
+                    }
+                }
+            });
+
+        }
+
         return signatureInfo;
 
     }
@@ -939,12 +961,12 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
     /*
     public static void main(String[] args) {
         //File file = new File("./datafirma/testSignPdf_result_testSignPdf_1753255937861.pdf");
-
+    
         File file = new File("./personal/holacaracola_signed_1.pdf");
-
-
+    
+    
         try {
-
+    
             Map<String, Calendar> calendar = getSignDateOfPdf(file);
         } catch (Exception e) {
             e.printStackTrace();
@@ -980,17 +1002,17 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
         }
 
         for (PDSignature signature : signatureDictionaries) {
-/*
+            /*
             System.out.println(" -----------------------------------");
             System.out.println(" CN:" + signature.getName());
-
+            
             System.out.println(" CI:" + signature.getContactInfo());
-
+            
             System.out.println(" SU:" + signature.getSubFilter());
             System.out.println(" FI:" + signature.getFilter());
-
+            
             System.out.println(" PB:" + signature.getPropBuild());
-*/
+            */
             Calendar signDate = signature.getSignDate();
             if (signDate != null) {
                 //System.out.println("     - Fecha de firma: " + signDate.getTime());
@@ -1002,31 +1024,31 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
                 listCal.add(signDate);
             } /*else {
                 System.out.println("      - No se pudo obtener la fecha de firma.");
-            } */
-/*
+              } */
+            /*
             byte[] contents = signature.getContents();
             if (contents == null || contents.length == 0) {
                 System.out.println("Firma vacía.");
                 continue;
             }
-
+            
             CMSSignedData cms = new CMSSignedData(contents);
             SignerInformationStore signers = cms.getSignerInfos();
             Collection<SignerInformation> signerInfos = signers.getSigners();
-
+            
             // Obtener el certificado (solo el primero en este ejemplo)
             Collection<X509CertificateHolder> certHolders = cms.getCertificates().getMatches(null);
             JcaX509CertificateConverter certConverter = new JcaX509CertificateConverter();
-
+            
             for (SignerInformation signer : signerInfos) {
-
+            
                 for (X509CertificateHolder certHolder : certHolders) {
                     if (signer.getSID().match(certHolder)) {
                         X509Certificate cert = certConverter.getCertificate(certHolder);
                         System.out.println("Certificado:");
-
+            
                         System.out.println("  CN: " + CertificateUtils.getCN(cert));
-
+            
                         System.out.println("  Sujeto: " + cert.getSubjectDN());
                         System.out.println("  Emisor: " + cert.getIssuerDN());
                         System.out.println("  Válido desde: " + cert.getNotBefore());
@@ -1035,7 +1057,7 @@ public class AfirmaCxfValidateSignaturePlugin extends AbstractValidateSignatureP
                     }
                 }
             }
-*/
+            */
         }
 
         return cal;

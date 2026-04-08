@@ -25,6 +25,7 @@
         <module>api</module>
         <module>fake</module>
         <module>afirmacxf</module>
+        <module>utilitatsfirma</module>
         <module>validatesignaturetester</module>
     </modules>
 
@@ -46,14 +47,6 @@
             <url>https://joinup.ec.europa.eu/sites/default/files/custom-page/attachment/eupl_v1.2_es.pdf</url>
         </license>
     </licenses>
-
-    <repositories>
-        <repository>
-            <id>github_governib_maven_repos</id>
-            <name>GitHub GovernIB Maven Repository</name>
-            <url>https://governib.github.io/maven/maven/</url>
-        </repository>
-    </repositories>
 
 
     <dependencies>
@@ -86,6 +79,21 @@
     </dependencies>
 
     <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
 
     <profiles>

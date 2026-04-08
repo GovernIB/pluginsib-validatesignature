@@ -1,0 +1,8 @@
+
+
+org.sample.app.pluginsib.validatesignature.utilitatsfirma.host=http://anadal:8080/utilitatsfirmaapi/interna
+org.sample.app.pluginsib.validatesignature.utilitatsfirma.username=<<username>>
+org.sample.app.pluginsib.validatesignature.utilitatsfirma.password=<<password>>
+
+
+org.sample.app.pluginsib.validatesignature.utilitatsfirma.languageui=ca
