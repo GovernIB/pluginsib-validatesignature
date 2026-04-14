@@ -3,15 +3,9 @@ package org.fundaciobit.pluginsib.validatesignature.utilitatsfirma.test;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.StringWriter;
 import java.security.cert.X509Certificate;
 import java.util.Properties;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.Marshaller;
-import javax.xml.namespace.QName;
 
 import org.fundaciobit.pluginsib.core.v3.utils.CertificateUtils;
 import org.fundaciobit.pluginsib.core.v3.utils.FileUtils;

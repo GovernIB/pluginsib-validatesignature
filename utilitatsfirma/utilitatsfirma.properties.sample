@@ -1,4 +1,5 @@
 
+# Class org.fundaciobit.pluginsib.validatesignature.utilitatsfirma.UtilitatsFirmaValidateSignaturePlugin
 
 org.sample.app.pluginsib.validatesignature.utilitatsfirma.host=http://anadal:8080/utilitatsfirmaapi/interna
 org.sample.app.pluginsib.validatesignature.utilitatsfirma.username=<<username>>

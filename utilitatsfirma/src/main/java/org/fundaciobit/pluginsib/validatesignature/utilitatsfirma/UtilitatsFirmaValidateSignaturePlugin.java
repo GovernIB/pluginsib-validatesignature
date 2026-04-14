@@ -19,9 +19,6 @@ import org.fundaciobit.pluginsib.validatesignature.api.ValidateSignatureRequest;
 import org.fundaciobit.pluginsib.validatesignature.api.ValidateSignatureResponse;
 import org.fundaciobit.pluginsib.validatesignature.api.ValidationStatus;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.api.UtilitatsFirmaV2Api;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.CertificateInformation;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.servicesforutilitatsfirma.ApiClientWithJsonSupport;
@@ -83,6 +80,7 @@ public class UtilitatsFirmaValidateSignaturePlugin extends AbstractValidateSigna
 
     @Override
     public SignatureRequestedInformation getSupportedSignatureRequestedInformationBySignatureType(String signType) {
+        // TODO Cridar al Servidor per veure si hi ha alguna diferència segons el tipus de signatura
         return getSupportedSignatureRequestedInformation();
     }
 
@@ -121,13 +119,13 @@ public class UtilitatsFirmaValidateSignaturePlugin extends AbstractValidateSigna
             es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.ValidateSignatureResponse response_ws;
             response_ws = getApi(languageUI).validateSignature(languageUI, sri_ws, signatureFile, documentDetachedFile);
 
-            
+            /*
             {
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
                 String response_json = gson.toJson(response_ws);
                 System.err.println("Resposta de UtilitatsFirma:\n" + response_json);
             }
-            
+            */
 
             ValidateSignatureResponse si = new ValidateSignatureResponse();
 

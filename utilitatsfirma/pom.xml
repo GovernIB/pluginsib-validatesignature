@@ -31,8 +31,7 @@
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
-            <!--   TODO XYZ_DEBUG -->
-          <!--   <scope>test</scope> -->
+            <scope>test</scope>
         </dependency>
 
     </dependencies>
