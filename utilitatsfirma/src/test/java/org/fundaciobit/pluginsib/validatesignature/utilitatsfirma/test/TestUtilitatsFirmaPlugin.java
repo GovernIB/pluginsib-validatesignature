@@ -271,6 +271,21 @@ public class TestUtilitatsFirmaPlugin {
         sri.setReturnTimeStampInfo(true);
 
         validationRequest.setSignatureRequestedInformation(sri);
+        
+        String filterResult = plugin.filter(validationRequest);
+        if (filterResult != null) {
+            // Si el filter retorna un missatge, es que no s'ha pogut validar per algun motiu de configuració
+            ValidateSignatureResponse errorResponse = new ValidateSignatureResponse();
+            
+            ValidationStatus vsError = new ValidationStatus();
+            vsError.setStatus(ValidationStatus.SIGNATURE_ERROR);
+            vsError.setErrorMsg(filterResult);            
+            
+            errorResponse.setValidationStatus(vsError);
+            return errorResponse;
+        }
+        
+        
 
         vs = plugin.validateSignature(validationRequest);
         return vs;

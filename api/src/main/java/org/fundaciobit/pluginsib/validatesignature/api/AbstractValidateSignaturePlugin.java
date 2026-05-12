@@ -49,7 +49,19 @@ public abstract class AbstractValidateSignaturePlugin extends AbstractPluginProp
     public String filter(ValidateSignatureRequest vsr) {
 
         SignatureRequestedInformation required = vsr.getSignatureRequestedInformation();
+
+        if (required == null) {
+            // XYZ ZZZ TRA
+            return "No s'ha definit la informació REQUIRED en la validació de la signatura "
+                    + "(SignatureRequestedInformation és null)";
+        }
+
         SignatureRequestedInformation supported = getSupportedSignatureRequestedInformation();
+        if (supported == null) {
+            // XYZ ZZZ TRA
+            return "El propi plugin no ha pogut proporcionar informació sobre les seves capacitats"
+                    + " (mètode getSignatureRequestedInformation ha retornat null). Revisi logs per saber més detalls.";
+        }
 
         if (!checkRequiredSupported(required.getReturnSignatureTypeFormatProfile(),
                 supported.getReturnSignatureTypeFormatProfile())) {
@@ -200,6 +212,5 @@ public abstract class AbstractValidateSignaturePlugin extends AbstractPluginProp
         str.append("\n");
         return str.toString();
     }
-
 
 }
