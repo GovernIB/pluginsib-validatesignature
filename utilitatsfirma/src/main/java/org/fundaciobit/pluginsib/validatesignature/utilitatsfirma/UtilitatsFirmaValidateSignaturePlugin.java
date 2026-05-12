@@ -192,7 +192,12 @@ public class UtilitatsFirmaValidateSignaturePlugin extends AbstractValidateSigna
                             ic_plugin.setNomResponsable(ic_ws.getFirstName());
                             ic_plugin.setNumeroIdentificacionPersonal(ic_ws.getFunctionaryID());
                             try {
-                                ic_plugin.setNumeroSerie(new BigInteger(ic_ws.getSerialNumber()));
+                                String serialNumberStr = ic_ws.getSerialNumber();
+                                if (serialNumberStr != null && serialNumberStr.trim().length() > 0
+                                        && !serialNumberStr.trim().equalsIgnoreCase("null")) {
+                                    ic_plugin.setNumeroSerie(new BigInteger(serialNumberStr.trim()));
+                                }
+
                             } catch (Exception e) {
                                 // TODO: handle exception
                                 e.printStackTrace();
@@ -243,8 +248,7 @@ public class UtilitatsFirmaValidateSignaturePlugin extends AbstractValidateSigna
                     }
 
                 }
-                
-                
+
                 if (all_sdi_plugin != null) {
 
                     Arrays.sort(all_sdi_plugin, new Comparator<SignatureDetailInfo>() {
